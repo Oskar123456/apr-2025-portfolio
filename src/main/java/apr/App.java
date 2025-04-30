@@ -1,5 +1,7 @@
 package apr;
 
+import apr.datastructure.Graph;
+import apr.datastructure.Node;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -24,8 +26,18 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        System.out.println("hello");
         // launch();
-    }
 
+        Graph<String> graph = new Graph<>();
+        graph.populate(10, () -> new Node<String>(String.format("N%2d", SeqInt.next())));
+        System.out.println(graph.toString());
+    }
+}
+
+class SeqInt {
+    static int i;
+
+    public static int next() {
+        return i++;
+    }
 }
