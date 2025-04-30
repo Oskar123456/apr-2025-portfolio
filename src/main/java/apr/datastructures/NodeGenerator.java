@@ -1,4 +1,4 @@
-package apr.datastructure;
+package apr.datastructures;
 
 /**
  * NodeGenerator

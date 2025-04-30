@@ -1,4 +1,4 @@
-package apr.datastructure;
+package apr.datastructures;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -39,17 +39,23 @@ public class Graph<T> {
             for (int i = 0; i < nEdges; i++) {
                 int r = rng.nextInt(0, n);
                 Node<T> neighbor = nodes.get(r);
+
                 int j = 0;
-                while (j++ < n && visited.contains(neighbor)) {
+                while (++j < n && visited.contains(neighbor)) {
                     r = (r + 1) % n;
                     neighbor = nodes.get(r);
                 }
                 if (j == n) {
                     break;
                 }
-                double weight = rng.nextInt(1, 25);
+
+                double weight = rng.nextInt(10, 25);
                 curNode.connectTwoWays(neighbor, weight);
                 edges.add(new Edge<T>(curNode, neighbor, weight));
+                if (!visited.contains(neighbor)) {
+                    stack.push(neighbor);
+                    visited.add(neighbor);
+                }
             }
         }
     }
@@ -59,11 +65,11 @@ public class Graph<T> {
 
         str += String.format("%nNodes:");
         for (var n : nodes) {
-            str += String.format("%n%s", n.toString());
+            str += String.format("%n\t%s", n.toString());
         }
         str += String.format("%nEdges:");
         for (var e : edges) {
-            str += String.format("%n%s", e.toString());
+            str += String.format("%n\t%s", e.toString());
         }
 
         return str;

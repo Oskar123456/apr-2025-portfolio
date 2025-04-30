@@ -1,7 +1,9 @@
+groupId="apr"
+mainClass="App"
+
 build:
 	@mvn -q compile
 run: build
-	@mvn clean javafx:run
-	# @mvn mvn -q exec:java
+	@mvn -q exec:java -Dexec.mainClass="$(groupId).$(mainClass)"
 javafx:
 	@mvn clean javafx:run

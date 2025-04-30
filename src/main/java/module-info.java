@@ -1,4 +1,4 @@
 module apr {
-    requires javafx.controls;
-    exports apr;
+requires javafx.controls;
+exports apr;
 }

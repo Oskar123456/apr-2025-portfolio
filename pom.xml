@@ -6,64 +6,30 @@
     <version>1.0-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>13</version>
+            <version>24.0.1</version>
         </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
-                <configuration>
-                    <release>11</release>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.6</version>
-                <executions>
-                    <execution>
-                        <!-- Default configuration for running -->
-                        <!-- Usage: mvn clean javafx:run -->
-                        <id>default-cli</id>
-                        <configuration>
-                            <mainClass>${project.groupId}.App</mainClass>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.5.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <version>0.0.8</version>
                 <configuration>
-                    <executable>java</executable>
                     <mainClass>${project.groupId}.App</mainClass>
-                    <!-- <arguments> -->
-                    <!--     <argument>-ea</argument> -->
-                    <!--     <argument>-classpath</argument> -->
-                    <!--     <classpath /> -->
-                    <!--     <argument>${project.groupId}.App</argument> -->
-                    <!-- </arguments> -->
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
+
+
 </project>
