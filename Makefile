@@ -1,5 +1,6 @@
 build:
-	mvn -q compile
-	
-run:
-	mvn -q compile && mvn -q exec:exec
+	@mvn -q compile
+run: build
+	@mvn mvn -q exec:java
+javafx:
+	@mvn clean javafx:run
