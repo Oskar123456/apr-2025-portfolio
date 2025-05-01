@@ -9,6 +9,7 @@ import apr.datastructures.AStarGraph;
 import apr.datastructures.AStarNode;
 import apr.datastructures.Graph;
 import apr.datastructures.Node;
+import apr.datastructures.Point2DI;
 import apr.datastructures.TwoTuple;
 // import javafx.application.Application;
 // import javafx.scene.Scene;
@@ -53,7 +54,7 @@ public class App {
         }
 
         for (int i = 0; i < n; i++) {
-            int srcId = rng.nextInt(0, n);
+            int srcId = i;
             int destId = rng.nextInt(0, n);
             if (destId == srcId) {
                 destId = (destId + 1) % n;
@@ -67,6 +68,7 @@ public class App {
                     break;
                 }
                 destId = (destId + 1) % n;
+                destNode = graph.nodes.get(destId);
             }
 
             if (srcNode == destNode || srcNode.isConnectedTo(destNode)) {
@@ -87,6 +89,22 @@ public class App {
         }
 
         AStar.use(graph, graph.nodes.get(srcId), graph.nodes.get(destId));
+
+        /* GRID TESTING */
+        int w = rng.nextInt(5, 10);
+        int h = rng.nextInt(5, 10);
+
+        int srcX = rng.nextInt(0, w);
+        int srcY = rng.nextInt(0, h);
+        int destX = rng.nextInt(0, w);
+        int destY = rng.nextInt(0, h);
+
+        if (srcX == destX && srcY == destY) {
+            destX = (destX + 1) % w;
+        }
+
+        int[][] grid = new int[h][w];
+        AStar.grid(grid, new Point2DI(srcX, srcY), new Point2DI(destX, destY));
     }
 
     static void testDijkstra() {

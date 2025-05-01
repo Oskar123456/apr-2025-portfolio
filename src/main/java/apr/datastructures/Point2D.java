@@ -4,7 +4,15 @@ package apr.datastructures;
  * Point2D
  */
 public class Point2D extends Point {
-    double x, y;
+
+    public static final Point2D[] dirs = {
+            new Point2D(-1, 0),
+            new Point2D(0, 1),
+            new Point2D(1, 0),
+            new Point2D(0, -1),
+    };
+
+    public double x, y;
 
     public Point2D(double x, double y) {
         this.x = x;
@@ -18,6 +26,10 @@ public class Point2D extends Point {
 
     public double magnitude() {
         return Math.sqrt(x * x + y * y);
+    }
+
+    public Point2D add(Point2D other) {
+        return new Point2D(x + other.x, y + other.y);
     }
 
     public String toString() {

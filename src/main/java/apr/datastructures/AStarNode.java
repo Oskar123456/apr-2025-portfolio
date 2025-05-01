@@ -32,6 +32,11 @@ public class AStarNode<T> {
             if (edge.dest == other) {
                 return true;
             }
+            for (var edge2 : edge.dest.edges) {
+                if (edge2.dest == this) {
+                    return true;
+                }
+            }
         }
         return false;
     }
