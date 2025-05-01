@@ -1,12 +1,12 @@
-package apr.algorithms;
+package apr.algorithms.graph;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
 
-import apr.datastructures.Graph;
-import apr.datastructures.Node;
-import apr.datastructures.TwoTuple;
+import apr.datastructures.graph.Graph;
+import apr.datastructures.graph.Node;
+import apr.datastructures.graph.TwoTuple;
 
 /**
  * Dijkstra
@@ -26,10 +26,12 @@ public class Dijkstra {
         PriorityQueue<TwoTuple<Node<T>, Double>> PQ = new PriorityQueue<>((a, b) -> a.second.compareTo(b.second));
         PQ.add(new TwoTuple<Node<T>, Double>(src, 0D));
 
-        while (!PQ.isEmpty()) {
+        int nVis = 0;
+        while (!PQ.isEmpty() && nVis < graph.nodes.size()) {
             var curTuple = PQ.remove();
             var curNode = curTuple.first;
             var curDist = curTuple.second;
+            ++nVis;
             for (var edge : curNode.edges) {
                 var prevDist = dists.get(edge.dest);
                 var newDist = curDist + edge.weight;

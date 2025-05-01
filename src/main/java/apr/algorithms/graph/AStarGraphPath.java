@@ -1,8 +1,8 @@
-package apr.algorithms;
+package apr.algorithms.graph;
 
 import java.util.List;
 
-import apr.datastructures.AStarNode;
+import apr.datastructures.graph.AStarNode;
 
 /**
  * AStarGraphPath

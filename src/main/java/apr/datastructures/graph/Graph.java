@@ -1,4 +1,4 @@
-package apr.datastructures;
+package apr.datastructures.graph;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;

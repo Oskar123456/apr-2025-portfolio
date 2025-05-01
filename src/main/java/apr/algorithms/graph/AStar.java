@@ -1,13 +1,13 @@
-package apr.algorithms;
+package apr.algorithms.graph;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
 
-import apr.datastructures.AStarGraph;
-import apr.datastructures.AStarNode;
-import apr.datastructures.Point2DI;
-import apr.datastructures.TwoTuple;
+import apr.datastructures.graph.AStarGraph;
+import apr.datastructures.graph.AStarNode;
+import apr.datastructures.graph.Point2DI;
+import apr.datastructures.graph.TwoTuple;
 
 /**
  * AStar

@@ -1,8 +1,8 @@
-package apr.algorithms;
+package apr.algorithms.graph;
 
 import java.util.Map;
 
-import apr.datastructures.Node;
+import apr.datastructures.graph.Node;
 
 /**
  * GraphPaths

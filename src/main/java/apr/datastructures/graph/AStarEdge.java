@@ -1,4 +1,4 @@
-package apr.datastructures;
+package apr.datastructures.graph;
 
 /**
  * AStarEdge
