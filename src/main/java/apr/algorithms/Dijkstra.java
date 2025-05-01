@@ -20,6 +20,8 @@ public class Dijkstra {
         for (var node : graph.nodes) {
             dists.put(node, Double.POSITIVE_INFINITY);
         }
+        dists.put(src, 0D);
+        srcs.put(src, src);
 
         PriorityQueue<TwoTuple<Node<T>, Double>> PQ = new PriorityQueue<>((a, b) -> a.second.compareTo(b.second));
         PQ.add(new TwoTuple<Node<T>, Double>(src, 0D));

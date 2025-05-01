@@ -50,8 +50,10 @@ public class Graph<T> {
                 }
 
                 double weight = rng.nextInt(10, 25);
-                curNode.connectTwoWays(neighbor, weight);
+                curNode.edges.add(new Edge<T>(curNode, neighbor, weight));
+                // curNode.connectTwoWays(neighbor, weight);
                 edges.add(new Edge<T>(curNode, neighbor, weight));
+                // edges.add(new Edge<T>(neighbor, curNode, weight));
                 if (!visited.contains(neighbor)) {
                     stack.push(neighbor);
                     visited.add(neighbor);
