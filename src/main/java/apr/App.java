@@ -4,6 +4,9 @@ import java.util.Random;
 
 import apr.algorithms.AStar;
 import apr.algorithms.Dijkstra;
+import apr.datastructures.AStarEdge;
+import apr.datastructures.AStarGraph;
+import apr.datastructures.AStarNode;
 import apr.datastructures.Graph;
 import apr.datastructures.Node;
 import apr.datastructures.TwoTuple;
@@ -35,7 +38,55 @@ public class App {
     public static void main(String[] args) {
         // launch();
 
-        testDijkstra();
+        // testDijkstra();
+        testAStar();
+    }
+
+    static void testAStar() {
+        Random rng = new Random();
+        int n = rng.nextInt(2, 10);
+
+        AStarGraph<String> graph = new AStarGraph<>();
+
+        for (int i = 0; i < n; i++) {
+            graph.nodes.add(new AStarNode<>("N" + i, rng.nextInt(1, 10), rng.nextInt(1, 10)));
+        }
+
+        for (int i = 0; i < n; i++) {
+            int srcId = rng.nextInt(0, n);
+            int destId = rng.nextInt(0, n);
+            if (destId == srcId) {
+                destId = (destId + 1) % n;
+            }
+            var srcNode = graph.nodes.get(srcId);
+            var destNode = graph.nodes.get(destId);
+
+            int j = 0;
+            while (j++ < n) {
+                if (srcNode != destNode && !srcNode.isConnectedTo(destNode)) {
+                    break;
+                }
+                destId = (destId + 1) % n;
+            }
+
+            if (srcNode == destNode || srcNode.isConnectedTo(destNode)) {
+                continue;
+            }
+
+            var edge = new AStarEdge<>(srcNode, destNode);
+            graph.edges.add(edge);
+            srcNode.edges.add(edge);
+        }
+
+        System.out.println(graph);
+
+        int srcId = rng.nextInt(0, n);
+        int destId = rng.nextInt(0, n);
+        if (destId == srcId) {
+            destId = (destId + 1) % n;
+        }
+
+        AStar.use(graph, graph.nodes.get(srcId), graph.nodes.get(destId));
     }
 
     static void testDijkstra() {
@@ -51,23 +102,6 @@ public class App {
         var dijkstraResults = Dijkstra.wDefaults(graph, src);
 
         System.out.println(dijkstraResults);
-    }
-
-    static void testAStar() {
-        // Random rng = new Random();
-        // int n = rng.nextInt(5, 15);
-        //
-        // Graph<String> graph = new Graph<>();
-        // graph.populate(n, () -> new Node<String>(String.format("N%02d",
-        // SeqInt.next())));
-        // graph.nodes.add(new Node<String>(String.format("N%02d", SeqInt.next())));
-        // System.out.println(graph.toString());
-        //
-        // var src = graph.nodes.get(rng.nextInt(0, graph.nodes.size()));
-        // var dest = graph.nodes.get(rng.nextInt(0, graph.nodes.size()));
-        // var astarResults = AStar.use(graph, src, dest);
-        //
-        // System.out.println(dijkstraResults);
     }
 }
 

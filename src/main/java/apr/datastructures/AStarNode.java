@@ -8,9 +8,9 @@ import java.util.List;
  */
 public class AStarNode<T> {
 
-    double x, y;
-    T data;
-    List<AStarEdge> edges;
+    public double x, y;
+    public T data;
+    public List<AStarEdge<T>> edges;
 
     public AStarNode(T data, double x, double y) {
         edges = new ArrayList<>();
@@ -21,5 +21,18 @@ public class AStarNode<T> {
 
     public double dist(AStarNode<T> other) {
         return Math.sqrt((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y));
+    }
+
+    public String toString() {
+        return String.format("Node[%s (%.1f, %.1f)]", data.toString(), x, y);
+    }
+
+    public boolean isConnectedTo(AStarNode<T> other) {
+        for (var edge : edges) {
+            if (edge.dest == other) {
+                return true;
+            }
+        }
+        return false;
     }
 }

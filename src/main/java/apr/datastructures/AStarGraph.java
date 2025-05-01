@@ -8,11 +8,26 @@ import java.util.List;
  */
 public class AStarGraph<T> {
 
-    List<AStarNode<T>> nodes;
-    List<AStarEdge<T>> edges;
+    public List<AStarNode<T>> nodes;
+    public List<AStarEdge<T>> edges;
 
     public AStarGraph() {
         nodes = new ArrayList<>();
         edges = new ArrayList<>();
+    }
+
+    public String toString() {
+        String str = String.format("Graph(nodes: %d, edges: %d)", nodes.size(), edges.size());
+
+        str += String.format("%nNodes:");
+        for (var n : nodes) {
+            str += String.format("%n\t%s", n.toString());
+        }
+        str += String.format("%nEdges:");
+        for (var e : edges) {
+            str += String.format("%n\t%s", e.toString());
+        }
+
+        return str;
     }
 }

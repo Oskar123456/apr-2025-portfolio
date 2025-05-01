@@ -4,9 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
 
-import apr.datastructures.GeoNode;
-import apr.datastructures.Graph;
-import apr.datastructures.Node;
+import apr.datastructures.AStarGraph;
+import apr.datastructures.AStarNode;
 import apr.datastructures.TwoTuple;
 
 /**
@@ -14,42 +13,49 @@ import apr.datastructures.TwoTuple;
  */
 public class AStar {
 
-    public static <T> GraphPaths<T> use(Graph<T> graph, GeoNode<T> src, GeoNode<T> dest, DistEstimator<T> estim) {
-        Map<Node<T>, Double> dists = new HashMap<>();
-        Map<Node<T>, Node<T>> srcs = new HashMap<>();
+    public static <T> AStarGraphPath<T> use(AStarGraph<T> graph, AStarNode<T> src, AStarNode<T> dest) {
+        System.out.printf("AStar:: %s --> %s%n%n", src.toString(), dest.toString());
+
+        Map<AStarNode<T>, Double> dists = new HashMap<>();
+        Map<AStarNode<T>, AStarNode<T>> srcs = new HashMap<>();
 
         for (var node : graph.nodes) {
             dists.put(node, Double.POSITIVE_INFINITY);
         }
+        dists.put(src, 0D);
 
-        PriorityQueue<TwoTuple<Node<T>, Double>> PQ = new PriorityQueue<>((a, b) -> a.second.compareTo(b.second));
-        PQ.add(new TwoTuple<Node<T>, Double>(src, estim.lowerBound(src, dest)));
+        PriorityQueue<TwoTuple<AStarNode<T>, Double>> PQ = new PriorityQueue<>((a, b) -> a.second.compareTo(b.second));
+        PQ.add(new TwoTuple<AStarNode<T>, Double>(src, src.dist(dest)));
 
         while (!PQ.isEmpty()) {
             var curTuple = PQ.remove();
             var curNode = curTuple.first;
-            var curDist = curTuple.second;
-
+            var curDist = dists.get(curNode);
             if (curNode == dest) {
-                return new GraphPaths<>(src, dists, srcs);
+                System.out.printf("%n%n >>> AStar:: Path with length %.1f found: ", dists.get(dest));
+                String str = "";
+                AStarNode<T> node = curNode;
+                while (curNode != null) {
+                    str += curNode.toString() + " <- ";
+                    curNode = srcs.get(curNode);
+                }
+                System.out.println(str);
+                System.out.println();
+                break;
             }
-
             for (var edge : curNode.edges) {
-                var prevDist = dists.get(edge.dest);
-                var newDist = curDist + edge.weight;
-                if (prevDist > newDist) {
-                    dists.put(edge.dest, newDist);
-                    srcs.put(edge.dest, curNode);
-                    PQ.add(new TwoTuple<Node<T>, Double>(edge.dest,
-                            newDist + estim.lowerBound((GeoNode<T>) edge.dest, dest)));
+                var neighbor = edge.dest;
+                var newDist = curDist + curNode.dist(neighbor);
+                var oldDist = dists.get(neighbor);
+                if (oldDist > newDist) {
+                    dists.put(neighbor, newDist);
+                    srcs.put(neighbor, curNode);
+                    PQ.add(new TwoTuple<AStarNode<T>, Double>(neighbor, newDist + neighbor.dist(dest)));
                 }
             }
         }
 
+        System.out.printf("%n%n >>> AStar:: No path found...%n%n");
         return null;
-    }
-
-    public interface DistEstimator<T> {
-        public double lowerBound(GeoNode<T> src, GeoNode<T> dest);
     }
 }
