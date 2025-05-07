@@ -17,7 +17,7 @@ public class AStarAnimator extends AnimationTimer {
     Canvas canvas;
     GraphicsContext gfxCtx;
     List<Maze> mazes;
-    long duration, lastUpdate, pauseLeft, updateFreq;
+    long duration, lastUpdate, pauseLeft, updateFreq, lastFrame;
     int curMazeIdx, mazeSnapshotIdx;
 
     public AStarAnimator(GraphicsContext graphicsContext, long durationInSeconds, List<Maze> solvedMazes) {
@@ -27,22 +27,25 @@ public class AStarAnimator extends AnimationTimer {
         this.mazes = solvedMazes;
     }
 
-    public void handle(long dt) {
+    public void handle(long tnow) {
         this.updateFreq = duration / mazes.get(curMazeIdx).snapshots.size();
         if (pauseLeft > 0) {
-            pauseLeft -= dt;
+            pauseLeft -= tnow - lastFrame;
+            lastFrame = tnow;
             return;
         }
-        if (!(lastUpdate == 0) && dt - lastUpdate < updateFreq) {
+        if (!(lastUpdate == 0) && tnow - lastUpdate < updateFreq) {
             return;
         }
 
-        lastUpdate = dt;
+        lastUpdate = tnow;
 
         draw();
 
         mazeSnapshotIdx++;
         if (mazeSnapshotIdx >= mazes.get(curMazeIdx).snapshots.size()) {
+            pauseLeft = 2000000000;
+            lastFrame = tnow;
             curMazeIdx = (curMazeIdx + 1) % mazes.size();
             mazeSnapshotIdx = 0;
             // this.stop();
@@ -79,7 +82,7 @@ public class AStarAnimator extends AnimationTimer {
                 }
 
                 if (curMaze.grid[i][j] == 'O') {
-                    gfxCtx.setFill(gfxCtx.getFill().interpolate(Color.AZURE, 0.5));
+                    gfxCtx.setFill(gfxCtx.getFill().interpolate(Color.BLUE, 0.7));
                 }
 
                 gfxCtx.strokeRect(padding + j * cellW, padding + i * cellH, cellW, cellH);

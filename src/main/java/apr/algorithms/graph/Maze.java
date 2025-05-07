@@ -24,7 +24,7 @@ public class Maze {
 
     static Map<Character, Double> travelCosts = Map.of(
             '.', 1D,
-            'O', 2D);
+            'O', 3D);
 
     public Maze(int width, int height, Point2DI src, Point2DI dest) {
         H = height;
