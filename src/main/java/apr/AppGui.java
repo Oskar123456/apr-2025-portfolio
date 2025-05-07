@@ -37,48 +37,13 @@ public class AppGui extends Application {
 
         root.getChildren().add(canvas);
 
-        AStarGUI.Maze maze;
-        try {
-            File dir = new File("data");
-
-            Timmy timer = new Timmy();
-            timer.mazesList = new ArrayList<>();
-            timer.gc = gc;
-
-            for (File file : dir.listFiles()) {
-                if (file.isDirectory()) {
-                    continue;
-                }
-                if (!file.getName().startsWith("maze")) {
-                    continue;
-                }
-                maze = AStarGUI.readMaze(file.getAbsolutePath());
-                List<AStarGUI.Maze> mazes = AStarGUI.solve(maze);
-                timer.mazesList.add(mazes);
-
-                System.out.printf("added %s%n", file.getAbsolutePath());
-            }
-
-            timer.start();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        AStarGUI.runMazes(gc, "data");
 
         stage.setScene(s);
         stage.show();
-
-        // draw(gc);
-    }
-
-    public static void draw(GraphicsContext gc) {
-        gc.setFill(Color.BLUE);
-
-        gc.fillRect(75, 75, 100, 100);
     }
 
     public static void main(String[] args) throws IOException {
-
         launch();
     }
 }

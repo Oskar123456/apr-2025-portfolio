@@ -1,5 +1,6 @@
 package apr.algorithms.graph;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -23,6 +24,37 @@ import javafx.scene.paint.Color;
  * AStarGUI
  */
 public class AStarGUI {
+
+    public static void runMazes(GraphicsContext graphicsContext, String dir) {
+        AStarGUI.Maze maze;
+        try {
+            File directory = new File("data");
+
+            Timmy timer = new Timmy();
+            timer.mazesList = new ArrayList<>();
+            timer.gc = graphicsContext;
+
+            System.out.println("AStarGUI running the following mazes:");
+            for (File file : directory.listFiles()) {
+                if (file.isDirectory()) {
+                    continue;
+                }
+                if (!file.getName().startsWith("maze")) {
+                    continue;
+                }
+                maze = AStarGUI.readMaze(file.getAbsolutePath());
+                List<AStarGUI.Maze> mazes = AStarGUI.solve(maze);
+                timer.mazesList.add(mazes);
+
+                System.out.printf("\t%s%n", file.getAbsolutePath());
+            }
+
+            timer.start();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static Maze readMaze(String filePath) throws IOException {
         var lines = Files.readAllLines(Paths.get(filePath));
@@ -64,13 +96,8 @@ public class AStarGUI {
 
         List<Maze> snapShots = new ArrayList<>();
 
-        // System.out.printf("%n%nAStarGUI:: %s --> %s%n", src.toString(),
-        // dest.toString());
-
         for (int i = 0; i < maze.H; i++) {
             for (int j = 0; j < maze.W; j++) {
-                // System.out.printf("adding point %s to dists%n", new Point2DI(j,
-                // i).toString());
                 dists.put(new Point2DI(j, i), Double.POSITIVE_INFINITY);
             }
         }
@@ -215,12 +242,12 @@ public class AStarGUI {
                         gc.setFill(Color.GREEN);
                         gc.fillRect(padding + j * cellW, padding + i * cellH, cellW, cellH);
                         gc.setFill(Color.DARKRED);
-                        gc.fillText("SRC", x + cellW / 2, y + cellH / 2, cellW);
+                        gc.fillText("SRC", x, y + cellH / 2, cellW);
                     } else if (i == end.y && j == end.x) {
                         gc.setFill(Color.YELLOW);
                         gc.fillRect(padding + j * cellW, padding + i * cellH, cellW, cellH);
                         gc.setFill(Color.DARKRED);
-                        gc.fillText("DEST", x + cellW / 2, y + cellH / 2, cellW);
+                        gc.fillText("DEST", x, y + cellH / 2, cellW);
                     } else if (c == 'W') {
                         gc.setFill(Color.BLACK);
                         gc.fillRect(padding + j * cellW, padding + i * cellH, cellW, cellH);
@@ -229,7 +256,7 @@ public class AStarGUI {
                         gc.strokeRect(padding + j * cellW, padding + i * cellH, cellW, cellH);
                     }
 
-                    String distStr = (dists[i][j] == Double.POSITIVE_INFINITY) ? "INF"
+                    String distStr = (dists[i][j] == Double.POSITIVE_INFINITY) ? ""
                             : String.format("%.1f", dists[i][j]);
 
                     gc.setFill(Color.DARKMAGENTA);
