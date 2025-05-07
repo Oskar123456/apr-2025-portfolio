@@ -219,7 +219,7 @@ public class AStarGUI {
             double cellH = (gc.getCanvas().heightProperty().doubleValue() - padding * 2) / H;
             double cellW = (gc.getCanvas().widthProperty().doubleValue() - padding * 2) / W;
 
-            for (int i = 0; i < H; i++) { // TODO: use Text object for texting
+            for (int i = 0; i < H; i++) {
                 for (int j = 0; j < W; j++) {
                     double x = padding + j * cellW;
                     double y = padding + i * cellH;

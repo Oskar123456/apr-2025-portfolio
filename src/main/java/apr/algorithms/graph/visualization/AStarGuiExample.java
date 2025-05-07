@@ -35,7 +35,9 @@ public class AStarGuiExample extends GUIExample {
                     continue;
                 }
                 Maze m = Maze.fromText(Files.readAllLines(file.toPath()));
-                AStarMaze.solve(m, (a, b) -> Math.abs(a.x - b.x) + Math.abs(a.y - b.y));
+                // AStarMaze.solve(m, (a, b) -> Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y -
+                // b.y) * (a.y - b.y)));
+                AStarMaze.solveAllowDiag(m, (a, b) -> Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)));
                 solvedMazes.add(m);
             }
         } catch (IOException e) {

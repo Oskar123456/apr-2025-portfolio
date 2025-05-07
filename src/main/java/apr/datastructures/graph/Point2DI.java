@@ -16,9 +16,13 @@ public class Point2DI {
 
     public static final Point2DI[] dirsIncDiag = {
             new Point2DI(-1, 0),
+            new Point2DI(-1, 1),
             new Point2DI(0, 1),
+            new Point2DI(1, 1),
             new Point2DI(1, 0),
+            new Point2DI(1, -1),
             new Point2DI(0, -1),
+            new Point2DI(-1, -1),
     };
 
     public int x, y;

@@ -51,6 +51,9 @@ public class Maze {
                 } else if (c == 'D') {
                     maze.dest = new Point2DI(j, i);
                     maze.grid[i][j] = '.';
+                } else if (c == 'W') {
+                    maze.dists.remove(new Point2DI(j, i));
+                    maze.grid[i][j] = c;
                 } else {
                     maze.grid[i][j] = c;
                 }
