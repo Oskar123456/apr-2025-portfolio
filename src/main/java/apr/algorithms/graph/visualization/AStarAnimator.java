@@ -74,10 +74,12 @@ public class AStarAnimator extends AnimationTimer {
                     gfxCtx.setFill(Color.LIGHTSLATEGRAY);
                 } else if (curMaze.grid[i][j] == 'W') {
                     gfxCtx.setFill(Color.BLACK);
-                } else if (curMaze.grid[i][j] == 'O') {
-                    gfxCtx.setFill(Color.AZURE);
                 } else {
                     gfxCtx.setFill(Color.WHITE);
+                }
+
+                if (curMaze.grid[i][j] == 'O') {
+                    gfxCtx.setFill(gfxCtx.getFill().interpolate(Color.AZURE, 0.5));
                 }
 
                 gfxCtx.strokeRect(padding + j * cellW, padding + i * cellH, cellW, cellH);
