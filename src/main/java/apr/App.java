@@ -1,5 +1,11 @@
 package apr;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import apr.algorithms.graph.AStarGUI;
+import apr.datastructures.graph.Point2DI;
 import apr.test.graph.TestDijkstra;
 
 /**
@@ -8,7 +14,15 @@ import apr.test.graph.TestDijkstra;
 public class App {
 
     public static void main(String[] args) {
-        TestDijkstra.testDijkstra();
+        AStarGUI.Maze maze;
+        try {
+            maze = AStarGUI.readMaze("data/maze2.txt");
+            AStarGUI.solve(maze);
+            // maze.DrawMe(gc);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // TestDijkstra.testDijkstra();
         // TestAStar.testAStar();
     }
 

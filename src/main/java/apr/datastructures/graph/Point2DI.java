@@ -1,5 +1,7 @@
 package apr.datastructures.graph;
 
+import java.util.Objects;
+
 /**
  * Point2DI
  */
@@ -20,7 +22,8 @@ public class Point2DI {
     }
 
     public int dist(Point2DI other) {
-        return Math.abs(this.x - other.x) + Math.abs(this.y - other.y);
+        // return Math.abs(this.x - other.x) + Math.abs(this.y - other.y);
+        return (int) Math.sqrt((this.x - other.x) * (this.x - other.x) + (this.y - other.y) * (this.y - other.y));
     }
 
     public double magnitude() {
@@ -33,5 +36,15 @@ public class Point2DI {
 
     public String toString() {
         return String.format("Point2DI[%d, %d]", x, y);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return o != null && ((Point2DI) o).x == this.x && ((Point2DI) o).y == this.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }
