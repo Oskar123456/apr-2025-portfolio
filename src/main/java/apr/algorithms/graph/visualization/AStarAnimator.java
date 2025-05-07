@@ -2,7 +2,7 @@ package apr.algorithms.graph.visualization;
 
 import java.util.List;
 
-import apr.algorithms.graph.Maze;
+import apr.algorithms.graph.visualization.Maze;
 import apr.datastructures.graph.Point2DI;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;

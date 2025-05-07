@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import apr.GUIExample;
-import apr.algorithms.graph.AStarMaze;
-import apr.algorithms.graph.Maze;
+import apr.algorithms.graph.visualization.AStarMaze;
+import apr.algorithms.graph.visualization.Maze;
 import javafx.scene.canvas.Canvas;
 
 /**

@@ -1,4 +1,4 @@
-package apr.algorithms.graph;
+package apr.algorithms.graph.visualization;
 
 import java.util.ArrayList;
 import java.util.HashMap;
