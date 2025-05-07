@@ -35,7 +35,6 @@ public class AStar {
             if (curNode == dest) {
                 System.out.printf("%n%n >>> AStar:: Path with length %.1f found:%n\t", dists.get(dest));
                 String str = "";
-                AStarNode<T> node = curNode;
                 while (curNode != null) {
                     str += curNode.toString() + " <- ";
                     curNode = srcs.get(curNode);
