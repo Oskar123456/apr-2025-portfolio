@@ -1,12 +1,8 @@
 package apr;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import apr.algorithms.graph.AStarGUI;
-import apr.datastructures.graph.Point2DI;
-import apr.test.graph.TestDijkstra;
 
 /**
  * App
