@@ -33,13 +33,6 @@ public class AppGui extends Application {
         root = new Group();
         Scene s = new Scene(root, W, H, Color.WHITE);
 
-        // final Canvas canvas = new Canvas(W, H);
-        // GraphicsContext gc = canvas.getGraphicsContext2D();
-
-        // root.getChildren().add(canvas);
-
-        // AStarGUI.runMazes(gc, "data");
-
         HBox hb = new HBox();
         VBox vb = new VBox();
 
@@ -52,27 +45,6 @@ public class AppGui extends Application {
         guiExample = new AStarGuiExample(W - 2 * padding, H - 2 * padding);
         vb.getChildren().add(guiExample);
         hb.getChildren().add(vb);
-
-        // Text txt = new Text();
-        // txt.setText("LOL");
-        //
-        // VBox sidePanel = new VBox();
-        // HBox baseLayout = new HBox(20);
-        //
-        // sidePanel.getChildren().add(txt);
-        // baseLayout.getChildren().add(sidePanel);
-        // baseLayout.getChildren().add(guiExample);
-        //
-        // guiExample.setBorder(new Border(new BorderStroke(Color.BLACK,
-        // BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-        // guiExample.setPadding(new Insets(10));
-
-        // baseLayout.setMinWidth(600);
-        // baseLayout.setMinHeight(600);
-
-        // HBox.setHgrow(sidePanel, Priority.ALWAYS);
-        // HBox.setHgrow(guiExample, Priority.ALWAYS);
-        // VBox.setVgrow(guiExample, Priority.ALWAYS);
 
         root.getChildren().add(hb);
 
