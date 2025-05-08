@@ -60,7 +60,7 @@ public class AStarGuiExample extends GUIExample {
         layout.setTop(topPanel);
         layout.setLeft(sidePanel);
         layout.setCenter(canvas);
-        getChildren().add(layout);
+        getChildren().add(canvas);
 
         int durationInSecs = 5;
 
