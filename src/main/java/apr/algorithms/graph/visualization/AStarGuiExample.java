@@ -17,10 +17,13 @@ public class AStarGuiExample extends GUIExample {
     AStarAnimator animator;
 
     public AStarGuiExample(double width, double height) {
-        setMinWidth(width);
-        setMinHeight(height);
-
-        Canvas canvas = new Canvas(width, height);
+        Canvas canvas = new Canvas();
+        canvas.widthProperty().bind(widthProperty());
+        canvas.heightProperty().bind(heightProperty());
+        canvas.widthProperty().addListener((e, o, n) -> canvas.prefWidth(n.doubleValue()));
+        canvas.heightProperty().addListener((e, o, n) -> canvas.prefHeight(n.doubleValue()));
+        canvas.widthProperty().addListener((e, o, n) -> canvas.resize(n.doubleValue(), canvas.getHeight()));
+        canvas.heightProperty().addListener((e, o, n) -> canvas.resize(canvas.getWidth(), n.doubleValue()));
         getChildren().add(canvas);
 
         int durationInSecs = 5;
@@ -44,6 +47,9 @@ public class AStarGuiExample extends GUIExample {
         }
 
         animator = new AStarAnimator(canvas.getGraphicsContext2D(), durationInSecs, solvedMazes);
+
+        canvas.widthProperty().addListener(e -> animator.draw());
+        canvas.heightProperty().addListener(e -> animator.draw());
     }
 
     public void start() {

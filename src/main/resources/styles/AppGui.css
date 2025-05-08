@@ -1,0 +1,26 @@
+#TopPanel {
+    -fx-alignment: center;
+}
+
+#SidePanel {
+    -fx-alignment: center;
+}
+
+#BottomPanel {
+    -fx-alignment: center;
+}
+
+#Content {
+    -fx-border-width: 4px;
+    -fx-border-color: black;
+    -fx-alignment: center;
+}
+
+#Title {
+    -fx-font-size: 25px;
+    -fx-alignment: center;
+}
+
+#Footnote {
+    -fx-font-size: 15px;
+}

@@ -16,7 +16,7 @@ import javafx.scene.paint.Color;
 public class AStarAnimator extends AnimationTimer {
 
     Canvas canvas;
-    GraphicsContext gfxCtx;
+    public GraphicsContext gfxCtx;
     List<Maze> mazes;
     long duration, lastUpdate, pauseLeft, updateFreq, lastFrame;
     int curMazeIdx, mazeSnapshotIdx;
@@ -26,9 +26,17 @@ public class AStarAnimator extends AnimationTimer {
         this.gfxCtx = graphicsContext;
         this.duration = durationInSeconds * 1000000000;
         this.mazes = solvedMazes;
+        this.canvas.widthProperty().addListener(e -> draw());
+        this.canvas.heightProperty().addListener(e -> draw());
     }
 
     public void handle(long tnow) {
+        if (gfxCtx == null) {
+            return;
+        }
+        // canvas.setPre
+        // canvas.setWidth(canvas.getParent());
+
         this.updateFreq = duration / mazes.get(curMazeIdx).snapshots.size();
         if (pauseLeft > 0) {
             pauseLeft -= tnow - lastFrame;
@@ -64,6 +72,7 @@ public class AStarAnimator extends AnimationTimer {
         Set<Point2DI> path = new HashSet<>();
         if (curMaze.srcs.containsKey(curMaze.dest)) {
             Point2DI p = curMaze.dest;
+            path.add(p);
             while (curMaze.srcs.containsKey(p)) {
                 path.add(curMaze.srcs.get(p));
                 p = curMaze.srcs.get(p);
