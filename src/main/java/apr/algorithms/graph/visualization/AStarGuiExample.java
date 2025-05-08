@@ -7,8 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import apr.GUIExample;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -22,10 +27,16 @@ public class AStarGuiExample extends GUIExample {
 
     AStarAnimator animator;
 
+    double padding = 10;
+    double sidePanelW = 125;
+    double topPanelH = 50;
+
+    boolean paused;
+
+    Canvas canvas;
+    Text sliderTxt;
+
     public AStarGuiExample(double width, double height) {
-        double padding = 10;
-        double sidePanelW = 50;
-        double topPanelH = 50;
 
         BorderPane layout = new BorderPane();
 
@@ -40,8 +51,22 @@ public class AStarGuiExample extends GUIExample {
         titleTxt.setId("AStar__title");
         topPanel.getChildren().add(titleTxt);
 
+        sliderTxt = new Text("Duration (secs): 5");
+
+        Slider sidePanelSlider = new Slider();
+        sidePanelSlider.setId("AStar__side-panel-slider");
+        sidePanelSlider.setValue(5);
+        sidePanelSlider.setMin(1);
+        sidePanelSlider.setMax(10);
+        sidePanelSlider.setShowTickMarks(true);
+        sidePanelSlider.setShowTickLabels(true);
+        sidePanelSlider.setMajorTickUnit(1);
+        sidePanelSlider.setBlockIncrement(1);
+        sidePanel.getChildren().add(sliderTxt);
+        sidePanel.getChildren().add(sidePanelSlider);
+
         Button sidePanelButton = new Button();
-        sidePanelButton.setText("button");
+        sidePanelButton.setText("pause");
         sidePanelButton.setId("AStar__side-panel-button");
         sidePanel.getChildren().add(sidePanelButton);
 
@@ -49,18 +74,14 @@ public class AStarGuiExample extends GUIExample {
         sidePanel.setPrefWidth(sidePanelW);
         content.setPrefSize(width - sidePanelW - padding, height - topPanelH);
 
-        Canvas canvas = new Canvas();
-        canvas.widthProperty().bind(widthProperty());
-        canvas.heightProperty().bind(heightProperty());
-        canvas.widthProperty().addListener((e, o, n) -> canvas.prefWidth(n.doubleValue()));
-        canvas.heightProperty().addListener((e, o, n) -> canvas.prefHeight(n.doubleValue()));
-        canvas.widthProperty().addListener((e, o, n) -> canvas.resize(n.doubleValue() - padding, canvas.getHeight()));
-        canvas.heightProperty().addListener((e, o, n) -> canvas.resize(canvas.getWidth(), n.doubleValue()));
+        canvas = new Canvas();
+        canvas.widthProperty().bind(widthProperty().subtract(sidePanelW + padding));
+        canvas.heightProperty().bind(heightProperty().subtract(topPanelH));
 
         layout.setTop(topPanel);
         layout.setLeft(sidePanel);
         layout.setCenter(canvas);
-        getChildren().add(canvas);
+        getChildren().add(layout);
 
         int durationInSecs = 5;
 
@@ -84,8 +105,26 @@ public class AStarGuiExample extends GUIExample {
 
         animator = new AStarAnimator(canvas.getGraphicsContext2D(), durationInSecs, solvedMazes);
 
+        sidePanelSlider.valueProperty().addListener((e, o, n) -> adjustAnimDuration(e, o, n));
+
+        sidePanelButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+            if (paused) {
+                sidePanelButton.setText("unpause");
+                animator.start();
+            } else {
+                sidePanelButton.setText("pause");
+                animator.stop();
+            }
+            paused = !paused;
+        });
+
         canvas.widthProperty().addListener(e -> animator.draw());
         canvas.heightProperty().addListener(e -> animator.draw());
+    }
+
+    void adjustAnimDuration(ObservableValue<? extends Number> ch, Number o, Number n) {
+        animator.duration = n.longValue() * 1000000000;
+        sliderTxt.setText("Duration (secs):" + n.longValue());
     }
 
     public void start() {
