@@ -15,11 +15,11 @@ import javafx.scene.paint.Color;
  */
 public class AStarAnimator extends AnimationTimer {
 
-    Canvas canvas;
+    public Canvas canvas;
     public GraphicsContext gfxCtx;
-    List<Maze> mazes;
-    long duration, lastUpdate, pauseLeft, updateFreq, lastFrame;
-    int curMazeIdx, mazeSnapshotIdx;
+    public List<Maze> mazes;
+    public long duration, lastUpdate, pauseLeft, updateFreq, lastFrame;
+    public int curMazeIdx, mazeSnapshotIdx;
 
     public AStarAnimator(GraphicsContext graphicsContext, long durationInSeconds, List<Maze> solvedMazes) {
         this.canvas = graphicsContext.getCanvas();
@@ -31,12 +31,6 @@ public class AStarAnimator extends AnimationTimer {
     }
 
     public void handle(long tnow) {
-        if (gfxCtx == null) {
-            return;
-        }
-        // canvas.setPre
-        // canvas.setWidth(canvas.getParent());
-
         this.updateFreq = duration / mazes.get(curMazeIdx).snapshots.size();
         if (pauseLeft > 0) {
             pauseLeft -= tnow - lastFrame;

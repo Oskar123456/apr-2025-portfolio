@@ -8,6 +8,12 @@ import java.util.List;
 
 import apr.GUIExample;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 /**
  * AStarGuiExample
@@ -17,14 +23,44 @@ public class AStarGuiExample extends GUIExample {
     AStarAnimator animator;
 
     public AStarGuiExample(double width, double height) {
+        double padding = 10;
+        double sidePanelW = 50;
+        double topPanelH = 50;
+
+        BorderPane layout = new BorderPane();
+
+        HBox topPanel = new HBox();
+        topPanel.setId("AStar__top-panel");
+        VBox sidePanel = new VBox();
+        sidePanel.setId("AStar__side-panel");
+        Pane content = new Pane();
+        content.setId("AStar__content");
+
+        Text titleTxt = new Text("A* Visualization");
+        titleTxt.setId("AStar__title");
+        topPanel.getChildren().add(titleTxt);
+
+        Button sidePanelButton = new Button();
+        sidePanelButton.setText("button");
+        sidePanelButton.setId("AStar__side-panel-button");
+        sidePanel.getChildren().add(sidePanelButton);
+
+        topPanel.setPrefHeight(topPanelH);
+        sidePanel.setPrefWidth(sidePanelW);
+        content.setPrefSize(width - sidePanelW - padding, height - topPanelH);
+
         Canvas canvas = new Canvas();
         canvas.widthProperty().bind(widthProperty());
         canvas.heightProperty().bind(heightProperty());
         canvas.widthProperty().addListener((e, o, n) -> canvas.prefWidth(n.doubleValue()));
         canvas.heightProperty().addListener((e, o, n) -> canvas.prefHeight(n.doubleValue()));
-        canvas.widthProperty().addListener((e, o, n) -> canvas.resize(n.doubleValue(), canvas.getHeight()));
+        canvas.widthProperty().addListener((e, o, n) -> canvas.resize(n.doubleValue() - padding, canvas.getHeight()));
         canvas.heightProperty().addListener((e, o, n) -> canvas.resize(canvas.getWidth(), n.doubleValue()));
-        getChildren().add(canvas);
+
+        layout.setTop(topPanel);
+        layout.setLeft(sidePanel);
+        layout.setCenter(canvas);
+        getChildren().add(layout);
 
         int durationInSecs = 5;
 

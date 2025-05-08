@@ -24,3 +24,26 @@
 #Footnote {
     -fx-font-size: 15px;
 }
+
+#AStar__top-panel {
+    
+    -fx-alignment: center;
+}
+
+#AStar__side-panel {
+    
+    -fx-alignment: center;
+}
+
+#AStar__content {
+    
+    -fx-alignment: center;
+}
+
+#AStar__title {
+    -fx-font-size: 15px;
+}
+
+#AStar__side-panel-button {
+    
+}
