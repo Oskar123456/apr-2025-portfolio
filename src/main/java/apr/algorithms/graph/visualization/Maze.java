@@ -76,11 +76,20 @@ public class Maze {
         return maze;
     }
 
-    public double getCost(char c) {
+    double tileCost(char c) {
         if (travelCosts.containsKey(c)) {
             return travelCosts.get(c);
         }
         return Double.POSITIVE_INFINITY;
+    }
+
+    public double travelCost(Point2DI src, Point2DI dir) {
+        Point2DI dest = src.add(dir);
+        if (!dists.containsKey(dest)) {
+            return Double.POSITIVE_INFINITY;
+        }
+        double dist = (dir.magnitude() > 1) ? Math.sqrt(2) : 1;
+        return dist * tileCost(grid[dest.y][dest.x]);
     }
 
     public void snapshot() {

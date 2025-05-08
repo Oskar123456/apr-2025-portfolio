@@ -30,7 +30,7 @@ public class AStarMaze {
                     continue;
                 }
                 var neighborDist = maze.dists.get(neighborPoint);
-                var newDist = curDist + maze.getCost(maze.grid[neighborPoint.y][neighborPoint.x]);
+                var newDist = curDist + maze.travelCost(curPoint, dir);
                 if (neighborDist > newDist) {
                     maze.dists.put(neighborPoint, newDist);
                     maze.srcs.put(neighborPoint, curPoint);
@@ -61,7 +61,7 @@ public class AStarMaze {
                     continue;
                 }
                 var neighborDist = maze.dists.get(neighborPoint);
-                var newDist = curDist + maze.getCost(maze.grid[neighborPoint.y][neighborPoint.x]);
+                var newDist = curDist + maze.travelCost(curPoint, dir);
                 if (neighborDist > newDist) {
                     maze.dists.put(neighborPoint, newDist);
                     maze.srcs.put(neighborPoint, curPoint);
