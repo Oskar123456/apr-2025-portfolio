@@ -25,7 +25,7 @@ public class SortingAnimator extends AnimationTimer {
     Pane canvas, infoBox, actionBox;
     SortingReplay<Double> replay;
 
-    Text infoTxt, statsTxt;
+    Text titleTxt, infoTxt, statsTxt;
     Rectangle[] rects;
     double min = Double.POSITIVE_INFINITY, max = Double.NEGATIVE_INFINITY;
 
@@ -36,10 +36,10 @@ public class SortingAnimator extends AnimationTimer {
     String statsTemplate = "Stats: swaps: %d, comparisons: %d";
     int statsSwaps, statsComparisons;
 
-    long duration_ns, lastUpdate_ns, updateFreq_ns;
+    long lastUpdate_ns, updateFreq_ns;
     boolean done;
 
-    public SortingAnimator(Pane renderTarget, SortingReplay<Double> replay, int duration_sec) {
+    public SortingAnimator(String title, Pane renderTarget, SortingReplay<Double> replay, int ups) {
         canvas = new Pane();
         canvas.setId("sorting__canvas");
 
@@ -47,29 +47,34 @@ public class SortingAnimator extends AnimationTimer {
         actionBox.setId("sorting__action-box");
         infoTxt = new Text();
         infoTxt.setId("sorting__info-text");
+        titleTxt = new Text(title);
+        titleTxt.setId("sorting__title-text");
         actionBox.getChildren().addAll(new Text("Last action:"), infoTxt);
 
         statsTxt = new Text();
         updateStats();
         infoBox = new VBox();
         infoBox.setId("sorting__info-box");
-        infoBox.getChildren().addAll(actionBox, statsTxt);
+        infoBox.getChildren().addAll(titleTxt, actionBox, statsTxt);
 
         infoBox.prefHeightProperty().set(50);
         infoBox.prefWidthProperty().bind(renderTarget.widthProperty().subtract(8));
+
         canvas.prefWidthProperty().bind(renderTarget.widthProperty().subtract(8));
-        canvas.prefHeightProperty().bind(renderTarget.heightProperty().subtract(50));
+        canvas.prefHeightProperty().bind(renderTarget.heightProperty().subtract(infoBox.heightProperty()));
 
         renderTarget.getChildren().add(infoBox);
         renderTarget.getChildren().add(canvas);
 
         this.replay = replay;
         this.renderTarget = renderTarget;
-        this.duration_ns = duration_sec * 1000000000L;
-        this.updateFreq_ns = duration_ns / replay.actions.size();
+        setUps(ups);
 
-        System.out.printf("SortingAnimator:: dur: %f, updateFreq: %f (%d elements, %d actions)%n",
-                Tools.NanoSecsToSecs(duration_ns),
+        canvas.widthProperty().addListener(e -> draw());
+        canvas.heightProperty().addListener(e -> draw());
+
+        System.out.printf("SortingAnimator:: dur: %f secs, updateFreq: %f (%d elements, %d actions)%n",
+                (ups * replay.actions.size()) / 60D,
                 Tools.NanoSecsToSecs(updateFreq_ns), replay.len, replay.actions.size());
 
         for (Double val : replay.dataInit) {
@@ -85,6 +90,7 @@ public class SortingAnimator extends AnimationTimer {
         for (int i = 0; i < rects.length; i++) {
             rects[i] = new Rectangle(20, 20, Color.BLACK);
         }
+
         canvas.getChildren().addAll(rects);
         draw();
     }
@@ -112,25 +118,39 @@ public class SortingAnimator extends AnimationTimer {
         draw();
     }
 
+    public void setUps(int ups) {
+        this.updateFreq_ns = 1000000000L / ups;
+    }
+
     public void draw() {
         /* RESIZE */
         double w = canvas.getWidth();
-        double h = canvas.getHeight();
+        double h = canvas.getHeight() - infoBox.heightProperty().doubleValue();
         /* TEXT */
         infoTxt.setText("");
 
         /* VISUALIZATION */
-        double paddingRects = (w) / (rects.length - 1) / 2D;
-        double rectW = (w - paddingRects * (rects.length - 1)) / rects.length;
-        double rectHMin = (h) / 20D;
+        double padding = 4;
+        double paddingRects = (w - 2 * padding) / (rects.length - 1) / 2D;
+        double rectW = (w - paddingRects * (rects.length - 1) - 2 * padding) / rects.length;
+        double rectHMin = h / 20D;
         double rectH = h - rectHMin;
 
         for (int i = 0; i < rects.length; i++) {
             double height = ((replay.dataInit[i] - min) / (max - min)) * rectH + rectHMin;
+            if ((replay.dataInit[i] - min) / (max - min) > 1) {
+                System.out.println("ALOE");
+            }
             rects[i].widthProperty().set(rectW);
             rects[i].heightProperty().set(height);
-            rects[i].relocate(rectW * i + paddingRects * i, h - height);
+            rects[i].relocate(rectW * i + paddingRects * i + padding, canvas.getHeight() - height);
             rects[i].fillProperty().set(defaultColor);
+        }
+
+        for (var r : rects) {
+            if (r.heightProperty().doubleValue() >= 640) {
+                System.out.println("r : " + r.heightProperty().doubleValue());
+            }
         }
 
         if (replay.isDone) {

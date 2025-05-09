@@ -1,5 +1,8 @@
 package apr;
 
+import java.util.List;
+
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 /**
@@ -12,4 +15,6 @@ public abstract class GUIExample extends Pane {
     public abstract void pause();
 
     public abstract void stop();
+
+    public abstract List<Node> options();
 }

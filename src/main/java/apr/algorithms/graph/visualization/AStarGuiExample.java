@@ -8,6 +8,7 @@ import java.util.List;
 
 import apr.GUIExample;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -147,6 +148,10 @@ public class AStarGuiExample extends GUIExample {
 
     public void stop() {
         animator.stop();
+    }
+
+    public List<Node> options() {
+        return new ArrayList<>();
     }
 
 }

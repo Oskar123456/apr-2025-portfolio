@@ -6,6 +6,7 @@ import java.util.List;
 
 import apr.algorithms.graph.visualization.AStarGuiExample;
 import apr.sorting.BubbleSort;
+import apr.sorting.SortFn;
 import apr.sorting.visualization.SortingGUIExample;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -58,10 +59,10 @@ public class AppGui extends Application {
         layout.prefHeightProperty().bind(scene.heightProperty());
         layout.prefWidthProperty().bind(scene.widthProperty());
 
+        setBottomPanel();
         setContent(stage);
         setTopPanel();
         setSidePanel(stage);
-        setBottomPanel();
 
         layout.setTop(topPanel);
         layout.setBottom(bottomPanel);
@@ -77,6 +78,14 @@ public class AppGui extends Application {
 
         stage.setScene(scene);
         stage.show();
+    }
+
+    static void setGuiExample(int idx) {
+        guiExamples.get(curGuiExampleIdx).stop();
+        curGuiExampleIdx = idx;
+        content.getChildren().setAll(guiExamples.get(curGuiExampleIdx));
+        bottomPanel.getChildren().setAll(guiExamples.get(curGuiExampleIdx).options());
+        guiExamples.get(curGuiExampleIdx).start();
     }
 
     static void setTopPanel() {
@@ -104,16 +113,16 @@ public class AppGui extends Application {
                 .subtract(topPanelH + bottomPanelH + 6 * margins.getBottom()));
 
         ChoiceBox contentSelection = new ChoiceBox<>();
-        contentSelection.setItems(FXCollections.observableArrayList("Bubble Sort", new Separator(), "A* Algorithm"));
-        contentSelection.getSelectionModel().selectFirst();
-        content.getChildren().setAll(guiExamples.get(curGuiExampleIdx));
-        guiExamples.get(curGuiExampleIdx).start();
+        contentSelection.setItems(FXCollections.observableArrayList(
+                "Bubble Sort",
+                "Bubble Sort X 2",
+                new Separator(),
+                "A* Algorithm"));
+        contentSelection.getSelectionModel().clearAndSelect(0);
+        setGuiExample(0);
 
         contentSelection.getSelectionModel().selectedIndexProperty().addListener((e, o, n) -> {
-            guiExamples.get(curGuiExampleIdx).stop();
-            curGuiExampleIdx = n.intValue();
-            content.getChildren().setAll(guiExamples.get(curGuiExampleIdx));
-            guiExamples.get(curGuiExampleIdx).start();
+            setGuiExample(n.intValue());
         });
 
         sidePanel.getChildren().add(contentSelection);
@@ -123,6 +132,8 @@ public class AppGui extends Application {
     static void setBottomPanel() {
         bottomPanel = new HBox();
         bottomPanel.setId("bottom-panel");
+        bottomPanel.spacingProperty().set(20);
+        bottomPanel.paddingProperty().set(new Insets(25));
 
         footnoteTxt = new Text("FOOTNOTES / INFO");
         footnoteTxt.setId("footnote");
@@ -131,6 +142,7 @@ public class AppGui extends Application {
         bottomPanel.setPrefHeight(bottomPanelH);
     }
 
+    @SuppressWarnings("unchecked")
     static void setContent(Stage stage) {
         content = new Pane();
         content.setId("content");
@@ -143,7 +155,12 @@ public class AppGui extends Application {
         System.out.printf("m: %f toppanelH: %f bottompanelH: %f%n", margins.getBottom(), topPanelH, bottomPanelH);
 
         guiExamples = new ArrayList<>();
-        guiExamples.add(new SortingGUIExample(BubbleSort::sort));
+        guiExamples.add(new SortingGUIExample("Bubble Sort",
+                new SortFn[] { BubbleSort::sort },
+                new String[] { "Bubble Sort" }));
+        guiExamples.add(new SortingGUIExample("Bubble Sort",
+                new SortFn[] { BubbleSort::sort, BubbleSort::sort },
+                new String[] { "Bubble Sort", "Bubble Sort" }));
         guiExamples.add(null);
         guiExamples.add(new AStarGuiExample(W - 2 * padding, H - 2 * padding));
 
