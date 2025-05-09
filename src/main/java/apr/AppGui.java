@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import apr.algorithms.graph.visualization.AStarGuiExample;
+import apr.sorting.BubbleSort;
 import apr.sorting.visualization.SortingGUIExample;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -65,7 +66,7 @@ public class AppGui extends Application {
 
         AnchorPane AP = new AnchorPane();
         // content = new AStarGuiExample(W - 2 * padding, H - 2 * padding);
-        content = new SortingGUIExample();
+        content = new SortingGUIExample(BubbleSort::sort);
         content.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
         AP.getChildren().setAll(content);

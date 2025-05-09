@@ -1,40 +1,33 @@
 package apr.sorting.visualization;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import apr.GUIExample;
-import apr.sorting.visualization.SortingReplay.ActionType;
-import apr.sorting.visualization.SortingReplay.ElementAction;
-import javafx.scene.layout.Pane;
+import apr.sorting.BubbleSort;
+import apr.sorting.SortFn;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 /**
  * SortingGUIExample
  */
 public class SortingGUIExample extends GUIExample {
 
-    Pane canvas;
+    VBox content, canvas;
+    HBox titleBox;
+    Text titleTxt;
     SortingAnimator animator;
 
-    public SortingGUIExample() {
-        canvas = new Pane();
-        canvas.setId("sorting__canvas");
+    public SortingGUIExample(SortFn<Double> sortFn) {
+        setupGui();
 
-        canvas.prefWidthProperty().bind(widthProperty());
-        canvas.prefHeightProperty().bind(heightProperty());
+        int n = 25;
 
-        getChildren().add(canvas);
-
-        List<ElementAction> actions = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            actions.add(new ElementAction(1, 1, ActionType.COMPARE));
-        }
-
-        double[] data = new double[100];
+        Double[] data = new Double[n];
         for (int i = 0; i < data.length; ++i) {
             data[i] = Math.random();
         }
-        SortingReplay replay = new SortingReplay(actions, data);
+
+        var replay = sortFn.sort(data);
 
         animator = new SortingAnimator(canvas, replay, 25);
 
@@ -44,16 +37,40 @@ public class SortingGUIExample extends GUIExample {
         animator.start();
     }
 
-    public void start() {
+    public void setTitle() {
 
+    }
+
+    void setupGui() {
+        content = new VBox();
+        canvas = new VBox();
+        canvas.setId("sorting__container");
+
+        titleTxt = new Text("Bubble Sort");
+        titleTxt.prefHeight(50);
+        titleTxt.setId("sorting__title");
+        titleBox = new HBox();
+        titleBox.getChildren().add(titleTxt);
+        titleBox.setId("sorting__title-box");
+
+        canvas.prefWidthProperty().bind(widthProperty());
+        canvas.prefHeightProperty().bind(heightProperty().subtract(50));
+
+        content.getChildren().addAll(titleBox, canvas);
+
+        getChildren().addAll(content);
+    }
+
+    public void start() {
+        animator.start();
     }
 
     public void pause() {
-
+        animator.stop();
     }
 
     public void stop() {
-
+        animator.stop();
     }
 
 }
