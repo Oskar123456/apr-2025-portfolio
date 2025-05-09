@@ -1,7 +1,6 @@
 package apr.sorting.visualization;
 
 import apr.GUIExample;
-import apr.sorting.BubbleSort;
 import apr.sorting.SortFn;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -34,11 +33,11 @@ public class SortingGUIExample extends GUIExample {
         widthProperty().addListener(e -> animator.draw());
         heightProperty().addListener(e -> animator.draw());
 
-        animator.start();
+        // animator.start();
     }
 
     public void setTitle() {
-
+        titleTxt.setText("Bubble Sort");
     }
 
     void setupGui() {

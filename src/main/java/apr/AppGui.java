@@ -1,6 +1,7 @@
 package apr;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import apr.algorithms.graph.visualization.AStarGuiExample;
@@ -15,6 +16,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -27,12 +29,13 @@ public class AppGui extends Application {
 
     static Group root;
     static List<GUIExample> guiExamples;
+    static int curGuiExampleIdx = 0;
 
     static Text titleTxt;
     static Text footnoteTxt;
     static VBox sidePanel;
     static HBox topPanel, bottomPanel;
-    static GUIExample content;
+    static Pane content;
 
     // @Override
     // public void start(Stage stage) {
@@ -56,6 +59,7 @@ public class AppGui extends Application {
     // }
 
     @Override
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public void start(Stage stage) {
         int W = 1000, H = 1000;
         double padding = 10;
@@ -66,22 +70,6 @@ public class AppGui extends Application {
         root = new Group();
         Scene s = new Scene(root, W, H, Color.WHITE);
         s.getStylesheets().add("styles/AppGui.css");
-
-        // AnchorPane AP = new AnchorPane();
-        // content = new AStarGuiExample(W - 2 * padding, H - 2 * padding);
-        content = new SortingGUIExample(BubbleSort::sort);
-        content.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-
-        // AP.getChildren().setAll(content);
-        // AnchorPane.setTopAnchor(content, 0D);
-        // AnchorPane.setBottomAnchor(content, 0D);
-        // AnchorPane.setLeftAnchor(content, 0D);
-        // AnchorPane.setRightAnchor(content, 0D);
-
-        stage.widthProperty()
-                .addListener((e, o, n) -> content.setPrefWidth(n.doubleValue() - sidePanelW - 2 * padding));
-        stage.heightProperty().addListener(
-                (e, o, n) -> content.setPrefHeight(n.doubleValue() - topPanelH - bottomPanelH - 2 * padding));
 
         topPanel = new HBox();
         bottomPanel = new HBox();
@@ -103,6 +91,16 @@ public class AppGui extends Application {
 
         BorderPane layout = new BorderPane();
 
+        content = new Pane();
+        content.prefWidthProperty().bind(stage.widthProperty().subtract(sidePanelW + 2 * padding));
+        content.prefHeightProperty().bind(stage.heightProperty().subtract(topPanelH + bottomPanelH + 2 * padding));
+        // stage.widthProperty()
+        // .addListener((e, o, n) -> content.setPrefWidth(n.doubleValue() - sidePanelW -
+        // 2 * padding));
+        // stage.heightProperty().addListener(
+        // (e, o, n) -> content.setPrefHeight(n.doubleValue() - topPanelH - bottomPanelH
+        // - 2 * padding));
+
         layout.setTop(topPanel);
         layout.setBottom(bottomPanel);
         layout.setCenter(content);
@@ -115,17 +113,31 @@ public class AppGui extends Application {
 
         root.getChildren().add(layout);
 
+        guiExamples = new ArrayList<>();
         guiExamples.add(new SortingGUIExample(BubbleSort::sort));
+        guiExamples.add(null);
         guiExamples.add(new AStarGuiExample(W - 2 * padding, H - 2 * padding));
 
-        ChoiceBox<String> cb = new ChoiceBox<>();
-        cb.getItems().addAll("item1", "item2", "item3");
+        for (var example : guiExamples) {
+            if (example == null) {
+                continue;
+            }
+            example.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+            example.prefWidthProperty().bind(content.widthProperty().subtract(2 * padding));
+            example.prefHeightProperty().bind(content.heightProperty().subtract(2 * padding));
+        }
 
-        cb.getSelectionModel().selectedIndexProperty().addListener((e, o, n) -> {
+        ChoiceBox contentSelection = new ChoiceBox<>();
+        contentSelection.setItems(FXCollections.observableArrayList("Bubble Sort", new Separator(), "A* Algorithm"));
 
+        contentSelection.getSelectionModel().selectedIndexProperty().addListener((e, o, n) -> {
+            guiExamples.get(curGuiExampleIdx).stop();
+            curGuiExampleIdx = n.intValue();
+            content.getChildren().setAll(guiExamples.get(curGuiExampleIdx));
+            guiExamples.get(curGuiExampleIdx).start();
         });
 
-        content.start();
+        sidePanel.getChildren().add(contentSelection);
 
         stage.setScene(s);
         stage.show();
