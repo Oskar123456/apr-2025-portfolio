@@ -120,18 +120,16 @@ public class SortingAnimator extends AnimationTimer {
         infoTxt.setText("");
 
         /* VISUALIZATION */
-        double paddingHori = h / 25D;
-        double paddingVert = w / 25D;
-        double paddingRects = (w - 2 * paddingVert) / (rects.length - 1) / 2D;
-        double rectW = (w - 2 * paddingVert - paddingRects * (rects.length - 1)) / rects.length;
-        double rectHMin = (h - 2 * paddingHori) / 20D;
-        double rectH = h - 2 * paddingHori - rectHMin;
+        double paddingRects = (w) / (rects.length - 1) / 2D;
+        double rectW = (w - paddingRects * (rects.length - 1)) / rects.length;
+        double rectHMin = (h) / 20D;
+        double rectH = h - rectHMin;
 
         for (int i = 0; i < rects.length; i++) {
             double height = ((replay.dataInit[i] - min) / (max - min)) * rectH + rectHMin;
             rects[i].widthProperty().set(rectW);
             rects[i].heightProperty().set(height);
-            rects[i].relocate(rectW * i + paddingVert + paddingRects * i, h - paddingHori - height);
+            rects[i].relocate(rectW * i + paddingRects * i, h - height);
             rects[i].fillProperty().set(defaultColor);
         }
 

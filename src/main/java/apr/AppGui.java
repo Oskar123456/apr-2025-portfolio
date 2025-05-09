@@ -9,11 +9,11 @@ import apr.sorting.BubbleSort;
 import apr.sorting.visualization.SortingGUIExample;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Separator;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -28,90 +28,119 @@ import javafx.stage.Stage;
 public class AppGui extends Application {
 
     static Group root;
+
     static List<GUIExample> guiExamples;
     static int curGuiExampleIdx = 0;
 
+    static Scene scene;
+    static BorderPane layout;
     static Text titleTxt;
     static Text footnoteTxt;
     static VBox sidePanel;
     static HBox topPanel, bottomPanel;
     static Pane content;
 
-    // @Override
-    // public void start(Stage stage) {
-    // // var javaVersion = SystemInfo.javaVersion();
-    // // var javafxVersion = SystemInfo.javafxVersion();
-    //
-    // int W = 1000, H = 1000;
-    // double padding = 10;
-    //
-    // root = new Group();
-    // Scene s = new Scene(root, W, H, Color.WHITE);
-    //
-    // content = new AStarGuiExample(W - 2 * padding, H - 2 * padding);
-    //
-    // root.getChildren().add(content);
-    //
-    // content.start();
-    //
-    // stage.setScene(s);
-    // stage.show();
-    // }
+    static int W = 1200, H = 1000;
+    static double padding = 4;
+    static double topPanelH = 100;
+    static double bottomPanelH = 100;
+    static double sidePanelW = 150;
+    static Insets margins = new Insets(padding);
 
-    @Override
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public void start(Stage stage) {
-        int W = 1000, H = 1000;
-        double padding = 10;
-        double topPanelH = 100;
-        double bottomPanelH = 100;
-        double sidePanelW = 100;
-
         root = new Group();
-        Scene s = new Scene(root, W, H, Color.WHITE);
-        s.getStylesheets().add("styles/AppGui.css");
+        scene = new Scene(root, W, H, Color.WHITE);
+        scene.getStylesheets().add("styles/AppGui.css");
 
-        topPanel = new HBox();
-        bottomPanel = new HBox();
+        stage.titleProperty().set("APR 2025 GUI EXAMPLES");
 
-        titleTxt = new Text("APR 2025 PORTFOLIO GUI EXAMPLES");
-        titleTxt.setId("Title");
-        topPanel.getChildren().add(titleTxt);
-        topPanel.setMinHeight(topPanelH);
-        footnoteTxt = new Text("FOOTNOTES / INFO");
-        footnoteTxt.setId("Footnote");
-        bottomPanel.getChildren().add(footnoteTxt);
-        bottomPanel.setMinHeight(bottomPanelH);
-        bottomPanel.setId("BottomPanel");
+        layout = new BorderPane();
+        layout.prefHeightProperty().bind(scene.heightProperty());
+        layout.prefWidthProperty().bind(scene.widthProperty());
 
-        sidePanel = new VBox();
-        sidePanel.setPrefWidth(sidePanelW);
-        Text sidePanelTitle = new Text("Side Panel");
-        sidePanel.getChildren().add(sidePanelTitle);
-
-        BorderPane layout = new BorderPane();
-
-        content = new Pane();
-        content.prefWidthProperty().bind(stage.widthProperty().subtract(sidePanelW + 2 * padding));
-        content.prefHeightProperty().bind(stage.heightProperty().subtract(topPanelH + bottomPanelH + 2 * padding));
-        // stage.widthProperty()
-        // .addListener((e, o, n) -> content.setPrefWidth(n.doubleValue() - sidePanelW -
-        // 2 * padding));
-        // stage.heightProperty().addListener(
-        // (e, o, n) -> content.setPrefHeight(n.doubleValue() - topPanelH - bottomPanelH
-        // - 2 * padding));
+        setContent(stage);
+        setTopPanel();
+        setSidePanel(stage);
+        setBottomPanel();
 
         layout.setTop(topPanel);
         layout.setBottom(bottomPanel);
         layout.setCenter(content);
         layout.setLeft(sidePanel);
 
-        content.setId("Content");
-        topPanel.setId("TopPanel");
-        bottomPanel.setId("BottomPanel");
-        sidePanel.setId("SidePanel");
+        BorderPane.setMargin(topPanel, margins);
+        BorderPane.setMargin(sidePanel, margins);
+        BorderPane.setMargin(content, margins);
+        BorderPane.setMargin(bottomPanel, margins);
 
         root.getChildren().add(layout);
+
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    static void setTopPanel() {
+        topPanel = new HBox();
+        topPanel.setId("top-panel");
+
+        titleTxt = new Text("APR 2025 PORTFOLIO GUI EXAMPLES");
+        titleTxt.setId("title");
+
+        topPanel.getChildren().add(titleTxt);
+        topPanel.setPrefHeight(topPanelH);
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    static void setSidePanel(Stage stage) {
+        sidePanel = new VBox();
+        sidePanel.setId("side-panel");
+
+        sidePanel.setPrefWidth(sidePanelW);
+        Text sidePanelTitle = new Text("Choose Demo:");
+        sidePanel.getChildren().add(sidePanelTitle);
+        sidePanelTitle.setId("side-panel__title");
+
+        content.prefHeightProperty().bind(layout.heightProperty()
+                .subtract(topPanelH + bottomPanelH + 6 * margins.getBottom()));
+
+        ChoiceBox contentSelection = new ChoiceBox<>();
+        contentSelection.setItems(FXCollections.observableArrayList("Bubble Sort", new Separator(), "A* Algorithm"));
+        contentSelection.getSelectionModel().selectFirst();
+        content.getChildren().setAll(guiExamples.get(curGuiExampleIdx));
+        guiExamples.get(curGuiExampleIdx).start();
+
+        contentSelection.getSelectionModel().selectedIndexProperty().addListener((e, o, n) -> {
+            guiExamples.get(curGuiExampleIdx).stop();
+            curGuiExampleIdx = n.intValue();
+            content.getChildren().setAll(guiExamples.get(curGuiExampleIdx));
+            guiExamples.get(curGuiExampleIdx).start();
+        });
+
+        sidePanel.getChildren().add(contentSelection);
+
+    }
+
+    static void setBottomPanel() {
+        bottomPanel = new HBox();
+        bottomPanel.setId("bottom-panel");
+
+        footnoteTxt = new Text("FOOTNOTES / INFO");
+        footnoteTxt.setId("footnote");
+
+        bottomPanel.getChildren().add(footnoteTxt);
+        bottomPanel.setPrefHeight(bottomPanelH);
+    }
+
+    static void setContent(Stage stage) {
+        content = new Pane();
+        content.setId("content");
+
+        content.prefWidthProperty().bind(layout.widthProperty()
+                .subtract(sidePanelW + 4 * margins.getLeft()));
+        content.prefHeightProperty().bind(layout.heightProperty()
+                .subtract(topPanelH + bottomPanelH + 6 * margins.getBottom()));
+
+        System.out.printf("m: %f toppanelH: %f bottompanelH: %f%n", margins.getBottom(), topPanelH, bottomPanelH);
 
         guiExamples = new ArrayList<>();
         guiExamples.add(new SortingGUIExample(BubbleSort::sort));
@@ -123,24 +152,10 @@ public class AppGui extends Application {
                 continue;
             }
             example.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-            example.prefWidthProperty().bind(content.widthProperty().subtract(2 * padding));
-            example.prefHeightProperty().bind(content.heightProperty().subtract(2 * padding));
+            example.prefWidthProperty().bind(content.widthProperty());
+            example.prefHeightProperty().bind(content.heightProperty());
         }
 
-        ChoiceBox contentSelection = new ChoiceBox<>();
-        contentSelection.setItems(FXCollections.observableArrayList("Bubble Sort", new Separator(), "A* Algorithm"));
-
-        contentSelection.getSelectionModel().selectedIndexProperty().addListener((e, o, n) -> {
-            guiExamples.get(curGuiExampleIdx).stop();
-            curGuiExampleIdx = n.intValue();
-            content.getChildren().setAll(guiExamples.get(curGuiExampleIdx));
-            guiExamples.get(curGuiExampleIdx).start();
-        });
-
-        sidePanel.getChildren().add(contentSelection);
-
-        stage.setScene(s);
-        stage.show();
     }
 
     public static void main(String[] args) throws IOException {

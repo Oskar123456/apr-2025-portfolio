@@ -2,6 +2,7 @@ package apr.sorting.visualization;
 
 import apr.GUIExample;
 import apr.sorting.SortFn;
+import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -45,6 +46,8 @@ public class SortingGUIExample extends GUIExample {
         canvas = new VBox();
         canvas.setId("sorting__container");
 
+        content.paddingProperty().set(new Insets(10));
+
         titleTxt = new Text("Bubble Sort");
         titleTxt.prefHeight(50);
         titleTxt.setId("sorting__title");
@@ -52,7 +55,11 @@ public class SortingGUIExample extends GUIExample {
         titleBox.getChildren().add(titleTxt);
         titleBox.setId("sorting__title-box");
 
-        canvas.prefWidthProperty().bind(widthProperty());
+        content.prefWidthProperty().bind(widthProperty());
+        content.prefHeightProperty().bind(heightProperty());
+        canvas.prefWidthProperty().bind(widthProperty()
+                .subtract(content.paddingProperty().getValue().getRight())
+                .subtract(content.paddingProperty().getValue().getLeft()));
         canvas.prefHeightProperty().bind(heightProperty().subtract(50));
 
         content.getChildren().addAll(titleBox, canvas);
