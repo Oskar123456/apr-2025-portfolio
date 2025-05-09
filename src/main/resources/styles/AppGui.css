@@ -47,3 +47,8 @@
 #AStar__side-panel-button {
     
 }
+
+sorting__canvas {
+    -fx-border-width: 4px;
+    -fx-border-color: black;
+}

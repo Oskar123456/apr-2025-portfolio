@@ -1,5 +1,8 @@
 package apr.sorting;
 
-public class HeapSort
-{
+/**
+ * HeapSort
+ */
+public class HeapSort {
+
 }

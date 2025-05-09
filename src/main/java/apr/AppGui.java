@@ -4,9 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import apr.algorithms.graph.visualization.AStarGuiExample;
+import apr.sorting.visualization.SortingGUIExample;
 import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -65,7 +64,8 @@ public class AppGui extends Application {
         s.getStylesheets().add("styles/AppGui.css");
 
         AnchorPane AP = new AnchorPane();
-        content = new AStarGuiExample(W - 2 * padding, H - 2 * padding);
+        // content = new AStarGuiExample(W - 2 * padding, H - 2 * padding);
+        content = new SortingGUIExample();
         content.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
         AP.getChildren().setAll(content);

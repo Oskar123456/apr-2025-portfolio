@@ -30,25 +30,25 @@ public class AStarAnimator extends AnimationTimer {
         this.canvas.heightProperty().addListener(e -> draw());
     }
 
-    public void handle(long tnow) {
+    public void handle(long nowInNanos) {
         this.updateFreq = duration / mazes.get(curMazeIdx).snapshots.size();
         if (pauseLeft > 0) {
-            pauseLeft -= tnow - lastFrame;
-            lastFrame = tnow;
+            pauseLeft -= nowInNanos - lastFrame;
+            lastFrame = nowInNanos;
             return;
         }
-        if (!(lastUpdate == 0) && tnow - lastUpdate < updateFreq) {
+        if (!(lastUpdate == 0) && nowInNanos - lastUpdate < updateFreq) {
             return;
         }
 
-        lastUpdate = tnow;
+        lastUpdate = nowInNanos;
 
         draw();
 
         mazeSnapshotIdx++;
         if (mazeSnapshotIdx >= mazes.get(curMazeIdx).snapshots.size()) {
             pauseLeft = 2000000000;
-            lastFrame = tnow;
+            lastFrame = nowInNanos;
             curMazeIdx = (curMazeIdx + 1) % mazes.size();
             mazeSnapshotIdx = 0;
         }

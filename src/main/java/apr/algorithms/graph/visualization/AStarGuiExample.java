@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import apr.GUIExample;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -95,7 +93,15 @@ public class AStarGuiExample extends GUIExample {
                 Maze m = Maze.fromText(Files.readAllLines(file.toPath()));
                 // AStarMaze.solve(m, (a, b) -> Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y -
                 // b.y) * (a.y - b.y)));
-                AStarMaze.solveAllowDiag(m, (a, b) -> Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)));
+                // AStarMaze.solveAllowDiag(m, (a, b) -> Math.sqrt((a.x - b.x) * (a.x - b.x) +
+                // (a.y - b.y) * (a.y - b.y)));
+                AStarMaze.solveAllowDiag(m, (a, b) -> {
+                    double dx = Math.abs(a.x - b.x);
+                    double dy = Math.abs(a.y - b.y);
+                    double max = Math.max(dx, dy);
+                    double min = Math.min(dx, dy);
+                    return Math.sqrt((min * min) + (min * min)) + (max - min);
+                });
                 solvedMazes.add(m);
             }
         } catch (IOException e) {
