@@ -7,8 +7,11 @@ import apr.algorithms.graph.visualization.AStarGuiExample;
 import apr.sorting.BubbleSort;
 import apr.sorting.visualization.SortingGUIExample;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -64,16 +67,16 @@ public class AppGui extends Application {
         Scene s = new Scene(root, W, H, Color.WHITE);
         s.getStylesheets().add("styles/AppGui.css");
 
-        AnchorPane AP = new AnchorPane();
+        // AnchorPane AP = new AnchorPane();
         // content = new AStarGuiExample(W - 2 * padding, H - 2 * padding);
         content = new SortingGUIExample(BubbleSort::sort);
         content.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
-        AP.getChildren().setAll(content);
-        AnchorPane.setTopAnchor(content, 0D);
-        AnchorPane.setBottomAnchor(content, 0D);
-        AnchorPane.setLeftAnchor(content, 0D);
-        AnchorPane.setRightAnchor(content, 0D);
+        // AP.getChildren().setAll(content);
+        // AnchorPane.setTopAnchor(content, 0D);
+        // AnchorPane.setBottomAnchor(content, 0D);
+        // AnchorPane.setLeftAnchor(content, 0D);
+        // AnchorPane.setRightAnchor(content, 0D);
 
         stage.widthProperty()
                 .addListener((e, o, n) -> content.setPrefWidth(n.doubleValue() - sidePanelW - 2 * padding));
@@ -102,15 +105,25 @@ public class AppGui extends Application {
 
         layout.setTop(topPanel);
         layout.setBottom(bottomPanel);
-        layout.setCenter(AP);
+        layout.setCenter(content);
         layout.setLeft(sidePanel);
 
-        AP.setId("Content");
+        content.setId("Content");
         topPanel.setId("TopPanel");
         bottomPanel.setId("BottomPanel");
         sidePanel.setId("SidePanel");
 
         root.getChildren().add(layout);
+
+        guiExamples.add(new SortingGUIExample(BubbleSort::sort));
+        guiExamples.add(new AStarGuiExample(W - 2 * padding, H - 2 * padding));
+
+        ChoiceBox<String> cb = new ChoiceBox<>();
+        cb.getItems().addAll("item1", "item2", "item3");
+
+        cb.getSelectionModel().selectedIndexProperty().addListener((e, o, n) -> {
+
+        });
 
         content.start();
 
