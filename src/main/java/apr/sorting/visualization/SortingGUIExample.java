@@ -42,25 +42,14 @@ public class SortingGUIExample extends GUIExample {
         this.subtitles = subtitles;
         this.sortFns = sortFns;
 
-        int n = 25;
-
-        Double[] data = new Double[n];
-        for (int i = 0; i < data.length; ++i) {
-            data[i] = Math.random();
-        }
-
         for (int i = 0; i < sortFns.length; i++) {
-            var sortFn = sortFns[i];
-            var subtitle = subtitles[i];
-            Pane p = new Pane();
-            canvases.add(p);
-            animators.add(
-                    new SortingAnimator(subtitle, p, sortFn.sort(Arrays.copyOf(data, data.length)), ups));
+            canvases.add(new Pane());
         }
 
         setupGui();
         setTitle(title);
         addOptions();
+        reset();
     }
 
     public void setTitle(String title) {

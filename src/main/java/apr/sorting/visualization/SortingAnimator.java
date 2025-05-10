@@ -22,7 +22,7 @@ public class SortingAnimator extends AnimationTimer {
     Logger logger = LoggerFactory.getLogger(SortingAnimator.class);
 
     Pane renderTarget;
-    Pane canvas, infoBox, actionBox;
+    Pane canvas, infoBox, timeBox;
     SortingReplay<Double> replay;
 
     Text titleTxt, infoTxt, statsTxt;
@@ -36,26 +36,26 @@ public class SortingAnimator extends AnimationTimer {
     String statsTemplate = "Stats: swaps: %d, comparisons: %d";
     int statsSwaps, statsComparisons;
 
-    long lastUpdate_ns, updateFreq_ns;
+    long start_ns, lastUpdate_ns, updateFreq_ns;
     boolean done;
 
     public SortingAnimator(String title, Pane renderTarget, SortingReplay<Double> replay, int ups) {
         canvas = new Pane();
         canvas.setId("sorting__canvas");
 
-        actionBox = new HBox(30);
-        actionBox.setId("sorting__action-box");
+        timeBox = new HBox(4);
+        timeBox.setId("sorting__action-box");
         infoTxt = new Text();
         infoTxt.setId("sorting__info-text");
         titleTxt = new Text(title);
         titleTxt.setId("sorting__title-text");
-        actionBox.getChildren().addAll(new Text("Last action:"), infoTxt);
+        timeBox.getChildren().addAll(new Text("Time elapsed:"), infoTxt);
 
         statsTxt = new Text();
         updateStats();
         infoBox = new VBox();
         infoBox.setId("sorting__info-box");
-        infoBox.getChildren().addAll(titleTxt, actionBox, statsTxt);
+        infoBox.getChildren().addAll(titleTxt, timeBox, statsTxt);
 
         infoBox.prefHeightProperty().set(50);
         infoBox.prefWidthProperty().bind(renderTarget.widthProperty().subtract(8));
@@ -73,8 +73,8 @@ public class SortingAnimator extends AnimationTimer {
         canvas.widthProperty().addListener(e -> draw());
         canvas.heightProperty().addListener(e -> draw());
 
-        System.out.printf("SortingAnimator:: dur: %f secs, updateFreq: %f (%d elements, %d actions)%n",
-                (ups * replay.actions.size()) / 60D,
+        System.out.printf("SortingAnimator (%s):: dur: %f secs, updateFreq: %f (%d elements, %d actions)%n",
+                title, (replay.actions.size() / (double) ups),
                 Tools.NanoSecsToSecs(updateFreq_ns), replay.len, replay.actions.size());
 
         for (Double val : replay.dataInit) {
@@ -102,6 +102,9 @@ public class SortingAnimator extends AnimationTimer {
         if (!(lastUpdate_ns == 0) && now_ns - lastUpdate_ns < updateFreq_ns) {
             return;
         }
+        if (lastUpdate_ns == 0) {
+            start_ns = now_ns;
+        }
 
         lastUpdate_ns = now_ns;
 
@@ -109,9 +112,15 @@ public class SortingAnimator extends AnimationTimer {
         if (nextAction == null) {
             done = true;
             draw();
-            System.out.println("DONE");
             stop();
             return;
+        }
+
+        if (nextAction.action == ActionType.COMPARE) {
+            statsComparisons++;
+        }
+        if (nextAction.action == ActionType.SWAP) {
+            statsSwaps++;
         }
 
         updateStats();
@@ -127,7 +136,7 @@ public class SortingAnimator extends AnimationTimer {
         double w = canvas.getWidth();
         double h = canvas.getHeight() - infoBox.heightProperty().doubleValue();
         /* TEXT */
-        infoTxt.setText("");
+        infoTxt.setText(String.format("%.1f seconds", Tools.NanoSecsToSecs(lastUpdate_ns - start_ns)));
 
         /* VISUALIZATION */
         double padding = 4;
@@ -138,19 +147,10 @@ public class SortingAnimator extends AnimationTimer {
 
         for (int i = 0; i < rects.length; i++) {
             double height = ((replay.dataInit[i] - min) / (max - min)) * rectH + rectHMin;
-            if ((replay.dataInit[i] - min) / (max - min) > 1) {
-                System.out.println("ALOE");
-            }
             rects[i].widthProperty().set(rectW);
             rects[i].heightProperty().set(height);
             rects[i].relocate(rectW * i + paddingRects * i + padding, canvas.getHeight() - height);
             rects[i].fillProperty().set(defaultColor);
-        }
-
-        for (var r : rects) {
-            if (r.heightProperty().doubleValue() >= 640) {
-                System.out.println("r : " + r.heightProperty().doubleValue());
-            }
         }
 
         if (replay.isDone) {
@@ -165,14 +165,10 @@ public class SortingAnimator extends AnimationTimer {
         if (lastAction.action == ActionType.COMPARE) {
             rects[lastAction.first].fillProperty().set(compareColor);
             rects[lastAction.second].fillProperty().set(compareColor);
-            statsComparisons++;
-            infoTxt.setText("Compare");
         }
         if (lastAction.action == ActionType.SWAP) {
             rects[lastAction.first].fillProperty().set(swapColor);
             rects[lastAction.second].fillProperty().set(swapColor);
-            statsSwaps++;
-            infoTxt.setText("Swap");
         }
     }
 

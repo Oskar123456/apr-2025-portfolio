@@ -6,6 +6,8 @@ import java.util.List;
 
 import apr.algorithms.graph.visualization.AStarGuiExample;
 import apr.sorting.BubbleSort;
+import apr.sorting.HeapSort;
+import apr.sorting.QuickSort;
 import apr.sorting.SortFn;
 import apr.sorting.visualization.SortingGUIExample;
 import javafx.application.Application;
@@ -115,7 +117,9 @@ public class AppGui extends Application {
         ChoiceBox contentSelection = new ChoiceBox<>();
         contentSelection.setItems(FXCollections.observableArrayList(
                 "Bubble Sort",
-                "Bubble Sort X 2",
+                "Heap Sort",
+                "Quick Sort",
+                "Bubble- & Quick- & Heap Sort",
                 new Separator(),
                 "A* Algorithm"));
         contentSelection.getSelectionModel().clearAndSelect(0);
@@ -155,12 +159,18 @@ public class AppGui extends Application {
         System.out.printf("m: %f toppanelH: %f bottompanelH: %f%n", margins.getBottom(), topPanelH, bottomPanelH);
 
         guiExamples = new ArrayList<>();
-        guiExamples.add(new SortingGUIExample("Bubble Sort",
+        guiExamples.add(new SortingGUIExample("Sorting",
                 new SortFn[] { BubbleSort::sort },
                 new String[] { "Bubble Sort" }));
-        guiExamples.add(new SortingGUIExample("Bubble Sort",
-                new SortFn[] { BubbleSort::sort, BubbleSort::sort },
-                new String[] { "Bubble Sort", "Bubble Sort" }));
+        guiExamples.add(new SortingGUIExample("Sorting",
+                new SortFn[] { HeapSort::sort },
+                new String[] { "Heap Sort" }));
+        guiExamples.add(new SortingGUIExample("Sorting",
+                new SortFn[] { QuickSort::sort },
+                new String[] { "Quick Sort" }));
+        guiExamples.add(new SortingGUIExample("Sorting",
+                new SortFn[] { BubbleSort::sort, HeapSort::sort, QuickSort::sort },
+                new String[] { "Bubble Sort", "Heap Sort", "Quick Sort" }));
         guiExamples.add(null);
         guiExamples.add(new AStarGuiExample(W - 2 * padding, H - 2 * padding));
 
