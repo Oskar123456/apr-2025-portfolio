@@ -30,6 +30,7 @@ public class GraphAnimator extends AnimationTimer {
     Color colorEdge = Color.BLACK;
 
     /* STATE */
+    GraphAlg<Integer> searchAlg;
     GraphReplay<Integer> replay;
     Graph<Integer> graph;
     int ups = 5, nodeId;
@@ -66,8 +67,8 @@ public class GraphAnimator extends AnimationTimer {
         this.ups = ups;
     }
 
-    public void setAlg() {
-
+    public void setAlg(GraphAlg<Integer> alg) {
+        searchAlg = alg;
     }
 
     public void reset() {
@@ -79,27 +80,17 @@ public class GraphAnimator extends AnimationTimer {
 
     public void start() {
         startNS = System.nanoTime();
-        if (replay != null) {
-            // replay.reset();
-            search("A*", (g) -> GraphSolver.astar(g, (a, b) -> a.pos.dist(b.pos)));
-            super.start();
-        } else if (graph != null) {
-            search("A*", (g) -> GraphSolver.astar(g, (a, b) -> a.pos.dist(b.pos)));
-            super.start();
-        } else {
-            System.out.println("GraphAnimator refuses to start");
-        }
+        search();
+        super.start();
     }
 
-    public void search(String title, GraphAlg<Integer> graphAlg) {
-        // this.title.setText(title);
-
+    public void search() {
         if (graph.src == null || graph.dest == null) {
             System.out.println("GraphAnimator:: Error: no src or dest, returning...");
             return;
         }
 
-        replay = graphAlg.search(graph);
+        replay = searchAlg.search(graph);
     }
 
     public void handle(long nowNS) {
@@ -146,7 +137,8 @@ public class GraphAnimator extends AnimationTimer {
         if (replay != null && replay.hasNext()) {
             info.setText(String.format("Number of moves: %d", replay.getCurrentIndex() + 1));
         } else if (replay != null) {
-            info.setText(String.format("Length of final path: %.1f",
+            info.setText(String.format("Number of moves: %d, Length of final path: %.1f",
+                    replay.getCurrentIndex() + 1,
                     graph.dists.containsKey(graph.dest) ? graph.dists.get(graph.dest) : -1));
         }
 
@@ -165,10 +157,6 @@ public class GraphAnimator extends AnimationTimer {
             e.relocate((Math.max(xSrc, xDest) - Math.min(xSrc, xDest)) / 2 + Math.min(xSrc, xDest) - r,
                     (Math.max(ySrc, yDest) - Math.min(ySrc, yDest)) / 2 + Math.min(ySrc, yDest) - r);
 
-            if (graph.path.contains(edge)) {
-                e.fillProperty().set(Color.GOLD);
-            }
-
             Point2D para = new Point2D(xDest - xSrc, yDest - ySrc).normalize().scale(r / 4);
             Point2D perp = new Point2D(-yDest + ySrc, xDest - xSrc).normalize().scale(r / 4);
 
@@ -180,12 +168,20 @@ public class GraphAnimator extends AnimationTimer {
             Polygon pointer = new Polygon(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
 
             pointer.fillProperty().set(colorEdge);
-
             Text weightTxt = new Text(String.format("%.2f", edge.weight));
             weightTxt.maxWidth(2 * r);
             weightTxt.relocate((Math.max(xSrc, xDest) - Math.min(xSrc, xDest)) / 2 + Math.min(xSrc, xDest) - r / 2,
                     (Math.max(ySrc, yDest) - Math.min(ySrc, yDest)) / 2 + Math.min(ySrc, yDest) - r / 2);
             weightTxt.fillProperty().set(Color.RED);
+
+            if (graph.path.contains(edge)) {
+                l.strokeWidthProperty().set(8);
+                l.strokeProperty().set(Color.GOLD);
+                pointer.fillProperty().set(Color.GOLD);
+                pointer.scaleXProperty().set(2);
+                pointer.scaleYProperty().set(2);
+                weightTxt.fillProperty().set(Color.GOLD);
+            }
 
             canvas.getChildren().add(l);
             canvas.getChildren().add(e);
@@ -237,7 +233,7 @@ public class GraphAnimator extends AnimationTimer {
             e.relocate(x, y);
             txt.relocate(x + 0.5 * r, y + 0.5 * r);
 
-            e.addEventHandler(MouseEvent.MOUSE_PRESSED, (event) -> addEdge(event, node));
+            e.addEventHandler(MouseEvent.MOUSE_PRESSED, (event) -> rightClickNode(event, node));
             e.addEventHandler(MouseEvent.MOUSE_PRESSED, (event) -> {
                 if (!event.isSecondaryButtonDown()) {
                     return;
@@ -258,7 +254,7 @@ public class GraphAnimator extends AnimationTimer {
                 graph.remove(node);
                 draw();
             });
-            txt.addEventHandler(MouseEvent.MOUSE_PRESSED, (event) -> addEdge(event, node));
+            txt.addEventHandler(MouseEvent.MOUSE_PRESSED, (event) -> rightClickNode(event, node));
         }
     }
 
@@ -269,7 +265,8 @@ public class GraphAnimator extends AnimationTimer {
         canvas.setId("graph__canvas");
         topPanel = new VBox();
         topPanel.setId("graph__topPanel");
-        title = new Text("How-To: Click to add nodes and edges, Right-click to set source and destination");
+        title = new Text(
+                "How-To: Left-Click: Add nodes & edges, Right-click: Set source & dest, Shift+Right-Click: Delete node");
         info = new Text("");
         title.setId("graph__title");
 
@@ -337,18 +334,13 @@ public class GraphAnimator extends AnimationTimer {
                 return;
             }
 
-            // System.out.printf("added node at %s on canvas(%.1f %.1f)%n",
-            // node.pos.toString(), canvas.widthProperty().doubleValue(),
-            // canvas.heightProperty().doubleValue());
-
-            // System.out.println(graph.toString());
             graph.nodes.add(node);
             draw();
         });
 
     }
 
-    void addEdge(MouseEvent event, Node<Integer> node) {
+    void rightClickNode(MouseEvent event, Node<Integer> node) {
         event.consume();
 
         if (event.isSecondaryButtonDown() && !event.isShiftDown()) {
@@ -377,14 +369,11 @@ public class GraphAnimator extends AnimationTimer {
                 edgeLine.startYProperty().set(event.getY());
                 edgeLine.endXProperty().set(event.getX());
                 edgeLine.endYProperty().set(event.getY());
-                // System.out.printf("set src: %s%n", node.pos.toString());
                 return;
             }
-            // System.out.printf("set dest: %s%n", node.pos.toString());
-            graph.edges.add(new Edge<>(edgeSrc, node));
+            graph.addEdge(new Edge<>(edgeSrc, node));
             edgeLine.visibleProperty().setValue(false);
             edgeSrc = null;
-            // System.out.println(graph.toString());
             draw();
         }
     }

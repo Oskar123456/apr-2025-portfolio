@@ -112,6 +112,7 @@
 }
 
 #graph__title { 
+    -fx-font-size: 20px;
 }
 
 #graph__content {
@@ -119,5 +120,5 @@
 
 #graph__title-panel {
     -fx-alignment: center;
-        -fx-font-size: 25px;
+    -fx-font-size: 25px;
 }

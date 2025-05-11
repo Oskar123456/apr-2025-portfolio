@@ -72,4 +72,14 @@ public class Graph<T> {
 
         return str;
     }
+
+    public void addEdge(Edge<T> edge) {
+        for (var e : edges) {
+            if (e.src == edge.src && e.dest == edge.dest) {
+                return;
+            }
+        }
+        System.out.println("added edge " + edge);
+        edges.add(edge);
+    }
 }

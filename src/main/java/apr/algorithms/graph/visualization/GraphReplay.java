@@ -13,6 +13,30 @@ public class GraphReplay<T> {
 
     public GraphReplay(Graph<T> graph) {
         graphStates = new ArrayList<>();
+        graph.visited.clear();
+        graph.srcs.clear();
+        graph.path.clear();
+
+        for (var node : graph.nodes) {
+            graph.dists.put(node, Double.POSITIVE_INFINITY);
+        }
+        graph.dists.put(graph.src, 0D);
+
+        storeState(graph);
+    }
+
+    public void seal(Graph<T> graph) {
+        var node = graph.dest;
+        while (graph.dists.containsKey(node)) {
+            var nodeSrc = graph.srcs.get(node);
+            for (var edge : graph.edges) {
+                if (edge.dest == node && edge.src == nodeSrc) {
+                    graph.path.add(edge);
+                    break;
+                }
+            }
+            node = nodeSrc;
+        }
         storeState(graph);
     }
 
