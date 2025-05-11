@@ -24,10 +24,11 @@ public class GraphAnimator extends AnimationTimer {
     Text title, info;
     String name;
 
-    Color colorDefault = Color.WHITESMOKE;
-    Color colorSeen = Color.LIGHTGRAY;
-    Color colorVis = Color.GRAY;
-    Color colorEdge = Color.BLACK;
+    public Color colorDefault = Color.WHITESMOKE;
+    public Color colorSeen = Color.LIGHTGRAY;
+    public Color colorVis = Color.GRAY;
+    public Color colorEdge = Color.BLACK;
+    public Color colorPath = Color.GOLD;
 
     /* STATE */
     GraphAlg<Integer> searchAlg;
@@ -135,10 +136,10 @@ public class GraphAnimator extends AnimationTimer {
         r = rProp * len;
 
         if (replay != null && replay.hasNext()) {
-            info.setText(String.format("Number of moves: %d", replay.getCurrentIndex() + 1));
+            info.setText(String.format("Number of nodes visited: %d", graph.visited.size()));
         } else if (replay != null) {
-            info.setText(String.format("Number of moves: %d, Length of final path: %.1f",
-                    replay.getCurrentIndex() + 1,
+            info.setText(String.format("Number of nodes visited: %d, Length of final path: %.1f",
+                    graph.visited.size(),
                     graph.dists.containsKey(graph.dest) ? graph.dists.get(graph.dest) : -1));
         }
 

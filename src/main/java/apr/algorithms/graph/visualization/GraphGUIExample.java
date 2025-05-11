@@ -5,6 +5,7 @@ import java.util.List;
 
 import apr.GUIExample;
 import javafx.collections.FXCollections;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -13,6 +14,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 /**
@@ -38,9 +41,9 @@ public class GraphGUIExample extends GUIExample {
 
         setupLayout();
         getChildren().setAll(layout);
-        addOptions();
 
         animator = new GraphAnimator(content, "A*");
+        addOptions();
     }
 
     public void start() {
@@ -57,7 +60,16 @@ public class GraphGUIExample extends GUIExample {
     }
 
     public List<Node> options() {
-        return options;
+        HBox hb = new HBox(10);
+        VBox vb = new VBox();
+
+        hb.alignmentProperty().set(Pos.CENTER);
+        vb.alignmentProperty().set(Pos.CENTER);
+
+        hb.getChildren().addAll(options);
+        vb.getChildren().add(hb);
+
+        return List.of(vb);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -87,6 +99,22 @@ public class GraphGUIExample extends GUIExample {
             title.setText(String.format(titleStr, optAlgs.getItems().get(n.intValue()).toString()));
         });
         options.add(optAlgs);
+
+        HBox optSeen = new HBox(10);
+        HBox optVis = new HBox(10);
+        HBox optPath = new HBox(10);
+
+        Rectangle optSeenR = new Rectangle(15, 15, animator.colorSeen);
+        Rectangle optVisR = new Rectangle(15, 15, animator.colorVis);
+        Rectangle optPathR = new Rectangle(15, 15, animator.colorPath);
+
+        optSeen.getChildren().setAll(optSeenR, new Text("Seen"));
+        optVis.getChildren().setAll(optVisR, new Text("Visited"));
+        optPath.getChildren().setAll(optPathR, new Text("Optimal path"));
+
+        options.add(optSeen);
+        options.add(optVis);
+        options.add(optPath);
     }
 
     void setupLayout() {
