@@ -16,8 +16,10 @@ public class Graph<T> {
     public List<Edge<T>> edges;
 
     public Map<Node<T>, Double> dists;
+    public Map<Node<T>, Double> guesstimates;
     public Map<Node<T>, Node<T>> srcs;
     public Set<Node<T>> visited;
+    public Set<Edge<T>> path;
 
     public Node<T> src, dest;
 
@@ -25,11 +27,34 @@ public class Graph<T> {
         nodes = new ArrayList<>();
         edges = new ArrayList<>();
         dists = new HashMap<>();
+        guesstimates = new HashMap<>();
         srcs = new HashMap<>();
         visited = new HashSet<>();
+        path = new HashSet<>();
 
         for (var node : nodes) {
             dists.put(node, Double.POSITIVE_INFINITY);
+        }
+    }
+
+    public void remove(Node<T> node) {
+        nodes.remove(node);
+        List<Edge<T>> edgesToRemove = new ArrayList<>();
+        for (var edge : edges) {
+            if (edge.src == node || edge.dest == node) {
+                edgesToRemove.add(edge);
+            }
+        }
+        edges.removeAll(edgesToRemove);
+        dists.remove(node);
+        guesstimates.remove(node);
+        srcs.remove(node);
+        visited.remove(node);
+        if (src == node) {
+            src = null;
+        }
+        if (dest == node) {
+            dest = null;
         }
     }
 

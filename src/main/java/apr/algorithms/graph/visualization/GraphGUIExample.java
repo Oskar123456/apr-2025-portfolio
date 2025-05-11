@@ -32,7 +32,8 @@ public class GraphGUIExample extends GUIExample {
     }
 
     public void start() {
-        animator.search("A*", (g) -> GraphSolver.astar(g, (a, b) -> a.pos.dist(b.pos)));
+        // animator.search("A*", (g) -> GraphSolver.astar(g, (a, b) ->
+        // a.pos.dist(b.pos)));
         animator.start();
     }
 
@@ -54,6 +55,12 @@ public class GraphGUIExample extends GUIExample {
             start();
         });
         options.add(optRunButton);
+
+        Button optResetButton = new Button("Reset");
+        optResetButton.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
+            animator.reset();
+        });
+        options.add(optResetButton);
     }
 
     void setupLayout() {

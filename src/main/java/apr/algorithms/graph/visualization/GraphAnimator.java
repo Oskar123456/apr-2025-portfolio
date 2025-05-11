@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 
 /**
@@ -19,24 +20,24 @@ public class GraphAnimator extends AnimationTimer {
 
     /* GUI */
     Pane renderTarget, canvas;
-    VBox layout, content;
-    HBox topPanel;
-    Text title;
+    VBox layout, content, topPanel;
+    Text title, info;
     String name;
 
     Color colorDefault = Color.WHITESMOKE;
-    Color colorSeen = Color.GRAY;
-    Color colorVis = Color.BLACK;
+    Color colorSeen = Color.LIGHTGRAY;
+    Color colorVis = Color.GRAY;
     Color colorEdge = Color.BLACK;
 
     /* STATE */
     GraphReplay<Integer> replay;
     Graph<Integer> graph;
     int ups = 5, nodeId;
-    long lastUpdateNS, updateFreqNS;
-    double nodeRadius = 0.025;
+    long startNS, lastUpdateNS, updateFreqNS;
+    double rProp = 0.030, r;
 
     Node<Integer> edgeSrc, edgeDest;
+    Point2D srcPos, destPos;
     Line edgeLine;
     int srcDestPick;
 
@@ -69,17 +70,43 @@ public class GraphAnimator extends AnimationTimer {
 
     }
 
+    public void reset() {
+        stop();
+        this.graph = new Graph<>();
+        this.replay = null;
+        draw();
+    }
+
+    public void start() {
+        startNS = System.nanoTime();
+        if (replay != null) {
+            // replay.reset();
+            search("A*", (g) -> GraphSolver.astar(g, (a, b) -> a.pos.dist(b.pos)));
+            super.start();
+        } else if (graph != null) {
+            search("A*", (g) -> GraphSolver.astar(g, (a, b) -> a.pos.dist(b.pos)));
+            super.start();
+        } else {
+            System.out.println("GraphAnimator refuses to start");
+        }
+    }
+
     public void search(String title, GraphAlg<Integer> graphAlg) {
+        // this.title.setText(title);
+
         if (graph.src == null || graph.dest == null) {
             System.out.println("GraphAnimator:: Error: no src or dest, returning...");
             return;
         }
-        this.title.setText(title);
-        replay = new GraphReplay<>(graph);
-        graphAlg.search(graph);
+
+        replay = graphAlg.search(graph);
     }
 
     public void handle(long nowNS) {
+        if (startNS == 0) {
+            startNS = System.nanoTime();
+        }
+
         if (lastUpdateNS != 0 && nowNS - lastUpdateNS < updateFreqNS) {
             return;
         }
@@ -112,28 +139,49 @@ public class GraphAnimator extends AnimationTimer {
         double len = Math.min(canvas.widthProperty().doubleValue(), canvas.heightProperty().doubleValue());
         double w = canvas.widthProperty().doubleValue();
         double h = canvas.heightProperty().doubleValue();
-        double wPad = 0D; // (canvas.widthProperty().doubleValue() - len) / 2D;
-        double hPad = 0D; // (canvas.heightProperty().doubleValue() - len) / 2D;
-        double r = nodeRadius * len;
+        double wPad = 0D;
+        double hPad = 0D;
+        r = rProp * len;
 
-        // System.out.printf("draw():: len: %f, wPad: %f, hPad: %f%n", len, wPad, hPad);
+        if (replay != null && replay.hasNext()) {
+            info.setText(String.format("Number of moves: %d", replay.getCurrentIndex() + 1));
+        } else if (replay != null) {
+            info.setText(String.format("Length of final path: %.1f",
+                    graph.dists.containsKey(graph.dest) ? graph.dists.get(graph.dest) : -1));
+        }
 
         for (var edge : graph.edges) {
-            double xSrc = wPad + edge.src.pos.x * w + r / 2;
-            double ySrc = hPad + edge.src.pos.y * h + r / 2;
-            double xDest = wPad + edge.dest.pos.x * w + r / 2;
-            double yDest = hPad + edge.dest.pos.y * h + r / 2;
+            double xSrc = wPad + edge.src.pos.x * w;
+            double ySrc = hPad + edge.src.pos.y * h;
+            double xDest = wPad + edge.dest.pos.x * w;
+            double yDest = hPad + edge.dest.pos.y * h;
 
             Line l = new Line(xSrc, ySrc, xDest, yDest);
             l.fillProperty().set(colorEdge);
             l.strokeWidthProperty().set(2);
 
-            Ellipse e = new Ellipse(r, r);
+            Ellipse e = new Ellipse(r * 0.95, r * 0.95);
             e.fillProperty().set(Color.WHITE);
             e.relocate((Math.max(xSrc, xDest) - Math.min(xSrc, xDest)) / 2 + Math.min(xSrc, xDest) - r,
                     (Math.max(ySrc, yDest) - Math.min(ySrc, yDest)) / 2 + Math.min(ySrc, yDest) - r);
 
-            Text weightTxt = new Text(String.format("%.1f", edge.weight));
+            if (graph.path.contains(edge)) {
+                e.fillProperty().set(Color.GOLD);
+            }
+
+            Point2D para = new Point2D(xDest - xSrc, yDest - ySrc).normalize().scale(r / 4);
+            Point2D perp = new Point2D(-yDest + ySrc, xDest - xSrc).normalize().scale(r / 4);
+
+            Point2D p1 = new Point2D(xDest, yDest)
+                    .subtract(new Point2D(xDest - xSrc, yDest - ySrc).normalize().scale(r));
+            Point2D p2 = p1.subtract(para).add(perp);
+            Point2D p3 = p1.subtract(para).subtract(perp);
+
+            Polygon pointer = new Polygon(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+
+            pointer.fillProperty().set(colorEdge);
+
+            Text weightTxt = new Text(String.format("%.2f", edge.weight));
             weightTxt.maxWidth(2 * r);
             weightTxt.relocate((Math.max(xSrc, xDest) - Math.min(xSrc, xDest)) / 2 + Math.min(xSrc, xDest) - r / 2,
                     (Math.max(ySrc, yDest) - Math.min(ySrc, yDest)) / 2 + Math.min(ySrc, yDest) - r / 2);
@@ -142,6 +190,7 @@ public class GraphAnimator extends AnimationTimer {
             canvas.getChildren().add(l);
             canvas.getChildren().add(e);
             canvas.getChildren().add(weightTxt);
+            canvas.getChildren().add(pointer);
         }
 
         for (var node : graph.nodes) {
@@ -164,16 +213,23 @@ public class GraphAnimator extends AnimationTimer {
 
             if (graph.dists.containsKey(node)) {
                 if (graph.dists.get(node) != Double.POSITIVE_INFINITY) {
-                    description = String.format("%.1f", graph.dists.get(node));
+                    description = String.format("%.2f", graph.dists.get(node));
                 } else {
                     description = "INF";
                 }
             }
 
-            Text txt = new Text(description);
+            if (graph.src == node) {
+                description = "src";
+                e.fillProperty().set(Color.GREEN);
+            }
 
-            // System.out.printf("draw():: add ellipse: w/h: %f, at (%f, %f%n",
-            // r, x, y);
+            if (graph.dest == node) {
+                description = "dest";
+                e.fillProperty().set(Color.RED);
+            }
+
+            Text txt = new Text(description);
 
             canvas.getChildren().add(e);
             canvas.getChildren().add(txt);
@@ -182,6 +238,27 @@ public class GraphAnimator extends AnimationTimer {
             txt.relocate(x + 0.5 * r, y + 0.5 * r);
 
             e.addEventHandler(MouseEvent.MOUSE_PRESSED, (event) -> addEdge(event, node));
+            e.addEventHandler(MouseEvent.MOUSE_PRESSED, (event) -> {
+                if (!event.isSecondaryButtonDown()) {
+                    return;
+                }
+                if (!event.isShiftDown()) {
+                    return;
+                }
+                graph.remove(node);
+                draw();
+            });
+            txt.addEventHandler(MouseEvent.MOUSE_PRESSED, (event) -> {
+                if (!event.isSecondaryButtonDown()) {
+                    return;
+                }
+                if (!event.isShiftDown()) {
+                    return;
+                }
+                graph.remove(node);
+                draw();
+            });
+            txt.addEventHandler(MouseEvent.MOUSE_PRESSED, (event) -> addEdge(event, node));
         }
     }
 
@@ -190,9 +267,10 @@ public class GraphAnimator extends AnimationTimer {
         layout.setId("graph__layout");
         canvas = new Pane();
         canvas.setId("graph__canvas");
-        topPanel = new HBox();
+        topPanel = new VBox();
         topPanel.setId("graph__topPanel");
-        title = new Text(name);
+        title = new Text("How-To: Click to add nodes and edges, Right-click to set source and destination");
+        info = new Text("");
         title.setId("graph__title");
 
         StackPane canvasStack = new StackPane();
@@ -217,7 +295,7 @@ public class GraphAnimator extends AnimationTimer {
         canvasOverlay.getChildren().add(edgeLine);
 
         layout.getChildren().addAll(topPanel, canvasStack);
-        topPanel.getChildren().add(title);
+        topPanel.getChildren().addAll(title, info);
 
         layout.prefWidthProperty().bind(renderTarget.widthProperty());
         layout.prefHeightProperty().bind(renderTarget.heightProperty());
@@ -249,11 +327,21 @@ public class GraphAnimator extends AnimationTimer {
                     new Point2D(e.getX() / canvas.widthProperty().doubleValue(),
                             e.getY() / canvas.heightProperty().doubleValue()));
 
+            double minDist = Double.MAX_VALUE;
+            for (var n : graph.nodes) {
+                if (minDist > n.pos.dist(node.pos)) {
+                    minDist = n.pos.dist(node.pos);
+                }
+            }
+            if (minDist < 3 * rProp) {
+                return;
+            }
+
             // System.out.printf("added node at %s on canvas(%.1f %.1f)%n",
             // node.pos.toString(), canvas.widthProperty().doubleValue(),
             // canvas.heightProperty().doubleValue());
 
-            System.out.println(graph.toString());
+            // System.out.println(graph.toString());
             graph.nodes.add(node);
             draw();
         });
@@ -263,13 +351,22 @@ public class GraphAnimator extends AnimationTimer {
     void addEdge(MouseEvent event, Node<Integer> node) {
         event.consume();
 
-        if (event.isSecondaryButtonDown()) {
-            if (srcDestPick == 0) {
-
+        if (event.isSecondaryButtonDown() && !event.isShiftDown()) {
+            if (node == graph.src) {
+                graph.dest = node;
+                graph.src = null;
+            } else if (node == graph.dest) {
+                graph.src = node;
+                graph.dest = null;
             } else {
-
+                if (graph.src == null) {
+                    graph.src = node;
+                } else {
+                    graph.dest = node;
+                }
+                srcDestPick = (srcDestPick + 1) % 2;
             }
-            srcDestPick = (srcDestPick + 1) % 2;
+            draw();
         }
 
         if (event.isPrimaryButtonDown()) {
@@ -287,7 +384,7 @@ public class GraphAnimator extends AnimationTimer {
             graph.edges.add(new Edge<>(edgeSrc, node));
             edgeLine.visibleProperty().setValue(false);
             edgeSrc = null;
-            System.out.println(graph.toString());
+            // System.out.println(graph.toString());
             draw();
         }
     }

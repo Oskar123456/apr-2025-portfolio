@@ -21,6 +21,6 @@ public class Edge<T> {
     }
 
     public String toString() {
-        return String.format("Edge(%.1f)[%s, %s]", weight, src.toString(), dest.toString());
+        return String.format("Edge(%.2f)[%s, %s]", weight, src.toString(), dest.toString());
     }
 }

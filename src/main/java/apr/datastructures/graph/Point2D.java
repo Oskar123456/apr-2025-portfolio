@@ -32,6 +32,27 @@ public class Point2D extends Point {
         return new Point2D(x + other.x, y + other.y);
     }
 
+    public Point2D subtract(Point2D other) {
+        return new Point2D(x - other.x, y - other.y);
+    }
+
+    public Point2D scale(double scale) {
+        this.x *= scale;
+        this.y *= scale;
+        return this;
+    }
+
+    public Point2D normalize() {
+        double len = magnitude();
+        this.x /= len;
+        this.y /= len;
+        return this;
+    }
+
+    public boolean equals(Object other) {
+        return other != null && this.x == ((Point2D) other).x && this.y == ((Point2D) other).y;
+    }
+
     public String toString() {
         return String.format("Point2D[%.1f, %.1f]", x, y);
     }
