@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import apr.algorithms.graph.visualization.AStarGuiExample;
+import apr.algorithms.graph.visualization.GraphAnimator;
+import apr.algorithms.graph.visualization.GraphGUIExample;
 import apr.sorting.BubbleSort;
 import apr.sorting.HeapSort;
 import apr.sorting.QuickSort;
@@ -121,6 +123,7 @@ public class AppGui extends Application {
                 "Quick Sort",
                 "Bubble- & Quick- & Heap Sort",
                 new Separator(),
+                "A* Graph Search",
                 "A* Algorithm"));
         contentSelection.getSelectionModel().clearAndSelect(0);
         setGuiExample(0);
@@ -172,6 +175,7 @@ public class AppGui extends Application {
                 new SortFn[] { BubbleSort::sort, HeapSort::sort, QuickSort::sort },
                 new String[] { "Bubble Sort", "Heap Sort", "Quick Sort" }));
         guiExamples.add(null);
+        guiExamples.add(new GraphGUIExample());
         guiExamples.add(new AStarGuiExample(W - 2 * padding, H - 2 * padding));
 
         for (var example : guiExamples) {

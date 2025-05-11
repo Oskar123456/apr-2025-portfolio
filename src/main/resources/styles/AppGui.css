@@ -97,3 +97,27 @@
     /* -fx-hgap: 10px; */
     /* -fx-vgap: 10px; */
 }
+
+#graph__layout {
+}
+
+#graph__canvas {
+}
+
+#graph__topPanel { 
+    -fx-border-width: 2px 0px 2px 0px;
+    -fx-border-radius: 0px;
+    -fx-border-color: black;
+    -fx-alignment: center;
+}
+
+#graph__title { 
+}
+
+#graph__content {
+}
+
+#graph__title-panel {
+    -fx-alignment: center;
+        -fx-font-size: 25px;
+}

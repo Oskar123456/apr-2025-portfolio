@@ -1,8 +1,12 @@
 package apr;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
 
+import apr.algorithms.graph.visualization.Node;
 import apr.datastructures.Hashmap;
 
 /**
