@@ -14,6 +14,7 @@ public class Graph<T> {
 
     public List<Node<T>> nodes;
     public List<Edge<T>> edges;
+    Map<Node<T>, List<Edge<T>>> nodeEdges;
 
     public Map<Node<T>, Double> dists;
     public Map<Node<T>, Double> guesstimates;
@@ -26,6 +27,7 @@ public class Graph<T> {
     public Graph() {
         nodes = new ArrayList<>();
         edges = new ArrayList<>();
+        nodeEdges = new HashMap<>();
         dists = new HashMap<>();
         guesstimates = new HashMap<>();
         srcs = new HashMap<>();
@@ -37,6 +39,10 @@ public class Graph<T> {
         }
     }
 
+    public List<Edge<T>> getNeighbors(Node<T> node) {
+        return nodeEdges.get(node);
+    }
+
     public void remove(Node<T> node) {
         nodes.remove(node);
         List<Edge<T>> edgesToRemove = new ArrayList<>();
@@ -45,6 +51,7 @@ public class Graph<T> {
                 edgesToRemove.add(edge);
             }
         }
+        nodeEdges.remove(node);
         edges.removeAll(edgesToRemove);
         dists.remove(node);
         guesstimates.remove(node);
@@ -73,13 +80,20 @@ public class Graph<T> {
         return str;
     }
 
+    public void addNode(Node<T> node) {
+        nodes.add(node);
+        nodeEdges.put(node, new ArrayList<>());
+    }
+
     public void addEdge(Edge<T> edge) {
         for (var e : edges) {
             if (e.src == edge.src && e.dest == edge.dest) {
                 return;
             }
         }
-        System.out.println("added edge " + edge);
         edges.add(edge);
+        if (nodeEdges.containsKey(edge.src))
+            nodeEdges.put(edge.src, new ArrayList<>());
+        nodeEdges.get(edge.src).add(edge);
     }
 }

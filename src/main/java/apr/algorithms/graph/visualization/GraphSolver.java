@@ -30,7 +30,7 @@ public class GraphSolver {
                 break;
             }
 
-            for (var edge : graph.edges) {
+            for (var edge : graph.getNeighbors(curNode)) {
                 if (edge.src != curNode) {
                     continue;
                 }
@@ -72,7 +72,7 @@ public class GraphSolver {
                 break;
             }
 
-            for (var edge : graph.edges) {
+            for (var edge : graph.getNeighbors(curNode)) {
                 if (edge.src != curNode) {
                     continue;
                 }

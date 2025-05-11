@@ -335,7 +335,7 @@ public class GraphAnimator extends AnimationTimer {
                 return;
             }
 
-            graph.nodes.add(node);
+            graph.addNode(node);
             draw();
         });
 

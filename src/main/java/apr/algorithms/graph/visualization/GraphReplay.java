@@ -58,8 +58,10 @@ public class GraphReplay<T> {
 
     public void storeState(Graph<T> graph) {
         Graph<T> newGraph = new Graph<>();
-        newGraph.nodes.addAll(graph.nodes);
-        newGraph.edges.addAll(graph.edges);
+        for (var node : graph.nodes)
+            newGraph.addNode(node);
+        for (var edge : graph.edges)
+            newGraph.addEdge(edge);
         newGraph.dists.putAll(graph.dists);
         newGraph.srcs.putAll(graph.srcs);
         newGraph.visited.addAll(graph.visited);
