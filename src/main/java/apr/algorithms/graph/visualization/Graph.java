@@ -86,14 +86,20 @@ public class Graph<T> {
     }
 
     public void addEdge(Edge<T> edge) {
+        if (edge.src == edge.dest) {
+            return;
+        }
+
         for (var e : edges) {
             if (e.src == edge.src && e.dest == edge.dest) {
                 return;
             }
         }
+
         edges.add(edge);
-        if (nodeEdges.containsKey(edge.src))
+        if (!nodeEdges.containsKey(edge.src)) {
             nodeEdges.put(edge.src, new ArrayList<>());
+        }
         nodeEdges.get(edge.src).add(edge);
     }
 }

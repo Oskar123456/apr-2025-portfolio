@@ -50,6 +50,7 @@ public class SortingGUIExample extends GUIExample {
         setTitle(title);
         addOptions();
         reset();
+        stop();
     }
 
     public void setTitle(String title) {
