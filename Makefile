@@ -1,4 +1,5 @@
-groupId="apr"
+# groupId="apr"
+groupId="apr.reflection"
 mainClass="App"
 
 build:

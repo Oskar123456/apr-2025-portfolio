@@ -1,13 +1,44 @@
 package apr.reflection;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * RecordGen
  */
 public class RecordGen {
+
+    static Map<Class<?>, FieldExtractor> extractors = Map.of(
+            Double.class, (field, json) -> json.get(field.getName()).asDouble(),
+            Float.class, (field, json) -> (float) json.get(field.getName()).asDouble(),
+            Long.class, (field, json) -> json.get(field.getName()).asLong(),
+            Integer.class, (field, json) -> json.get(field.getName()).asInt(),
+            String.class, (field, json) -> json.get(field.getName()).asText());
+
+    public static Object fromJson(JsonNode json)
+            throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+            ClassNotFoundException {
+
+        Class<?> cls = Class.forName(json.get("className").asText());
+        Constructor<?> ctor = cls.getConstructors()[0]; // record has exactly 1 constructor
+        List<Object> ctorArgs = new ArrayList<>();
+
+        for (var field : cls.getDeclaredFields()) {
+            if (!extractors.containsKey(field.getType())) {
+                System.out.println("RecordGen.fromJson(): Error: enrecognized field type " + field.getType().getName());
+                continue;
+            }
+            ctorArgs.add(extractors.get(field.getType()).extract(field, json));
+        }
+
+        return ctor.newInstance(ctorArgs.toArray());
+    }
 
     public static Object gen(String query) throws InstantiationException,
             IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException,
@@ -55,4 +86,12 @@ public class RecordGen {
         }
     }
 
+}
+
+/**
+ * FieldExtractor
+ */
+interface FieldExtractor {
+
+    public Object extract(Field field, JsonNode json);
 }

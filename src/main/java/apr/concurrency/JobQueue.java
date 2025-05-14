@@ -1,5 +1,8 @@
 package apr.concurrency;
 
-public class JobQueue
-{
+/**
+ * JobQueue
+ */
+public class JobQueue {
+
 }
