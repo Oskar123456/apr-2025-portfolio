@@ -6,8 +6,7 @@ html {
     background-color: gray;
 }
 
-body {
-}
+body {}
 
 .reflection__body {
     background-color: gray;
@@ -18,7 +17,7 @@ body {
 
     grid-template-columns: auto auto auto;
     grid-template-rows: auto;
-    
+
     background-color: gray;
     color: gray;
     max-width: 75vw;
@@ -40,7 +39,7 @@ body {
 }
 
 .reflection__content {
-    
+
     background-color: gray;
 }
 
@@ -51,7 +50,7 @@ body {
     width: fit-content;
     align-items: center;
     justify-content: space-between;
-    
+
     background-color: #A3A3A3;
 
     border-radius: 4px;
@@ -76,9 +75,11 @@ body {
         margin: 4px 4px;
         display: flex;
         justify-content: space-between;
+
         input {
             width: 33%;
         }
+
         label {
             color: black;
         }
@@ -93,7 +94,7 @@ body {
 .reflection__form-div {
     display: flex;
     flex-direction: column;
-    
+
     padding: 10px;
     border-radius: 4px;
 
