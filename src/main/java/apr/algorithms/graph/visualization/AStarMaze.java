@@ -10,9 +10,22 @@ import apr.datastructures.graph.TwoTuple;
  */
 public class AStarMaze {
 
+    static double tieThreshold = 0.001;
+
     public static void solveAllowDiag(Maze maze, HeuristicFunction heuristicFct) {
         maze.dists.put(maze.src, 0D);
-        var PQ = new PriorityQueue<TwoTuple<Point2DI, Double>>((a, b) -> a.second.compareTo(b.second));
+        var PQ = new PriorityQueue<TwoTuple<Point2DI, Double>>((a, b) -> {
+            if (Math.abs(a.second.compareTo(b.second)) <= tieThreshold) {
+                double aDist = a.first.dist(maze.dest);
+                double bDist = b.first.dist(maze.dest);
+                if (aDist < bDist) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            }
+            return a.second.compareTo(b.second);
+        });
         PQ.add(new TwoTuple<Point2DI, Double>(maze.src, 0D));
 
         while (!PQ.isEmpty()) {
