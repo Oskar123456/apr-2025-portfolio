@@ -39,12 +39,20 @@ public class App {
 
             List<Class<?>> classes = ClassFinder.find("apr.reflection.records");
 
+            Element title = index.createElement("h1");
+            title.text("APR REFLECTION EXAMPLE");
+            title.attributes().add("class", "reflection__title");
+
+            Element subTitle = index.createElement("h2");
+            subTitle.text("Here you can create new classes/records");
+            subTitle.attributes().add("class", "reflection__sub-title");
+
             Element container = index.createElement("div");
             container.attributes().add("class", "reflection__container");
-            for (var cls : classes) {
-                Element recordForm = RecordFormGen.gen(index, cls);
-                container.appendChild(recordForm);
-            }
+            container.appendChildren(classes.stream().map(cl -> RecordFormGen.gen(index, cl)).toList());
+
+            index.body().appendChild(title);
+            index.body().appendChild(subTitle);
             index.body().appendChild(container);
             index.body().attributes().add("class", "reflection__body");
 

@@ -15,7 +15,8 @@ public class RecordFormGen {
 
         Element title = doc.createElement("h1");
         title.attributes().add("class", "reflection__form-title");
-        title.text("Create new " + cls.getName());
+        // title.text("Create new " + cls.getName());
+        title.text(cls.getName());
 
         Element form = doc.createElement("form");
         form.attributes().add("onsubmit", "reflectionFormSubmit(event)");
@@ -52,10 +53,10 @@ public class RecordFormGen {
         Element submit = doc.createElement("input");
         submit.attributes().add("type", "submit");
         submit.attributes().add("value", "Submit");
-        ul.appendChild(submit);
 
         form.appendChild(className);
         form.appendChild(ul);
+        form.appendChild(submit);
 
         div.appendChild(title);
         div.appendChild(form);
