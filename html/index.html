@@ -1,193 +1,113 @@
 <!doctype html>
 <html>
-
-<head>
-        <meta charset="utf-8">
-        <title data-l10n-id="newtab-page-title"></title>
-        <link rel="stylesheet" href="index.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
-                integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
-                crossorigin="anonymous">
-        <script type="text/javascript" src="index.js"></script>
-</head>
-
-<body class="reflection__body" class="reflection__body">
-        <h1 class="reflection__title">APR REFLECTION EXAMPLE</h1>
-        <h2 class="reflection__sub-title">Here you can create new classes/records</h2>
-        <div class="reflection__container">
-                <div class="reflection__form-div">
-                        <h1 class="reflection__form-title">apr.reflection.records.MyRecord7</h1>
-                        <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post"
-                                action="javascript">
-                                <input type="hidden" name="className" value="apr.reflection.records.MyRecord7">
-                                <ul class="reflection__ul">
-                                        <li><label for="5afd8f98-fdd2-48d6-979c-d781fd86a431">[java.lang.String]
-                                                        firstNameA:</label><input name="firstNameA" type="text"
-                                                        id="5afd8f98-fdd2-48d6-979c-d781fd86a431"></li>
-                                        <li><label for="7eecc837-f017-42ce-b9a3-4c1b817c88e0">[java.lang.String]
-                                                        firstNameB:</label><input name="firstNameB" type="text"
-                                                        id="7eecc837-f017-42ce-b9a3-4c1b817c88e0"></li>
-                                        <li><label for="c088383b-e34b-448d-8ab5-666f8c322dbf">[java.lang.String]
-                                                        firstNameC:</label><input name="firstNameC" type="text"
-                                                        id="c088383b-e34b-448d-8ab5-666f8c322dbf"></li>
-                                        <li><label for="bb7a6869-56fc-4285-bcc7-d73fd8664930">[java.lang.String]
-                                                        lastName:</label><input name="lastName" type="text"
-                                                        id="bb7a6869-56fc-4285-bcc7-d73fd8664930"></li>
-                                        <li><label for="f617ffb9-beb1-4d8f-bd65-c8378275bd60">[java.lang.String]
-                                                        email:</label><input name="email" type="text"
-                                                        id="f617ffb9-beb1-4d8f-bd65-c8378275bd60"></li>
-                                        <li><label for="f24a63e3-e638-48a3-ab83-90673adf8ae8">[java.lang.Integer]
-                                                        age:</label><input name="age" type="text"
-                                                        id="f24a63e3-e638-48a3-ab83-90673adf8ae8"></li>
-                                        <li><label for="52dfdd0a-4bd7-465e-a327-5ca9aa5856c9">[java.lang.Double]
-                                                        height:</label><input name="height" type="text"
-                                                        id="52dfdd0a-4bd7-465e-a327-5ca9aa5856c9"></li>
-                                </ul>
-                                <input type="submit" value="Submit">
-                        </form>
-                </div>
-                <div class="reflection__form-div">
-                        <h1 class="reflection__form-title">apr.reflection.records.MyRecord2</h1>
-                        <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post"
-                                action="javascript">
-                                <input type="hidden" name="className" value="apr.reflection.records.MyRecord2">
-                                <ul class="reflection__ul">
-                                        <li><label for="c7184784-e98c-427c-8cd4-0338b79b2e3a">[java.lang.String]
-                                                        name:</label><input name="name" type="text"
-                                                        id="c7184784-e98c-427c-8cd4-0338b79b2e3a"></li>
-                                        <li><label for="caa504b5-fb83-4335-849b-ee3403cd404b">[java.lang.Double]
-                                                        x:</label><input name="x" type="text"
-                                                        id="caa504b5-fb83-4335-849b-ee3403cd404b"></li>
-                                        <li><label for="32231692-95a5-4e21-9aba-fe69a6cba6ce">[java.lang.Double]
-                                                        y:</label><input name="y" type="text"
-                                                        id="32231692-95a5-4e21-9aba-fe69a6cba6ce"></li>
-                                </ul>
-                                <input type="submit" value="Submit">
-                        </form>
-                </div>
-                <div class="reflection__form-div">
-                        <h1 class="reflection__form-title">apr.reflection.records.MyRecord1</h1>
-                        <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post"
-                                action="javascript">
-                                <input type="hidden" name="className" value="apr.reflection.records.MyRecord1">
-                                <ul class="reflection__ul">
-                                        <li><label for="cefa405e-2c41-4427-9a30-218344e06e29">[java.lang.Double]
-                                                        x:</label><input name="x" type="text"
-                                                        id="cefa405e-2c41-4427-9a30-218344e06e29"></li>
-                                        <li><label for="a57e2c94-1bc7-453d-b1e5-277312ed93de">[java.lang.Double]
-                                                        y:</label><input name="y" type="text"
-                                                        id="a57e2c94-1bc7-453d-b1e5-277312ed93de"></li>
-                                        <li><label for="ce397ef8-a86c-4235-ae55-591ace6f98ba">[java.lang.Double]
-                                                        z:</label><input name="z" type="text"
-                                                        id="ce397ef8-a86c-4235-ae55-591ace6f98ba"></li>
-                                </ul>
-                                <input type="submit" value="Submit">
-                        </form>
-                </div>
-                <div class="reflection__form-div">
-                        <h1 class="reflection__form-title">apr.reflection.records.MyRecord3</h1>
-                        <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post"
-                                action="javascript">
-                                <input type="hidden" name="className" value="apr.reflection.records.MyRecord3">
-                                <ul class="reflection__ul">
-                                        <li><label for="c46336a2-dced-4cf3-b8ee-3713d6b143ae">[java.lang.String]
-                                                        name:</label><input name="name" type="text"
-                                                        id="c46336a2-dced-4cf3-b8ee-3713d6b143ae"></li>
-                                        <li><label for="a234395c-422b-4ec3-935d-479d47517930">[java.lang.String]
-                                                        email:</label><input name="email" type="text"
-                                                        id="a234395c-422b-4ec3-935d-479d47517930"></li>
-                                        <li><label for="a3488896-54a6-411b-958b-e5a722bed8d3">[java.lang.Integer]
-                                                        age:</label><input name="age" type="text"
-                                                        id="a3488896-54a6-411b-958b-e5a722bed8d3"></li>
-                                        <li><label for="bb63917e-18e8-4148-9200-91190294f831">[java.lang.Double]
-                                                        height:</label><input name="height" type="text"
-                                                        id="bb63917e-18e8-4148-9200-91190294f831"></li>
-                                </ul>
-                                <input type="submit" value="Submit">
-                        </form>
-                </div>
-                <div class="reflection__form-div">
-                        <h1 class="reflection__form-title">apr.reflection.records.MyRecord5</h1>
-                        <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post"
-                                action="javascript">
-                                <input type="hidden" name="className" value="apr.reflection.records.MyRecord5">
-                                <ul class="reflection__ul">
-                                        <li><label for="d3437d51-7a91-4e1b-990a-48b92f83da3e">[java.lang.String]
-                                                        firstName:</label><input name="firstName" type="text"
-                                                        id="d3437d51-7a91-4e1b-990a-48b92f83da3e"></li>
-                                        <li><label for="c81d4f09-7c93-4ed4-8d8e-0f16d6de6caa">[java.lang.String]
-                                                        lastName:</label><input name="lastName" type="text"
-                                                        id="c81d4f09-7c93-4ed4-8d8e-0f16d6de6caa"></li>
-                                        <li><label for="da64fd19-10a7-4e1d-b15f-61ad547f5b0a">[java.lang.String]
-                                                        email:</label><input name="email" type="text"
-                                                        id="da64fd19-10a7-4e1d-b15f-61ad547f5b0a"></li>
-                                        <li><label for="76923a8c-0ecd-4524-8404-4b529736d8d0">[java.lang.String]
-                                                        email24:</label><input name="email24" type="text"
-                                                        id="76923a8c-0ecd-4524-8404-4b529736d8d0"></li>
-                                        <li><label for="d1840fed-f0f6-4f4d-abe0-dd41bd2c7920">[java.lang.String]
-                                                        email75:</label><input name="email75" type="text"
-                                                        id="d1840fed-f0f6-4f4d-abe0-dd41bd2c7920"></li>
-                                        <li><label for="f2a8325c-f959-42fe-84aa-bdbe8792da0e">[java.lang.Integer]
-                                                        age:</label><input name="age" type="text"
-                                                        id="f2a8325c-f959-42fe-84aa-bdbe8792da0e"></li>
-                                        <li><label for="8f587bbb-be3a-4c0c-b142-a181defdcb04">[java.lang.Double]
-                                                        height:</label><input name="height" type="text"
-                                                        id="8f587bbb-be3a-4c0c-b142-a181defdcb04"></li>
-                                </ul>
-                                <input type="submit" value="Submit">
-                        </form>
-                </div>
-                <div class="reflection__form-div">
-                        <h1 class="reflection__form-title">apr.reflection.records.MyRecord6</h1>
-                        <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post"
-                                action="javascript">
-                                <input type="hidden" name="className" value="apr.reflection.records.MyRecord6">
-                                <ul class="reflection__ul">
-                                        <li><label for="9aa7ac7d-6468-4c7f-99b5-ec898e478d8b">[java.lang.String]
-                                                        firstName:</label><input name="firstName" type="text"
-                                                        id="9aa7ac7d-6468-4c7f-99b5-ec898e478d8b"></li>
-                                        <li><label for="647203df-2861-4570-9744-cdf9183d8597">[java.lang.String]
-                                                        lastName:</label><input name="lastName" type="text"
-                                                        id="647203df-2861-4570-9744-cdf9183d8597"></li>
-                                        <li><label for="2abda8e8-76bc-4ef3-8c00-ccb0aefda2d7">[java.lang.String]
-                                                        email:</label><input name="email" type="text"
-                                                        id="2abda8e8-76bc-4ef3-8c00-ccb0aefda2d7"></li>
-                                        <li><label for="b6bc8b29-ed75-4bd2-8cdc-8a2e096ab6c1">[java.lang.Integer]
-                                                        age:</label><input name="age" type="text"
-                                                        id="b6bc8b29-ed75-4bd2-8cdc-8a2e096ab6c1"></li>
-                                        <li><label for="7f7eae62-7b91-4cbe-8819-24c2881fe3a5">[java.lang.Double]
-                                                        height:</label><input name="height" type="text"
-                                                        id="7f7eae62-7b91-4cbe-8819-24c2881fe3a5"></li>
-                                </ul>
-                                <input type="submit" value="Submit">
-                        </form>
-                </div>
-                <div class="reflection__form-div">
-                        <h1 class="reflection__form-title">apr.reflection.records.MyRecord4</h1>
-                        <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post"
-                                action="javascript">
-                                <input type="hidden" name="className" value="apr.reflection.records.MyRecord4">
-                                <ul class="reflection__ul">
-                                        <li><label for="0bea371a-fd7d-40ef-9c61-c01bceb12868">[java.lang.String]
-                                                        firstName:</label><input name="firstName" type="text"
-                                                        id="0bea371a-fd7d-40ef-9c61-c01bceb12868"></li>
-                                        <li><label for="3cf41455-8a28-42f5-8e35-0663e4e96092">[java.lang.String]
-                                                        lastName:</label><input name="lastName" type="text"
-                                                        id="3cf41455-8a28-42f5-8e35-0663e4e96092"></li>
-                                        <li><label for="e8c1e559-cca5-4836-bb4f-57b343e53277">[java.lang.String]
-                                                        email:</label><input name="email" type="text"
-                                                        id="e8c1e559-cca5-4836-bb4f-57b343e53277"></li>
-                                        <li><label for="e7015401-8d68-4791-a4d6-1ce7fdd2f2c6">[java.lang.Integer]
-                                                        age:</label><input name="age" type="text"
-                                                        id="e7015401-8d68-4791-a4d6-1ce7fdd2f2c6"></li>
-                                        <li><label for="ffba73f3-0c52-4ea6-9159-f52e923dbc8a">[java.lang.Double]
-                                                        height:</label><input name="height" type="text"
-                                                        id="ffba73f3-0c52-4ea6-9159-f52e923dbc8a"></li>
-                                </ul>
-                                <input type="submit" value="Submit">
-                        </form>
-                </div>
-        </div>
-</body>
-
+ <head>
+  <meta charset="utf-8">
+  <title data-l10n-id="newtab-page-title"></title>
+  <link rel="stylesheet" href="index.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+  <script type="text/javascript" src="index.js"></script>
+ </head>
+ <body class="reflection__body" class="reflection__body">  
+  <h1 class="reflection__title">APR REFLECTION EXAMPLE</h1>
+  <h2 class="reflection__sub-title">Here you can create new classes/records</h2>
+  <div class="reflection__container">
+   <div class="reflection__form-div">
+    <h1 class="reflection__form-title">apr.reflection.records.MyRecord7</h1>
+    <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
+     <input type="hidden" name="className" value="apr.reflection.records.MyRecord7">
+     <ul class="reflection__ul">
+      <li><label for="31960330-fcc2-4f20-a603-a13010452f57">[java.lang.String] firstNameA:</label><input name="firstNameA" type="text" id="31960330-fcc2-4f20-a603-a13010452f57"></li>
+      <li><label for="764c07e4-999a-45d2-b54d-d19c675b3776">[java.lang.String] firstNameB:</label><input name="firstNameB" type="text" id="764c07e4-999a-45d2-b54d-d19c675b3776"></li>
+      <li><label for="7a4f8c5b-0b5e-402a-8551-0b40c539ed78">[java.lang.String] firstNameC:</label><input name="firstNameC" type="text" id="7a4f8c5b-0b5e-402a-8551-0b40c539ed78"></li>
+      <li><label for="2d30755c-3ab7-4e26-b746-a4c38d8fe0b8">[java.lang.String] lastName:</label><input name="lastName" type="text" id="2d30755c-3ab7-4e26-b746-a4c38d8fe0b8"></li>
+      <li><label for="e5c45c43-8dfa-4943-860d-6da38f11cbaa">[java.lang.String] email:</label><input name="email" type="text" id="e5c45c43-8dfa-4943-860d-6da38f11cbaa"></li>
+      <li><label for="f48f58c2-2d26-43c5-b1b5-01c2714d8b93">[java.lang.Integer] age:</label><input name="age" type="text" id="f48f58c2-2d26-43c5-b1b5-01c2714d8b93"></li>
+      <li><label for="2b63a7ee-08dc-48d2-8d8d-32a82239b81c">[java.lang.Double] height:</label><input name="height" type="text" id="2b63a7ee-08dc-48d2-8d8d-32a82239b81c"></li>
+     </ul>
+     <input type="submit" value="Submit">
+    </form>
+   </div>
+   <div class="reflection__form-div">
+    <h1 class="reflection__form-title">apr.reflection.records.MyRecord2</h1>
+    <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
+     <input type="hidden" name="className" value="apr.reflection.records.MyRecord2">
+     <ul class="reflection__ul">
+      <li><label for="f2802709-af07-487b-b30e-057669243560">[java.lang.String] name:</label><input name="name" type="text" id="f2802709-af07-487b-b30e-057669243560"></li>
+      <li><label for="baa37de0-e487-4757-b795-2dcbacbe43dd">[java.lang.Double] x:</label><input name="x" type="text" id="baa37de0-e487-4757-b795-2dcbacbe43dd"></li>
+      <li><label for="879d7893-9c90-4b47-8c29-202ba709db08">[java.lang.Double] y:</label><input name="y" type="text" id="879d7893-9c90-4b47-8c29-202ba709db08"></li>
+     </ul>
+     <input type="submit" value="Submit">
+    </form>
+   </div>
+   <div class="reflection__form-div">
+    <h1 class="reflection__form-title">apr.reflection.records.MyRecord1</h1>
+    <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
+     <input type="hidden" name="className" value="apr.reflection.records.MyRecord1">
+     <ul class="reflection__ul">
+      <li><label for="8409b84a-706d-4c75-b4cf-3a4cb19f2b3b">[java.lang.Double] x:</label><input name="x" type="text" id="8409b84a-706d-4c75-b4cf-3a4cb19f2b3b"></li>
+      <li><label for="cdd9cba0-1a24-4630-bfea-bb34804507cd">[java.lang.Double] y:</label><input name="y" type="text" id="cdd9cba0-1a24-4630-bfea-bb34804507cd"></li>
+      <li><label for="1a5b6d79-2d86-4515-8aad-9c5c56ca1074">[java.lang.Double] z:</label><input name="z" type="text" id="1a5b6d79-2d86-4515-8aad-9c5c56ca1074"></li>
+     </ul>
+     <input type="submit" value="Submit">
+    </form>
+   </div>
+   <div class="reflection__form-div">
+    <h1 class="reflection__form-title">apr.reflection.records.MyRecord3</h1>
+    <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
+     <input type="hidden" name="className" value="apr.reflection.records.MyRecord3">
+     <ul class="reflection__ul">
+      <li><label for="0601f580-e8a3-4cf4-965a-c400aa6efc2b">[java.lang.String] name:</label><input name="name" type="text" id="0601f580-e8a3-4cf4-965a-c400aa6efc2b"></li>
+      <li><label for="daa194f4-48fe-4591-9a91-a7d0d6051463">[java.lang.String] email:</label><input name="email" type="text" id="daa194f4-48fe-4591-9a91-a7d0d6051463"></li>
+      <li><label for="2ee101c4-5043-482e-9dcd-c6079b919ffc">[java.lang.Integer] age:</label><input name="age" type="text" id="2ee101c4-5043-482e-9dcd-c6079b919ffc"></li>
+      <li><label for="fda8108e-9c42-4640-b97d-aff987659f54">[java.lang.Double] height:</label><input name="height" type="text" id="fda8108e-9c42-4640-b97d-aff987659f54"></li>
+     </ul>
+     <input type="submit" value="Submit">
+    </form>
+   </div>
+   <div class="reflection__form-div">
+    <h1 class="reflection__form-title">apr.reflection.records.MyRecord5</h1>
+    <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
+     <input type="hidden" name="className" value="apr.reflection.records.MyRecord5">
+     <ul class="reflection__ul">
+      <li><label for="2d889e04-10b2-475e-a6f0-aa2b43d767a7">[java.lang.String] firstName:</label><input name="firstName" type="text" id="2d889e04-10b2-475e-a6f0-aa2b43d767a7"></li>
+      <li><label for="0637d645-ca44-4c51-8da5-b4e17307e13a">[java.lang.String] lastName:</label><input name="lastName" type="text" id="0637d645-ca44-4c51-8da5-b4e17307e13a"></li>
+      <li><label for="4a9595e4-c59e-4e8d-99ca-5e2d1fc8e324">[java.lang.String] email:</label><input name="email" type="text" id="4a9595e4-c59e-4e8d-99ca-5e2d1fc8e324"></li>
+      <li><label for="3d0f8862-fa19-4415-8668-5ac9734fa2a6">[java.lang.String] email24:</label><input name="email24" type="text" id="3d0f8862-fa19-4415-8668-5ac9734fa2a6"></li>
+      <li><label for="f8883b8d-5181-4a51-83bb-60b22bddf785">[java.lang.String] email75:</label><input name="email75" type="text" id="f8883b8d-5181-4a51-83bb-60b22bddf785"></li>
+      <li><label for="20172427-c0f9-48b1-9509-02fc913c1fd2">[java.lang.Integer] age:</label><input name="age" type="text" id="20172427-c0f9-48b1-9509-02fc913c1fd2"></li>
+      <li><label for="099eb37c-fc47-4be7-b2f5-56abdcb37490">[java.lang.Double] height:</label><input name="height" type="text" id="099eb37c-fc47-4be7-b2f5-56abdcb37490"></li>
+     </ul>
+     <input type="submit" value="Submit">
+    </form>
+   </div>
+   <div class="reflection__form-div">
+    <h1 class="reflection__form-title">apr.reflection.records.MyRecord6</h1>
+    <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
+     <input type="hidden" name="className" value="apr.reflection.records.MyRecord6">
+     <ul class="reflection__ul">
+      <li><label for="4b9caf1e-4526-4d1a-bb14-12befcefdaae">[java.lang.String] firstName:</label><input name="firstName" type="text" id="4b9caf1e-4526-4d1a-bb14-12befcefdaae"></li>
+      <li><label for="4dcee4c6-14d5-4c2b-a489-82d50c771b1c">[java.lang.String] lastName:</label><input name="lastName" type="text" id="4dcee4c6-14d5-4c2b-a489-82d50c771b1c"></li>
+      <li><label for="2bd563bc-f2fb-473f-996d-124e77d6cd12">[java.lang.String] email:</label><input name="email" type="text" id="2bd563bc-f2fb-473f-996d-124e77d6cd12"></li>
+      <li><label for="ee86dd3f-3e90-48e2-b64c-1eb19aee5df2">[java.lang.Integer] age:</label><input name="age" type="text" id="ee86dd3f-3e90-48e2-b64c-1eb19aee5df2"></li>
+      <li><label for="c8b0e1f3-5767-44c6-8931-a320316272f9">[java.lang.Double] height:</label><input name="height" type="text" id="c8b0e1f3-5767-44c6-8931-a320316272f9"></li>
+     </ul>
+     <input type="submit" value="Submit">
+    </form>
+   </div>
+   <div class="reflection__form-div">
+    <h1 class="reflection__form-title">apr.reflection.records.MyRecord4</h1>
+    <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
+     <input type="hidden" name="className" value="apr.reflection.records.MyRecord4">
+     <ul class="reflection__ul">
+      <li><label for="4c332192-014b-444b-be6a-f6055b0a8e30">[java.lang.String] firstName:</label><input name="firstName" type="text" id="4c332192-014b-444b-be6a-f6055b0a8e30"></li>
+      <li><label for="01974ac5-4e9a-4d76-813e-fb308c17207c">[java.lang.String] lastName:</label><input name="lastName" type="text" id="01974ac5-4e9a-4d76-813e-fb308c17207c"></li>
+      <li><label for="14b2db29-b487-40c4-9556-0b19f9348828">[java.lang.String] email:</label><input name="email" type="text" id="14b2db29-b487-40c4-9556-0b19f9348828"></li>
+      <li><label for="8882a117-5a44-43c6-9cb1-cce1d9d608f0">[java.lang.Integer] age:</label><input name="age" type="text" id="8882a117-5a44-43c6-9cb1-cce1d9d608f0"></li>
+      <li><label for="dcbc056d-5529-4cee-8b50-38ab6a53f63e">[java.lang.Double] height:</label><input name="height" type="text" id="dcbc056d-5529-4cee-8b50-38ab6a53f63e"></li>
+     </ul>
+     <input type="submit" value="Submit">
+    </form>
+   </div>
+  </div>
+ </body>
 </html>

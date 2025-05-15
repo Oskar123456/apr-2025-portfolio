@@ -1,9 +1,5 @@
 package apr.reflection;
 
-import static io.javalin.apibuilder.ApiBuilder.get;
-import static io.javalin.apibuilder.ApiBuilder.path;
-import static io.javalin.apibuilder.ApiBuilder.post;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -80,12 +76,7 @@ public class App {
 
         var jav = Javalin.create(config -> {
             config.staticFiles.add(f.getAbsolutePath(), Location.EXTERNAL);
-            config.router.apiBuilder(() -> {
-                path("/", () -> {
-                    get("/", ctx -> ctx.redirect("/index.html"));
-                    post("/records", App::onFormSubmission);
-                });
-            });
+            config.router.apiBuilder(Endpoints.getAll());
         });
         jav.afterMatched("*", ctx -> logger.info(ctx.statusCode() + ""));
 
@@ -95,25 +86,6 @@ public class App {
         System.setErr(serr);
 
         System.out.println("App.main(): serving " + f.getAbsolutePath());
-    }
-
-    static void onFormSubmission(Context ctx) throws Exception {
-        try {
-            String form = new String(ctx.bodyAsBytes());
-            System.out.println("App.onFormSubmission(): " + form);
-
-            JsonNode json = jsonMapper.readTree(form);
-            Object obj = RecordGen.fromJson(json);
-
-            System.out.printf("App.onFormSubmission(): managed to instantiate record: %s%n", obj.toString());
-
-            ctx.status(200);
-            ctx.json(obj);
-
-        } catch (Exception e) {
-            System.out.println("App.onFormSubmission(): Error: " + e.getMessage());
-            throw e;
-        }
     }
 
     static void clean() throws IOException {
