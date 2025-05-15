@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import apr.algorithms.graph.visualization.AStarGuiExample;
-import apr.algorithms.graph.visualization.GraphAnimator;
 import apr.algorithms.graph.visualization.GraphGUIExample;
 import apr.sorting.BubbleSort;
 import apr.sorting.HeapSort;

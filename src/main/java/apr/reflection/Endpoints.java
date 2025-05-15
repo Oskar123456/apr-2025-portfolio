@@ -41,7 +41,7 @@ public class Endpoints {
             System.out.printf("App.onFormSubmission(): managed to instantiate record: %s%n", obj.toString());
 
             ctx.status(200);
-            ctx.json(obj);
+            ctx.result(JSON.stringify(obj));
 
         } catch (Exception e) {
             System.out.println("App.onFormSubmission(): Error: " + e.getMessage());
