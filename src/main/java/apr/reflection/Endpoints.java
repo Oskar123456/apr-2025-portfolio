@@ -36,6 +36,7 @@ public class Endpoints {
             System.out.println("App.onFormSubmission(): " + form);
 
             JsonNode json = jsonMapper.readTree(form);
+
             Object obj = RecordGen.fromJson(json);
 
             System.out.printf("App.onFormSubmission(): managed to instantiate record: %s%n", obj.toString());
