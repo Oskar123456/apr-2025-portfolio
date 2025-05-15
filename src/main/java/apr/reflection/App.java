@@ -76,7 +76,8 @@ public class App {
             config.staticFiles.add(f.getAbsolutePath(), Location.EXTERNAL);
             config.router.apiBuilder(Endpoints.getAll());
         });
-        jav.afterMatched("*", ctx -> logger.info(ctx.statusCode() + ""));
+
+        jav.afterMatched("*", ctx -> logger.info(ctx.path() + " : " + ctx.statusCode() + ""));
 
         jav.start(9999);
 
