@@ -31,8 +31,6 @@ public class App {
             Document index = HtmlGen.loadDoc("html/index.html");
             index.body().children().clear();
 
-            List<Class<?>> classes = ClassFinder.find("apr.reflection.records");
-
             Element title = index.createElement("h1");
             title.text("APR REFLECTION EXAMPLE");
             title.attributes().add("class", "reflection__title");
@@ -43,6 +41,7 @@ public class App {
 
             Element container = index.createElement("div");
             container.attributes().add("class", "reflection__container");
+            List<Class<?>> classes = ClassFinder.find("apr.reflection.records");
             container.appendChildren(classes.stream().map(cl -> RecordFormGen.gen(index, cl)).toList());
 
             index.body().appendChild(title);
