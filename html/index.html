@@ -7,59 +7,40 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
   <script type="text/javascript" src="index.js"></script>
  </head>
- <body class="reflection__body" class="reflection__body">  
+ <body class="reflection__body">        
   <h1 class="reflection__title">APR REFLECTION EXAMPLE</h1>
   <h2 class="reflection__sub-title">Here you can create new classes/records</h2>
+  <button onclick="reflectionFinalSubmit(event)" class="reflection__final-submit-button">SUBMIT ALL</button>
+  <a download="download records" href="tmprecords.txt">Download all records</a>
+  <h2 class="reflection__sub-title">Records for submission:</h2>
+  <ul class="reflection__submissions-list" id="submissions-list"></ul>
+  <h2 class="reflection__sub-title">Ready to Download:</h2>
+  <ul class="reflection__submissions-list" id="submissions-list-to-dl"></ul>
   <div class="reflection__container">
    <div class="reflection__form-div">
-    <h1 class="reflection__form-title">apr.reflection.records.MyRecord7</h1>
+    <h1 class="reflection__form-title">apr.reflection.records.MyRecord5</h1>
     <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
-     <input type="hidden" name="className" value="apr.reflection.records.MyRecord7">
+     <input type="hidden" name="className" value="apr.reflection.records.MyRecord5">
      <ul class="reflection__ul">
-      <li><label for="9db7cad8-e192-4a24-a8eb-268808f8ce5d">[java.lang.String] firstNameA:</label><input name="firstNameA" type="text" id="9db7cad8-e192-4a24-a8eb-268808f8ce5d"></li>
-      <li><label for="64855a34-bc18-4da7-b162-cf1f0bac2784">[java.lang.String] firstNameB:</label><input name="firstNameB" type="text" id="64855a34-bc18-4da7-b162-cf1f0bac2784"></li>
-      <li><label for="0a8bbc06-78f7-42c5-bdac-d6a0f360d470">[java.lang.String] firstNameC:</label><input name="firstNameC" type="text" id="0a8bbc06-78f7-42c5-bdac-d6a0f360d470"></li>
-      <li><label for="426da999-1321-41e9-b863-44d862caa676">[java.lang.String] lastName:</label><input name="lastName" type="text" id="426da999-1321-41e9-b863-44d862caa676"></li>
-      <li><label for="32e98ba2-3342-415d-bfd4-6e012bef836e">[java.lang.String] email:</label><input name="email" type="text" id="32e98ba2-3342-415d-bfd4-6e012bef836e"></li>
-      <li><label for="569fa575-fe8a-4516-aa6a-f58ecc87127b">[java.lang.Integer] age:</label><input name="age" type="text" id="569fa575-fe8a-4516-aa6a-f58ecc87127b"></li>
-      <li><label for="d328f163-2787-4b5c-aaf9-f899e3411ff1">[java.lang.Double] height:</label><input name="height" type="text" id="d328f163-2787-4b5c-aaf9-f899e3411ff1"></li>
+      <li><label for="da13bac3-7e96-4adf-8846-ceb28ba0c4d8">[String] firstName:</label><input name="firstName" type="text" id="da13bac3-7e96-4adf-8846-ceb28ba0c4d8"></li>
+      <li><label for="3663cbb6-e690-4e8f-8a86-44e2c8dba605">[String] lastName:</label><input name="lastName" type="text" id="3663cbb6-e690-4e8f-8a86-44e2c8dba605"></li>
+      <li><label for="29dbc2ed-01fb-4445-b625-dfbbe028bdef">[String] email:</label><input name="email" type="text" id="29dbc2ed-01fb-4445-b625-dfbbe028bdef"></li>
+      <li><label for="08029561-a208-438c-b011-9acf66ff2610">[String] email24:</label><input name="email24" type="text" id="08029561-a208-438c-b011-9acf66ff2610"></li>
+      <li><label for="fa68f31b-e950-4aa5-99a2-b990a36458b7">[String] email75:</label><input name="email75" type="text" id="fa68f31b-e950-4aa5-99a2-b990a36458b7"></li>
+      <li><label for="26387a4d-042a-4c48-b0a8-0396a810593c">[Integer] age:</label><input name="age" type="text" id="26387a4d-042a-4c48-b0a8-0396a810593c"></li>
+      <li><label for="3b6dc8f7-8703-47f4-a715-e97ea43fffad">[Double] height:</label><input name="height" type="text" id="3b6dc8f7-8703-47f4-a715-e97ea43fffad"></li>
      </ul>
      <input type="submit" value="Submit">
     </form>
    </div>
    <div class="reflection__form-div">
-    <h1 class="reflection__form-title">apr.reflection.records.MyRecord2</h1>
+    <h1 class="reflection__form-title">apr.reflection.records.Vector3</h1>
     <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
-     <input type="hidden" name="className" value="apr.reflection.records.MyRecord2">
+     <input type="hidden" name="className" value="apr.reflection.records.Vector3">
      <ul class="reflection__ul">
-      <li><label for="40a84784-bf33-4594-b16f-e9f1dcc1351e">[java.lang.String] name:</label><input name="name" type="text" id="40a84784-bf33-4594-b16f-e9f1dcc1351e"></li>
-      <li><label for="bdcfe34c-1b3e-4ed7-aa39-c4b584eab888">[java.lang.Double] x:</label><input name="x" type="text" id="bdcfe34c-1b3e-4ed7-aa39-c4b584eab888"></li>
-      <li><label for="7b9a0480-6335-4b01-a9ff-035f19cd52a0">[java.lang.Double] y:</label><input name="y" type="text" id="7b9a0480-6335-4b01-a9ff-035f19cd52a0"></li>
-     </ul>
-     <input type="submit" value="Submit">
-    </form>
-   </div>
-   <div class="reflection__form-div">
-    <h1 class="reflection__form-title">apr.reflection.records.MyRecord1</h1>
-    <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
-     <input type="hidden" name="className" value="apr.reflection.records.MyRecord1">
-     <ul class="reflection__ul">
-      <li><label for="904d1c21-57c2-4e59-a718-06ba5e3b09b0">[java.lang.Double] x:</label><input name="x" type="text" id="904d1c21-57c2-4e59-a718-06ba5e3b09b0"></li>
-      <li><label for="ce48d637-be82-450a-add6-cd1375d2e5f4">[java.lang.Double] y:</label><input name="y" type="text" id="ce48d637-be82-450a-add6-cd1375d2e5f4"></li>
-      <li><label for="8bb941b1-f135-4c44-b218-3b2aa844c09b">[java.lang.Double] z:</label><input name="z" type="text" id="8bb941b1-f135-4c44-b218-3b2aa844c09b"></li>
-     </ul>
-     <input type="submit" value="Submit">
-    </form>
-   </div>
-   <div class="reflection__form-div">
-    <h1 class="reflection__form-title">apr.reflection.records.MyRecord3</h1>
-    <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
-     <input type="hidden" name="className" value="apr.reflection.records.MyRecord3">
-     <ul class="reflection__ul">
-      <li><label for="0857961e-abf6-4c1f-96c8-d8d7f1ce4694">[java.lang.String] name:</label><input name="name" type="text" id="0857961e-abf6-4c1f-96c8-d8d7f1ce4694"></li>
-      <li><label for="84dab45e-b055-4496-af4b-d296616bffbb">[java.lang.String] email:</label><input name="email" type="text" id="84dab45e-b055-4496-af4b-d296616bffbb"></li>
-      <li><label for="5604c095-a5c1-496b-9813-05d626e50e84">[java.lang.Integer] age:</label><input name="age" type="text" id="5604c095-a5c1-496b-9813-05d626e50e84"></li>
-      <li><label for="30eb23e8-536d-4b7b-8dca-7d739ffba366">[java.lang.Double] height:</label><input name="height" type="text" id="30eb23e8-536d-4b7b-8dca-7d739ffba366"></li>
+      <li><label for="d9d62f19-45a7-4777-8bfb-4d8aa0fff089">[Double] x:</label><input name="x" type="text" id="d9d62f19-45a7-4777-8bfb-4d8aa0fff089"></li>
+      <li><label for="1f8e59f8-e080-4ef8-8b8e-cca04010e2df">[Double] y:</label><input name="y" type="text" id="1f8e59f8-e080-4ef8-8b8e-cca04010e2df"></li>
+      <li><label for="a144e9f2-6ac6-4bd1-9297-c2a4c4b113a0">[Double] z:</label><input name="z" type="text" id="a144e9f2-6ac6-4bd1-9297-c2a4c4b113a0"></li>
      </ul>
      <input type="submit" value="Submit">
     </form>
@@ -69,24 +50,8 @@
     <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
      <input type="hidden" name="className" value="apr.reflection.records.New">
      <ul class="reflection__ul">
-      <li><label for="684103ce-e153-4b41-be57-183e49665961">[java.lang.Double] a:</label><input name="a" type="text" id="684103ce-e153-4b41-be57-183e49665961"></li>
-      <li><label for="984b9611-47db-492b-9f2c-eb970c6afc06">[java.lang.String] b:</label><input name="b" type="text" id="984b9611-47db-492b-9f2c-eb970c6afc06"></li>
-     </ul>
-     <input type="submit" value="Submit">
-    </form>
-   </div>
-   <div class="reflection__form-div">
-    <h1 class="reflection__form-title">apr.reflection.records.MyRecord5</h1>
-    <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
-     <input type="hidden" name="className" value="apr.reflection.records.MyRecord5">
-     <ul class="reflection__ul">
-      <li><label for="490eabaf-1ff8-42eb-a147-fa2793945907">[java.lang.String] firstName:</label><input name="firstName" type="text" id="490eabaf-1ff8-42eb-a147-fa2793945907"></li>
-      <li><label for="ce517564-c693-4454-9f9c-b181df0f2e3f">[java.lang.String] lastName:</label><input name="lastName" type="text" id="ce517564-c693-4454-9f9c-b181df0f2e3f"></li>
-      <li><label for="db9929f3-810a-42a2-b042-a0b1c0606b02">[java.lang.String] email:</label><input name="email" type="text" id="db9929f3-810a-42a2-b042-a0b1c0606b02"></li>
-      <li><label for="75927d0c-4d68-4f63-a1f1-f2573181252e">[java.lang.String] email24:</label><input name="email24" type="text" id="75927d0c-4d68-4f63-a1f1-f2573181252e"></li>
-      <li><label for="f5809bb2-2998-4e92-9e64-d6049dd150cf">[java.lang.String] email75:</label><input name="email75" type="text" id="f5809bb2-2998-4e92-9e64-d6049dd150cf"></li>
-      <li><label for="20b7eacd-7352-4e00-9128-cea4dcc18ba1">[java.lang.Integer] age:</label><input name="age" type="text" id="20b7eacd-7352-4e00-9128-cea4dcc18ba1"></li>
-      <li><label for="c09294ee-8f97-48a3-b7c5-efe0fa083fe5">[java.lang.Double] height:</label><input name="height" type="text" id="c09294ee-8f97-48a3-b7c5-efe0fa083fe5"></li>
+      <li><label for="463d5c81-0629-4f68-b1c1-67efd833d021">[Double] a:</label><input name="a" type="text" id="463d5c81-0629-4f68-b1c1-67efd833d021"></li>
+      <li><label for="3bff8386-acd9-48b8-bd58-737e1673e21a">[String] b:</label><input name="b" type="text" id="3bff8386-acd9-48b8-bd58-737e1673e21a"></li>
      </ul>
      <input type="submit" value="Submit">
     </form>
@@ -96,11 +61,168 @@
     <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
      <input type="hidden" name="className" value="apr.reflection.records.MyRecord6">
      <ul class="reflection__ul">
-      <li><label for="0d71ab67-0a6f-48a2-9420-bcc6e032fdcd">[java.lang.String] firstName:</label><input name="firstName" type="text" id="0d71ab67-0a6f-48a2-9420-bcc6e032fdcd"></li>
-      <li><label for="c5bbdae3-9236-42b9-a26c-62b2eee5260f">[java.lang.String] lastName:</label><input name="lastName" type="text" id="c5bbdae3-9236-42b9-a26c-62b2eee5260f"></li>
-      <li><label for="06c6256b-678a-4714-b81b-5972de73aec3">[java.lang.String] email:</label><input name="email" type="text" id="06c6256b-678a-4714-b81b-5972de73aec3"></li>
-      <li><label for="4c4627d0-e71e-47ad-bf6a-0e9695eaabd4">[java.lang.Integer] age:</label><input name="age" type="text" id="4c4627d0-e71e-47ad-bf6a-0e9695eaabd4"></li>
-      <li><label for="10d81ae0-eca7-4727-8631-61785c62f8e3">[java.lang.Double] height:</label><input name="height" type="text" id="10d81ae0-eca7-4727-8631-61785c62f8e3"></li>
+      <li><label for="cd53e602-100a-47f8-9b6d-bba828da4b17">[String] firstName:</label><input name="firstName" type="text" id="cd53e602-100a-47f8-9b6d-bba828da4b17"></li>
+      <li><label for="24f2446f-9690-4870-9af4-da4db18c5f16">[String] lastName:</label><input name="lastName" type="text" id="24f2446f-9690-4870-9af4-da4db18c5f16"></li>
+      <li><label for="366e7da8-1fcf-4a1c-94db-3917c1a6ab25">[String] email:</label><input name="email" type="text" id="366e7da8-1fcf-4a1c-94db-3917c1a6ab25"></li>
+      <li><label for="d5f86b88-60cf-4d3e-ad18-17c1904cc3eb">[Integer] age:</label><input name="age" type="text" id="d5f86b88-60cf-4d3e-ad18-17c1904cc3eb"></li>
+      <li><label for="526edd39-41c9-4914-b9e5-1ac7ab3c34e4">[Double] height:</label><input name="height" type="text" id="526edd39-41c9-4914-b9e5-1ac7ab3c34e4"></li>
+     </ul>
+     <input type="submit" value="Submit">
+    </form>
+   </div>
+   <div class="reflection__form-div">
+    <h1 class="reflection__form-title">apr.reflection.records.MyRecord7</h1>
+    <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
+     <input type="hidden" name="className" value="apr.reflection.records.MyRecord7">
+     <ul class="reflection__ul">
+      <li><label for="68388f70-f649-4d07-957f-c280640ab384">[String] firstNameA:</label><input name="firstNameA" type="text" id="68388f70-f649-4d07-957f-c280640ab384"></li>
+      <li><label for="a861ff8a-1a5c-4821-b307-57794f40fd8b">[String] firstNameB:</label><input name="firstNameB" type="text" id="a861ff8a-1a5c-4821-b307-57794f40fd8b"></li>
+      <li><label for="07bdb86f-316d-4a37-bee0-40dab77f6389">[String] firstNameC:</label><input name="firstNameC" type="text" id="07bdb86f-316d-4a37-bee0-40dab77f6389"></li>
+      <li><label for="1583bcbc-1a86-4174-a618-9a2b334d1979">[String] lastName:</label><input name="lastName" type="text" id="1583bcbc-1a86-4174-a618-9a2b334d1979"></li>
+      <li><label for="d4a99c59-aea2-42cb-b40e-6618b39a52d1">[String] email:</label><input name="email" type="text" id="d4a99c59-aea2-42cb-b40e-6618b39a52d1"></li>
+      <li><label for="7812d54c-54b3-40d9-a18a-1d8ed1a48653">[Integer] age:</label><input name="age" type="text" id="7812d54c-54b3-40d9-a18a-1d8ed1a48653"></li>
+      <li><label for="eb40aad7-d401-4ccf-a05e-129b8708dfc6">[Double] height:</label><input name="height" type="text" id="eb40aad7-d401-4ccf-a05e-129b8708dfc6"></li>
+     </ul>
+     <input type="submit" value="Submit">
+    </form>
+   </div>
+   <div class="reflection__form-div">
+    <h1 class="reflection__form-title">apr.reflection.records.MyRecord2</h1>
+    <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
+     <input type="hidden" name="className" value="apr.reflection.records.MyRecord2">
+     <ul class="reflection__ul">
+      <li><label for="7158b805-da6b-42ae-9172-8315175e480b">[String] name:</label><input name="name" type="text" id="7158b805-da6b-42ae-9172-8315175e480b"></li>
+      <li><label for="d450144a-ef41-4ae6-8429-d3b708eaec1d">[Double] x:</label><input name="x" type="text" id="d450144a-ef41-4ae6-8429-d3b708eaec1d"></li>
+      <li><label for="b86503f9-3c7d-485d-9d26-ebf75763f544">[Double] y:</label><input name="y" type="text" id="b86503f9-3c7d-485d-9d26-ebf75763f544"></li>
+     </ul>
+     <input type="submit" value="Submit">
+    </form>
+   </div>
+   <div class="reflection__form-div">
+    <h1 class="reflection__form-title">apr.reflection.records.MVP</h1>
+    <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
+     <input type="hidden" name="className" value="apr.reflection.records.MVP">
+     <ul class="reflection__ul">
+      <div>
+       <h2 class="reflection__form-element-subtitle">[Matrix3] m</h2>
+       <ul>
+        <div className="m">
+         <h2 class="reflection__form-element-subtitle">[Vector3] a1</h2>
+         <ul>
+          <li className="m.a1"><label for="931da775-a176-4559-a485-e2beabebdae7">[Double] x:</label><input name="m.a1.x" type="text" id="931da775-a176-4559-a485-e2beabebdae7"></li>
+          <li className="m.a1"><label for="5082196d-79b7-4932-9ddf-69e53c90e89c">[Double] y:</label><input name="m.a1.y" type="text" id="5082196d-79b7-4932-9ddf-69e53c90e89c"></li>
+          <li className="m.a1"><label for="67ca2882-2966-4c1a-8377-624685774913">[Double] z:</label><input name="m.a1.z" type="text" id="67ca2882-2966-4c1a-8377-624685774913"></li>
+         </ul>
+        </div>
+        <div className="m">
+         <h2 class="reflection__form-element-subtitle">[Vector3] a2</h2>
+         <ul>
+          <li className="m.a2"><label for="88eea5e2-e214-4f7a-aa2d-fe3f6b7c4255">[Double] x:</label><input name="m.a2.x" type="text" id="88eea5e2-e214-4f7a-aa2d-fe3f6b7c4255"></li>
+          <li className="m.a2"><label for="6b9fa138-845e-4360-a6f3-243eb642e2ca">[Double] y:</label><input name="m.a2.y" type="text" id="6b9fa138-845e-4360-a6f3-243eb642e2ca"></li>
+          <li className="m.a2"><label for="f43da0d0-368b-4e3d-bd08-ac57dc1d9ebe">[Double] z:</label><input name="m.a2.z" type="text" id="f43da0d0-368b-4e3d-bd08-ac57dc1d9ebe"></li>
+         </ul>
+        </div>
+        <div className="m">
+         <h2 class="reflection__form-element-subtitle">[Vector3] a3</h2>
+         <ul>
+          <li className="m.a3"><label for="3beacce3-2411-4962-82a9-7366e3cdf636">[Double] x:</label><input name="m.a3.x" type="text" id="3beacce3-2411-4962-82a9-7366e3cdf636"></li>
+          <li className="m.a3"><label for="87fee39f-5c7d-409d-9905-ff324453751c">[Double] y:</label><input name="m.a3.y" type="text" id="87fee39f-5c7d-409d-9905-ff324453751c"></li>
+          <li className="m.a3"><label for="767cc2d1-473f-4933-a5ed-e91ec8dc3389">[Double] z:</label><input name="m.a3.z" type="text" id="767cc2d1-473f-4933-a5ed-e91ec8dc3389"></li>
+         </ul>
+        </div>
+       </ul>
+      </div>
+      <div>
+       <h2 class="reflection__form-element-subtitle">[Matrix3] v</h2>
+       <ul>
+        <div className="v">
+         <h2 class="reflection__form-element-subtitle">[Vector3] a1</h2>
+         <ul>
+          <li className="v.a1"><label for="26f9c2d2-7677-4006-a41a-2ca1fc628c57">[Double] x:</label><input name="v.a1.x" type="text" id="26f9c2d2-7677-4006-a41a-2ca1fc628c57"></li>
+          <li className="v.a1"><label for="3b4ddd7b-3122-4d12-bd47-8f65917b0570">[Double] y:</label><input name="v.a1.y" type="text" id="3b4ddd7b-3122-4d12-bd47-8f65917b0570"></li>
+          <li className="v.a1"><label for="d5c49bde-c522-4811-b1ed-fe2b6f3a7d4f">[Double] z:</label><input name="v.a1.z" type="text" id="d5c49bde-c522-4811-b1ed-fe2b6f3a7d4f"></li>
+         </ul>
+        </div>
+        <div className="v">
+         <h2 class="reflection__form-element-subtitle">[Vector3] a2</h2>
+         <ul>
+          <li className="v.a2"><label for="fdc5cfb4-98a2-48da-9d30-62e937f7231c">[Double] x:</label><input name="v.a2.x" type="text" id="fdc5cfb4-98a2-48da-9d30-62e937f7231c"></li>
+          <li className="v.a2"><label for="4d9295ee-fa2e-46a9-bdfd-ecc75bc081f8">[Double] y:</label><input name="v.a2.y" type="text" id="4d9295ee-fa2e-46a9-bdfd-ecc75bc081f8"></li>
+          <li className="v.a2"><label for="95877a29-977d-4648-8e83-76cc6971c129">[Double] z:</label><input name="v.a2.z" type="text" id="95877a29-977d-4648-8e83-76cc6971c129"></li>
+         </ul>
+        </div>
+        <div className="v">
+         <h2 class="reflection__form-element-subtitle">[Vector3] a3</h2>
+         <ul>
+          <li className="v.a3"><label for="8fa8491d-c064-417e-8769-5dba488c8f0d">[Double] x:</label><input name="v.a3.x" type="text" id="8fa8491d-c064-417e-8769-5dba488c8f0d"></li>
+          <li className="v.a3"><label for="5aefae82-4431-4e01-b5fd-0bd4ac76676f">[Double] y:</label><input name="v.a3.y" type="text" id="5aefae82-4431-4e01-b5fd-0bd4ac76676f"></li>
+          <li className="v.a3"><label for="6fa50444-7e75-4eb3-ac36-9fabaeafb6bf">[Double] z:</label><input name="v.a3.z" type="text" id="6fa50444-7e75-4eb3-ac36-9fabaeafb6bf"></li>
+         </ul>
+        </div>
+       </ul>
+      </div>
+      <div>
+       <h2 class="reflection__form-element-subtitle">[Matrix3] p</h2>
+       <ul>
+        <div className="p">
+         <h2 class="reflection__form-element-subtitle">[Vector3] a1</h2>
+         <ul>
+          <li className="p.a1"><label for="8670d02e-e450-4fec-bce0-392bba0b3fab">[Double] x:</label><input name="p.a1.x" type="text" id="8670d02e-e450-4fec-bce0-392bba0b3fab"></li>
+          <li className="p.a1"><label for="f464eb0f-ab45-42ca-bec7-2e95b4ac1598">[Double] y:</label><input name="p.a1.y" type="text" id="f464eb0f-ab45-42ca-bec7-2e95b4ac1598"></li>
+          <li className="p.a1"><label for="7012a9db-0f47-45da-bb2d-a2fd0acfc634">[Double] z:</label><input name="p.a1.z" type="text" id="7012a9db-0f47-45da-bb2d-a2fd0acfc634"></li>
+         </ul>
+        </div>
+        <div className="p">
+         <h2 class="reflection__form-element-subtitle">[Vector3] a2</h2>
+         <ul>
+          <li className="p.a2"><label for="d62e89e0-e9d6-448f-9c94-427a8dccc29b">[Double] x:</label><input name="p.a2.x" type="text" id="d62e89e0-e9d6-448f-9c94-427a8dccc29b"></li>
+          <li className="p.a2"><label for="91c930a5-70f7-45e7-bd23-f22812783f43">[Double] y:</label><input name="p.a2.y" type="text" id="91c930a5-70f7-45e7-bd23-f22812783f43"></li>
+          <li className="p.a2"><label for="d523d5f9-9120-4d25-9c86-b774cf0cc105">[Double] z:</label><input name="p.a2.z" type="text" id="d523d5f9-9120-4d25-9c86-b774cf0cc105"></li>
+         </ul>
+        </div>
+        <div className="p">
+         <h2 class="reflection__form-element-subtitle">[Vector3] a3</h2>
+         <ul>
+          <li className="p.a3"><label for="bbac3695-990e-4e83-bf5e-2ee3f0973eb8">[Double] x:</label><input name="p.a3.x" type="text" id="bbac3695-990e-4e83-bf5e-2ee3f0973eb8"></li>
+          <li className="p.a3"><label for="0ed4bbd2-df48-467f-81cf-632090d19ee2">[Double] y:</label><input name="p.a3.y" type="text" id="0ed4bbd2-df48-467f-81cf-632090d19ee2"></li>
+          <li className="p.a3"><label for="4f730cc9-efda-4b1e-bb40-10e9a93bafda">[Double] z:</label><input name="p.a3.z" type="text" id="4f730cc9-efda-4b1e-bb40-10e9a93bafda"></li>
+         </ul>
+        </div>
+       </ul>
+      </div>
+     </ul>
+     <input type="submit" value="Submit">
+    </form>
+   </div>
+   <div class="reflection__form-div">
+    <h1 class="reflection__form-title">apr.reflection.records.Matrix3</h1>
+    <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
+     <input type="hidden" name="className" value="apr.reflection.records.Matrix3">
+     <ul class="reflection__ul">
+      <div>
+       <h2 class="reflection__form-element-subtitle">[Vector3] a1</h2>
+       <ul>
+        <li className="a1"><label for="4c583f0f-ccde-4677-9002-926c213c0478">[Double] x:</label><input name="a1.x" type="text" id="4c583f0f-ccde-4677-9002-926c213c0478"></li>
+        <li className="a1"><label for="81b485ec-bc84-4d8a-a82e-1e10182fad90">[Double] y:</label><input name="a1.y" type="text" id="81b485ec-bc84-4d8a-a82e-1e10182fad90"></li>
+        <li className="a1"><label for="c17fcf5e-77a6-4746-94bc-914268f7c54b">[Double] z:</label><input name="a1.z" type="text" id="c17fcf5e-77a6-4746-94bc-914268f7c54b"></li>
+       </ul>
+      </div>
+      <div>
+       <h2 class="reflection__form-element-subtitle">[Vector3] a2</h2>
+       <ul>
+        <li className="a2"><label for="0af8853c-1a04-4652-b843-9a7489c70533">[Double] x:</label><input name="a2.x" type="text" id="0af8853c-1a04-4652-b843-9a7489c70533"></li>
+        <li className="a2"><label for="7d64d889-f3a1-47b2-a7a7-f04d13e1e040">[Double] y:</label><input name="a2.y" type="text" id="7d64d889-f3a1-47b2-a7a7-f04d13e1e040"></li>
+        <li className="a2"><label for="b9ab59a2-dee7-41a4-b53a-50eea47f2b78">[Double] z:</label><input name="a2.z" type="text" id="b9ab59a2-dee7-41a4-b53a-50eea47f2b78"></li>
+       </ul>
+      </div>
+      <div>
+       <h2 class="reflection__form-element-subtitle">[Vector3] a3</h2>
+       <ul>
+        <li className="a3"><label for="fa9e25ca-d57a-4ce5-b917-3dd3cc4a7930">[Double] x:</label><input name="a3.x" type="text" id="fa9e25ca-d57a-4ce5-b917-3dd3cc4a7930"></li>
+        <li className="a3"><label for="ab35c077-ef68-4b77-b987-ebaf01ee3522">[Double] y:</label><input name="a3.y" type="text" id="ab35c077-ef68-4b77-b987-ebaf01ee3522"></li>
+        <li className="a3"><label for="192f9049-88c0-42f2-aeae-445e6955f293">[Double] z:</label><input name="a3.z" type="text" id="192f9049-88c0-42f2-aeae-445e6955f293"></li>
+       </ul>
+      </div>
      </ul>
      <input type="submit" value="Submit">
     </form>
@@ -110,11 +232,61 @@
     <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
      <input type="hidden" name="className" value="apr.reflection.records.MyRecord4">
      <ul class="reflection__ul">
-      <li><label for="f56a8d13-fafa-4eef-94a4-ccbe18efebdf">[java.lang.String] firstName:</label><input name="firstName" type="text" id="f56a8d13-fafa-4eef-94a4-ccbe18efebdf"></li>
-      <li><label for="dbb0b925-8b46-4e90-aebe-b093b8a594f1">[java.lang.String] lastName:</label><input name="lastName" type="text" id="dbb0b925-8b46-4e90-aebe-b093b8a594f1"></li>
-      <li><label for="c24cbb9c-8acc-4947-aef3-316a78e5d434">[java.lang.String] email:</label><input name="email" type="text" id="c24cbb9c-8acc-4947-aef3-316a78e5d434"></li>
-      <li><label for="67aa6676-e4f4-40f5-a24d-4fbec7bada94">[java.lang.Integer] age:</label><input name="age" type="text" id="67aa6676-e4f4-40f5-a24d-4fbec7bada94"></li>
-      <li><label for="14ffe0ea-2486-4d44-80c9-4c8411da721e">[java.lang.Double] height:</label><input name="height" type="text" id="14ffe0ea-2486-4d44-80c9-4c8411da721e"></li>
+      <li><label for="b3ea9a1e-cfd6-4c92-938f-76904cc0eb91">[String] firstName:</label><input name="firstName" type="text" id="b3ea9a1e-cfd6-4c92-938f-76904cc0eb91"></li>
+      <li><label for="96a3e299-77dc-44b9-843d-1c4b030b39e3">[String] lastName:</label><input name="lastName" type="text" id="96a3e299-77dc-44b9-843d-1c4b030b39e3"></li>
+      <li><label for="b7202e31-1fd3-4829-921f-e114bce6ecc8">[String] email:</label><input name="email" type="text" id="b7202e31-1fd3-4829-921f-e114bce6ecc8"></li>
+      <li><label for="91845772-34d1-4e22-b284-e3566f8253eb">[Integer] age:</label><input name="age" type="text" id="91845772-34d1-4e22-b284-e3566f8253eb"></li>
+      <li><label for="0611db64-a02d-4bfb-b5a5-b760e27051b4">[Double] height:</label><input name="height" type="text" id="0611db64-a02d-4bfb-b5a5-b760e27051b4"></li>
+     </ul>
+     <input type="submit" value="Submit">
+    </form>
+   </div>
+   <div class="reflection__form-div">
+    <h1 class="reflection__form-title">apr.reflection.records.MyRecord1</h1>
+    <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
+     <input type="hidden" name="className" value="apr.reflection.records.MyRecord1">
+     <ul class="reflection__ul">
+      <li><label for="a6fa7340-2b44-4a75-8b74-3c5f333854dd">[Double] x:</label><input name="x" type="text" id="a6fa7340-2b44-4a75-8b74-3c5f333854dd"></li>
+      <li><label for="ef88be9f-8169-4ef2-9a4e-aa0c2dba6956">[Double] y:</label><input name="y" type="text" id="ef88be9f-8169-4ef2-9a4e-aa0c2dba6956"></li>
+      <li><label for="b9896911-ed23-428e-996e-75ae654da7b8">[Double] z:</label><input name="z" type="text" id="b9896911-ed23-428e-996e-75ae654da7b8"></li>
+     </ul>
+     <input type="submit" value="Submit">
+    </form>
+   </div>
+   <div class="reflection__form-div">
+    <h1 class="reflection__form-title">apr.reflection.records.Line3D</h1>
+    <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
+     <input type="hidden" name="className" value="apr.reflection.records.Line3D">
+     <ul class="reflection__ul">
+      <div>
+       <h2 class="reflection__form-element-subtitle">[Vector3] start</h2>
+       <ul>
+        <li className="start"><label for="4e497b08-7626-443a-bbf9-fa33573c27cd">[Double] x:</label><input name="start.x" type="text" id="4e497b08-7626-443a-bbf9-fa33573c27cd"></li>
+        <li className="start"><label for="94512653-1776-4ac0-92fd-3081222ec046">[Double] y:</label><input name="start.y" type="text" id="94512653-1776-4ac0-92fd-3081222ec046"></li>
+        <li className="start"><label for="9ee1d2d7-f396-4ae5-ad45-d8d107f6fcf7">[Double] z:</label><input name="start.z" type="text" id="9ee1d2d7-f396-4ae5-ad45-d8d107f6fcf7"></li>
+       </ul>
+      </div>
+      <div>
+       <h2 class="reflection__form-element-subtitle">[Vector3] end</h2>
+       <ul>
+        <li className="end"><label for="36b7ddf8-95ca-4ba3-adfc-3bddab99587e">[Double] x:</label><input name="end.x" type="text" id="36b7ddf8-95ca-4ba3-adfc-3bddab99587e"></li>
+        <li className="end"><label for="b3577fda-6650-425e-a1da-a708b61a3a83">[Double] y:</label><input name="end.y" type="text" id="b3577fda-6650-425e-a1da-a708b61a3a83"></li>
+        <li className="end"><label for="f694a73e-9ced-418e-b663-c184ea672d0f">[Double] z:</label><input name="end.z" type="text" id="f694a73e-9ced-418e-b663-c184ea672d0f"></li>
+       </ul>
+      </div>
+     </ul>
+     <input type="submit" value="Submit">
+    </form>
+   </div>
+   <div class="reflection__form-div">
+    <h1 class="reflection__form-title">apr.reflection.records.MyRecord3</h1>
+    <form onsubmit="reflectionFormSubmit(event)" class="reflection__form" method="post" action="javascript">
+     <input type="hidden" name="className" value="apr.reflection.records.MyRecord3">
+     <ul class="reflection__ul">
+      <li><label for="812f3415-510b-4e99-ba3a-d84a694f62d6">[String] name:</label><input name="name" type="text" id="812f3415-510b-4e99-ba3a-d84a694f62d6"></li>
+      <li><label for="fa76518b-e9b9-4b1a-ae09-61765b25348f">[String] email:</label><input name="email" type="text" id="fa76518b-e9b9-4b1a-ae09-61765b25348f"></li>
+      <li><label for="1ea6407f-08c7-4b7e-a503-1858350fc03c">[Integer] age:</label><input name="age" type="text" id="1ea6407f-08c7-4b7e-a503-1858350fc03c"></li>
+      <li><label for="b04cd88b-963e-48a2-bf71-abea0aa3909a">[Double] height:</label><input name="height" type="text" id="b04cd88b-963e-48a2-bf71-abea0aa3909a"></li>
      </ul>
      <input type="submit" value="Submit">
     </form>

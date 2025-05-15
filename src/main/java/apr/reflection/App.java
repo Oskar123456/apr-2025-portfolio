@@ -39,6 +39,32 @@ public class App {
             subTitle.text("Here you can create new classes/records");
             subTitle.attributes().add("class", "reflection__sub-title");
 
+            Element subTitle2 = index.createElement("h2");
+            subTitle2.text("Records for submission:");
+            subTitle2.attributes().add("class", "reflection__sub-title");
+
+            Element subTitle3 = index.createElement("h2");
+            subTitle3.text("Ready to Download:");
+            subTitle3.attributes().add("class", "reflection__sub-title");
+
+            Element downloadButton = index.createElement("a");
+            downloadButton.attributes().add("download", "download records");
+            downloadButton.attributes().add("href", "tmprecords.txt");
+            downloadButton.text("Download all records");
+
+            Element submitButton = index.createElement("button");
+            submitButton.text("SUBMIT ALL");
+            submitButton.attributes().add("onclick", "reflectionFinalSubmit(event)");
+            submitButton.attributes().add("class", "reflection__final-submit-button");
+
+            Element submissionsList = index.createElement("ul");
+            submissionsList.attributes().add("class", "reflection__submissions-list");
+            submissionsList.attributes().add("id", "submissions-list");
+
+            Element submissionsListToDL = index.createElement("ul");
+            submissionsListToDL.attributes().add("class", "reflection__submissions-list");
+            submissionsListToDL.attributes().add("id", "submissions-list-to-dl");
+
             Element container = index.createElement("div");
             container.attributes().add("class", "reflection__container");
             List<Class<?>> classes = ClassFinder.find("apr.reflection.records");
@@ -46,7 +72,16 @@ public class App {
 
             index.body().appendChild(title);
             index.body().appendChild(subTitle);
+            index.body().appendChild(submitButton);
+            index.body().appendChild(downloadButton);
+
+            index.body().appendChild(subTitle2);
+            index.body().appendChild(submissionsList);
+            index.body().appendChild(subTitle3);
+            index.body().appendChild(submissionsListToDL);
+
             index.body().appendChild(container);
+            index.body().attributes().remove("class");
             index.body().attributes().add("class", "reflection__body");
 
             HtmlGen.write(index);
@@ -70,9 +105,11 @@ public class App {
         System.setErr(new PrintStream(PrintStream.nullOutputStream()));
 
         File f = new File("html");
+        File f2 = new File("data");
 
         var jav = Javalin.create(config -> {
             config.staticFiles.add(f.getAbsolutePath(), Location.EXTERNAL);
+            config.staticFiles.add(f2.getAbsolutePath(), Location.EXTERNAL);
             config.router.apiBuilder(Endpoints.getAll());
         });
 

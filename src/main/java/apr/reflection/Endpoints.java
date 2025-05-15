@@ -2,6 +2,12 @@ package apr.reflection;
 
 import static io.javalin.apibuilder.ApiBuilder.path;
 import static io.javalin.apibuilder.ApiBuilder.post;
+
+import java.io.FileWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+
 import static io.javalin.apibuilder.ApiBuilder.get;
 
 import org.slf4j.Logger;
@@ -37,14 +43,37 @@ public class Endpoints {
 
             JsonNode json = jsonMapper.readTree(form);
 
-            Object obj = RecordGen.fromJson(json);
+            List<Object> objs = new ArrayList<>();
 
-            System.out.printf("App.onFormSubmission(): managed to instantiate record: %s%n", obj.toString());
+            for (var node : json) {
+                objs.add(RecordGen.fromJson(node));
+            }
+
+            System.out.printf("App.onFormSubmission(): managed to instantiate records: %s%n", objs.toString());
 
             ctx.status(200);
-            ctx.result(JSON.stringify(obj));
+            ctx.json(objs);
+
+            FileWriter fwriter = new FileWriter("data/tmprecords.txt", false);
+
+            String finalStr = "";
+            List<String> finalStrs = new ArrayList<>();
+
+            for (var obj : objs) {
+                String objStr = jsonMapper.writeValueAsString(obj);
+                objStr = String.format("{\"className\": \"%s\", %s", obj.getClass().getName(),
+                        objStr.substring(objStr.indexOf("{") + 1));
+                finalStrs.add(objStr);
+            }
+
+            finalStr = "[" + String.join(",", finalStrs) + "]";
+
+            fwriter.write(finalStr);
+            fwriter.flush();
+            fwriter.close();
 
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("App.onFormSubmission(): Error: " + e.getMessage());
             throw e;
         }

@@ -6,10 +6,12 @@ html {
     background-color: gray;
 }
 
-body {}
-
 .reflection__body {
     background-color: gray;
+}
+
+.reflection__final-submit-button {
+    width: fit-content;
 }
 
 .reflection__container {
@@ -102,4 +104,25 @@ body {}
     align-items: center;
 
     background-color: #DADADA;
+}
+
+.reflection__form-element-subtitle {
+    font-size: 1.2rem;
+}
+
+.reflection__submissions-list {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    padding: 4;
+    margin: 0;
+    gap: 5px;
+
+    li {
+        overflow: auto;
+        max-width: 50vw;
+
+        padding: 4;
+        margin: 0;
+    }
 }
