@@ -28,19 +28,10 @@ public class RecordGen {
         // System.out.println("RecordGen.fromJson(): " + json.toPrettyString());
 
         Class<?> cls = Class.forName(json.get("className").asText());
-        // Constructor<?> ctor = cls.getConstructors()[0]; // record has exactly 1
-        // constructor
-        // List<Object> ctorArgs = new ArrayList<>();
-        //
-        // for (var field : cls.getDeclaredFields()) {
-        // ctorArgs.add(extract(field.getClass(), json.get(field.getName())));
-        // }
-
         Object obj = extract(cls, json);
 
         // System.out.println("RecordGen.fromJson(): " + obj);
 
-        // return ctor.newInstance(ctorArgs.toArray());
         return obj;
     }
 

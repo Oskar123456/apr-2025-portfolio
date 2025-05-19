@@ -122,6 +122,7 @@ public class SortingGUIExample extends GUIExample {
 
         Double[] data = new Double[n];
         for (int i = 0; i < data.length; ++i) {
+            // data[i] = i * (1D / n);
             data[i] = Math.random();
         }
 

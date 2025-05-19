@@ -28,7 +28,7 @@ public class App {
 
         try {
 
-            Document index = HtmlGen.loadDoc("html/index.html");
+            Document index = HtmlGen.loadDoc("public/index.html");
             index.body().children().clear();
 
             Element title = index.createElement("h1");
@@ -104,7 +104,7 @@ public class App {
         System.setOut(new PrintStream(PrintStream.nullOutputStream()));
         System.setErr(new PrintStream(PrintStream.nullOutputStream()));
 
-        File f = new File("html");
+        File f = new File("public");
         File f2 = new File("data");
 
         var jav = Javalin.create(config -> {
@@ -124,10 +124,10 @@ public class App {
     }
 
     static void clean() throws IOException {
-        Document document = HtmlGen.loadDoc("html/index.html");
+        Document document = HtmlGen.loadDoc("public/index.html");
         document.body().children().clear();
 
-        try (var fwriter = new FileWriter("html/index.html", false)) {
+        try (var fwriter = new FileWriter("public/index.html", false)) {
             fwriter.write(document.toString());
             fwriter.flush();
         } catch (Exception e) {

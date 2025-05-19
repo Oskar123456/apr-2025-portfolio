@@ -30,6 +30,7 @@ public class GraphGUIExample extends GUIExample {
     String titleStr;
     List<GraphAlg<Integer>> searchAlgs;
     GraphAlg<Integer> searchAlg;
+    boolean paused;
 
     public GraphGUIExample() {
         options = new ArrayList<>();
@@ -85,6 +86,26 @@ public class GraphGUIExample extends GUIExample {
             animator.reset();
         });
         options.add(optResetButton);
+
+        Button optGenerateButton = new Button("Generate");
+        optGenerateButton.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
+            animator.generate();
+        });
+        options.add(optGenerateButton);
+
+        Button optPauseButton = new Button("Pause");
+        optPauseButton.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
+            if (paused) {
+                optPauseButton.setText("Pause");
+                animator.unpause();
+                paused = false;
+            } else {
+                optPauseButton.setText("Unpause");
+                animator.unpause();
+                paused = true;
+            }
+        });
+        options.add(optPauseButton);
 
         ChoiceBox optAlgs = new ChoiceBox<>();
         optAlgs.setItems(FXCollections.observableArrayList(

@@ -19,7 +19,7 @@ public class HtmlGen {
     }
 
     public static void write(Document doc) {
-        try (FileWriter fwriter = new FileWriter("html/index.html", false)) {
+        try (FileWriter fwriter = new FileWriter("public/index.html", false)) {
             fwriter.write(doc.toString());
             // System.out.println("wrote:");
             // System.out.println(doc.toString());

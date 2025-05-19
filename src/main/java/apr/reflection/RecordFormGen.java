@@ -4,6 +4,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,7 +21,6 @@ public class RecordFormGen {
 
         Element title = doc.createElement("h1");
         title.attributes().add("class", "reflection__form-title");
-        // title.text("Create new " + cls.getName());
         title.text(cls.getName());
 
         Element form = doc.createElement("form");
@@ -31,26 +31,7 @@ public class RecordFormGen {
 
         Element ul = doc.createElement("ul");
         ul.attributes().add("class", "reflection__ul");
-
-        for (var field : cls.getDeclaredFields()) {
-            // Element li = doc.createElement("li");
-            // Element label = doc.createElement("label");
-            // Element input = doc.createElement("input");
-            //
-            // label.appendText("[" + field.getType().getName() + "] " + field.getName() +
-            // ":");
-            // input.attributes().add("name", field.getName());
-            // input.attributes().add("type", "text");
-            //
-            // UUID uuid = UUID.randomUUID();
-            // label.attributes().add("for", uuid.toString());
-            // input.attributes().add("id", uuid.toString());
-            //
-            // li.appendChild(label);
-            // li.appendChild(input);
-            Element li = makeFormField(doc, field, "");
-            ul.appendChild(li);
-        }
+        ul.appendChildren(Arrays.stream(cls.getDeclaredFields()).map(f -> makeFormField(doc, f, "")).toList());
 
         Element className = doc.createElement("input");
         className.attributes().add("type", "hidden");

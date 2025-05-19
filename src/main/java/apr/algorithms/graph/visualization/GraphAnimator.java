@@ -72,9 +72,24 @@ public class GraphAnimator extends AnimationTimer {
         searchAlg = alg;
     }
 
+    public void pause() {
+        stop();
+    }
+
+    public void unpause() {
+        stop();
+    }
+
     public void reset() {
         stop();
         this.graph = new Graph<>();
+        this.replay = null;
+        draw();
+    }
+
+    public void generate() {
+        stop();
+        this.graph = Graph.makeGridGraph(7, 5, () -> 0);
         this.replay = null;
         draw();
     }
@@ -310,6 +325,12 @@ public class GraphAnimator extends AnimationTimer {
 
         renderTarget.getChildren().setAll(layout);
 
+        canvas.widthProperty().addListener((e) -> {
+            draw();
+        });
+        canvas.heightProperty().addListener((e) -> {
+            draw();
+        });
         canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
             if (!e.isPrimaryButtonDown()) {
                 return;

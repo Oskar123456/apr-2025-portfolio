@@ -1,14 +1,12 @@
 package apr.reflection;
 
+import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.path;
 import static io.javalin.apibuilder.ApiBuilder.post;
 
 import java.io.FileWriter;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static io.javalin.apibuilder.ApiBuilder.get;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
