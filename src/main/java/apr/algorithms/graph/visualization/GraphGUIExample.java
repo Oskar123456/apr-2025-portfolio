@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Separator;
+import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -75,9 +76,12 @@ public class GraphGUIExample extends GUIExample {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     void addOptions() {
+        Button optPauseButton = new Button("Pause");
         Button optRunButton = new Button("Run");
         optRunButton.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
             start();
+            optPauseButton.setText("Pause");
+            paused = false;
         });
         options.add(optRunButton);
 
@@ -93,7 +97,18 @@ public class GraphGUIExample extends GUIExample {
         });
         options.add(optGenerateButton);
 
-        Button optPauseButton = new Button("Pause");
+        Slider radiusSlider = new Slider();
+        radiusSlider.setId("AStar__side-panel-slider");
+        radiusSlider.setValue(0.03);
+        radiusSlider.setMin(0.005);
+        radiusSlider.setMax(0.05);
+        radiusSlider.setShowTickMarks(true);
+        radiusSlider.setShowTickLabels(true);
+        radiusSlider.setMajorTickUnit(0.001);
+        radiusSlider.setBlockIncrement(0.001);
+        radiusSlider.valueProperty().addListener((e, o, n) -> animator.setRadius(n.doubleValue()));
+        options.add(radiusSlider);
+
         optPauseButton.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
             if (paused) {
                 optPauseButton.setText("Pause");
@@ -101,7 +116,7 @@ public class GraphGUIExample extends GUIExample {
                 paused = false;
             } else {
                 optPauseButton.setText("Unpause");
-                animator.unpause();
+                animator.pause();
                 paused = true;
             }
         });

@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
@@ -37,6 +38,7 @@ public class GraphAnimator extends AnimationTimer {
     int ups = 5, nodeId;
     long startNS, lastUpdateNS, updateFreqNS;
     double rProp = 0.030, r;
+    boolean paused = false;
 
     Node<Integer> edgeSrc, edgeDest;
     Point2D srcPos, destPos;
@@ -73,11 +75,16 @@ public class GraphAnimator extends AnimationTimer {
     }
 
     public void pause() {
-        stop();
+        paused = true;
     }
 
     public void unpause() {
-        stop();
+        paused = false;
+    }
+
+    public void setRadius(double r) {
+        rProp = Math.max(Math.min(r, 0.5), 0.005);
+        draw();
     }
 
     public void reset() {
@@ -89,7 +96,7 @@ public class GraphAnimator extends AnimationTimer {
 
     public void generate() {
         stop();
-        this.graph = Graph.makeGridGraph(7, 5, () -> 0);
+        this.graph = Graph.makeGridGraph((int) ((0.03 / rProp) * 7), (int) ((0.03 / rProp) * 5), () -> 0);
         this.replay = null;
         draw();
     }
@@ -115,6 +122,10 @@ public class GraphAnimator extends AnimationTimer {
         }
 
         if (lastUpdateNS != 0 && nowNS - lastUpdateNS < updateFreqNS) {
+            return;
+        }
+
+        if (paused) {
             return;
         }
 
@@ -189,6 +200,7 @@ public class GraphAnimator extends AnimationTimer {
             weightTxt.relocate((Math.max(xSrc, xDest) - Math.min(xSrc, xDest)) / 2 + Math.min(xSrc, xDest) - r / 2,
                     (Math.max(ySrc, yDest) - Math.min(ySrc, yDest)) / 2 + Math.min(ySrc, yDest) - r / 2);
             weightTxt.fillProperty().set(Color.RED);
+            weightTxt.fontProperty().set(Font.font((rProp / 0.03) * 12));
 
             if (graph.path.contains(edge)) {
                 l.strokeWidthProperty().set(8);
@@ -242,6 +254,7 @@ public class GraphAnimator extends AnimationTimer {
             }
 
             Text txt = new Text(description);
+            txt.fontProperty().set(Font.font((rProp / 0.03) * 12));
 
             canvas.getChildren().add(e);
             canvas.getChildren().add(txt);
