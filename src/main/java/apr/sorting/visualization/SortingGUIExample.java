@@ -122,8 +122,29 @@ public class SortingGUIExample extends GUIExample {
 
         Double[] data = new Double[n];
         for (int i = 0; i < data.length; ++i) {
-            // data[i] = i * (1D / n);
             data[i] = Math.random();
+        }
+
+        for (int i = 0; i < sortFns.length; i++) {
+            var sortFn = sortFns[i];
+            var subtitle = subtitles[i];
+            canvases.get(i).getChildren().clear();
+            animators.add(
+                    new SortingAnimator(subtitle, canvases.get(i), sortFn.sort(Arrays.copyOf(data, data.length)), ups));
+        }
+
+        if (!paused) {
+            start();
+        }
+    }
+
+    void resetSorted() {
+        stop();
+        animators.clear();
+
+        Double[] data = new Double[n];
+        for (int i = 0; i < data.length; ++i) {
+            data[i] = i * (1D / n);
         }
 
         for (int i = 0; i < sortFns.length; i++) {
@@ -141,16 +162,19 @@ public class SortingGUIExample extends GUIExample {
 
     void addOptions() {
         VBox optNew = new VBox();
+        VBox optSorted = new VBox();
         VBox optPause = new VBox();
         VBox optN = new VBox();
         VBox optDur = new VBox();
 
         Text optNewTitle = new Text();
+        Text optSortedTitle = new Text();
         Text optPauseTitle = new Text();
         Text optNTitle = new Text("No. of elements");
         Text optDurTitle = new Text("Updates per second");
 
         Button optNewButton = new Button();
+        Button optSortedButton = new Button();
         Button optPauseButton = new Button();
         Slider optNSlider = new Slider();
         Slider optDurSlider = new Slider();
@@ -172,14 +196,17 @@ public class SortingGUIExample extends GUIExample {
         optDurSlider.setBlockIncrement(1);
 
         optPauseButton.setText("pause");
-        optNewButton.setText("reset");
+        optNewButton.setText("reset to random data");
+        optSortedButton.setText("reset to sorted data");
 
         optNew.getChildren().addAll(optNewTitle, optNewButton);
+        optSorted.getChildren().addAll(optSortedTitle, optSortedButton);
         optPause.getChildren().addAll(optPauseTitle, optPauseButton);
         optN.getChildren().addAll(optNSlider, optNTitle);
         optDur.getChildren().addAll(optDurSlider, optDurTitle);
 
         optNewButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> reset());
+        optSortedButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> resetSorted());
         optPauseButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
             if (paused) {
                 paused = false;
@@ -200,6 +227,7 @@ public class SortingGUIExample extends GUIExample {
         });
 
         options.add(optNew);
+        options.add(optSorted);
         options.add(optPause);
         options.add(optN);
         options.add(optDur);
