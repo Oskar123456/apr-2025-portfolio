@@ -1,4 +1,4 @@
-groupId="apr.reflection"
+groupId="apr"
 mainClass="App"
 args=""
 
