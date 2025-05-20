@@ -118,7 +118,7 @@ public class Graph<T> {
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                int nEdges = rng.nextInt(0, 8);
+                int nEdges = rng.nextInt(4, 8);
                 for (int k = 0; k < nEdges; k++) {
                     Point2DI dir = Point2DI.dirsIncDiag[rng.nextInt(0, 8)];
                     Point2DI p = new Point2DI(j, i).add(dir);

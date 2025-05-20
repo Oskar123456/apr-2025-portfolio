@@ -1,5 +1,7 @@
 package apr.algorithms.graph.visualization;
 
+import java.util.Set;
+
 import apr.datastructures.graph.Point2D;
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.MouseEvent;
@@ -41,6 +43,8 @@ public class GraphAnimator extends AnimationTimer {
     boolean paused = false;
 
     Node<Integer> edgeSrc, edgeDest;
+    Set<Node<Integer>> lastVis;
+    Node<Integer> highlightNode;
     Point2D srcPos, destPos;
     Line edgeLine;
     int srcDestPick;
@@ -90,13 +94,18 @@ public class GraphAnimator extends AnimationTimer {
     public void reset() {
         stop();
         this.graph = new Graph<>();
+        this.lastVis = null;
+        this.highlightNode = null;
         this.replay = null;
+        paused = false;
         draw();
     }
 
     public void generate() {
         stop();
         this.graph = Graph.makeGridGraph((int) ((0.03 / rProp) * 7), (int) ((0.03 / rProp) * 5), () -> 0);
+        this.lastVis = null;
+        this.highlightNode = null;
         this.replay = null;
         draw();
     }
@@ -104,6 +113,9 @@ public class GraphAnimator extends AnimationTimer {
     public void start() {
         startNS = System.nanoTime();
         search();
+        paused = false;
+        this.lastVis = null;
+        this.highlightNode = null;
         super.start();
     }
 
@@ -168,6 +180,22 @@ public class GraphAnimator extends AnimationTimer {
                     graph.visited.size(),
                     graph.dists.containsKey(graph.dest) ? graph.dists.get(graph.dest) : -1));
         }
+
+        if (lastVis != null) {
+            for (var n : graph.visited) {
+                boolean matched = false;
+                for (var nn : lastVis) {
+                    if (n == nn) {
+                        matched = true;
+                    }
+                }
+                if (!matched) {
+                    highlightNode = n;
+                    break;
+                }
+            }
+        }
+        lastVis = graph.visited;
 
         for (var edge : graph.edges) {
             double xSrc = wPad + edge.src.pos.x * w;
@@ -255,6 +283,14 @@ public class GraphAnimator extends AnimationTimer {
 
             Text txt = new Text(description);
             txt.fontProperty().set(Font.font((rProp / 0.03) * 12));
+
+            if (highlightNode == node) {
+                double bonus = 0.3;
+                Ellipse hightlightEllipse = new Ellipse(r * (1 + bonus), r * (1 + bonus));
+                hightlightEllipse.fillProperty().set(Color.DARKRED);
+                hightlightEllipse.relocate(x - (bonus) * r, y - (bonus) * r);
+                canvas.getChildren().add(hightlightEllipse);
+            }
 
             canvas.getChildren().add(e);
             canvas.getChildren().add(txt);
