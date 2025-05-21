@@ -21,11 +21,11 @@ dists(src) := 0
 while **unvisited**.length > 0:
     cur := unvisited.pop()
     unvisited.remove(cur)
-    if (cur == dest): 
+    if (cur == dest):  // hvis vi kun er interesserede i src -> dest, og ikke alle src -> node
         done
-    For hver neighbor(cur):
-        Hvis dists(neighbor) > dist(cur, neighbor) + dists(cur):
-        dists(neighbor) := dist(cur, neighbor) + dists(cur)
+    foreach neighbor in neighbors(cur):
+        if (dists(neighbor) > dist(cur, neighbor) + dists(cur)):
+            dists(neighbor) := dist(cur, neighbor) + dists(cur)
 ```
 
 ### CORRECTNESS
