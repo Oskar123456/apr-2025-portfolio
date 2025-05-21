@@ -11,9 +11,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
 
-import apr.examproj.geom.Bounds;
-import apr.examproj.geom.Node;
-import apr.examproj.geom.Way;
+import apr.examproj.ds.StreetMap;
+import apr.examproj.geom.MapBounds;
+import apr.examproj.geom.MapNode;
+import apr.examproj.geom.MapWay;
+import apr.examproj.osm.MapData;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -86,67 +88,11 @@ public class Main extends Application {
 
     static void loadOSM(String path) throws IOException {
         String osmStr = new String(Files.readAllBytes(Paths.get(path)));
-        Document doc = Jsoup.parse(osmStr, Parser.xmlParser());
+        MapData mapData = new MapData(osmStr);
+        StreetMap streetMap = new StreetMap(mapData);
 
-        var boundsElmt = doc.getElementsByTag("bounds").get(0);
-        System.out.printf("Main.loadOSM()::%n\tBounds: ");
-        for (var bound : boundsElmt.getAllElements()) {
-            for (var attr : bound.attributes()) {
-                System.out.printf("(%s : %s)  ", attr.getKey(), attr.getValue());
-            }
-        }
-        System.out.println();
-
-        Bounds bounds = new Bounds(Double.valueOf(boundsElmt.attributes().get("minlat")),
-                Double.valueOf(boundsElmt.attributes().get("maxlat")),
-                Double.valueOf(boundsElmt.attributes().get("minlon")),
-                Double.valueOf(boundsElmt.attributes().get("maxlon")));
-
-        Map<String, Node> nodes = new HashMap<>();
-        for (var node : doc.getElementsByTag("node")) {
-            String id = node.attributes().get("id");
-            double lat = Double.valueOf(node.attributes().get("lat"));
-            double lon = Double.valueOf(node.attributes().get("lon"));
-            nodes.put(id, new Node(id, lat, lon));
-        }
-
-        for (var e : doc.getElementsByTag("way")) {
-
-            boolean isStreet = false;
-            var tags = e.getElementsByTag("tag");
-            for (var tag : tags) {
-                if (tag.attributes().get("k").equals("highway")) {
-                    isStreet = true;
-                    break;
-                }
-            }
-
-            if (!isStreet) {
-                continue;
-            }
-
-            Way way = new Way();
-            way.id = e.attributes().get("id");
-
-            for (var tag : tags) {
-                if (tag.attributes().get("k").equals("highway")) {
-                    way.type = tag.attributes().get("v");
-                }
-                if (tag.attributes().get("k").equals("name")) {
-                    way.name = tag.attributes().get("v");
-                }
-                if (tag.attributes().get("k").equals("maxspeed")) {
-                    way.maxSpeed = Double.valueOf(tag.attributes().get("v"));
-                }
-            }
-
-            var wayNodes = e.getElementsByTag("nd");
-            for (var nd : wayNodes) {
-                way.addNode(nodes.get(nd.attributes().get("ref")));
-            }
-
-            System.out.println(way.toString());
-        }
+        System.out.println(mapData);
+        System.out.println(streetMap);
     }
 
 }
