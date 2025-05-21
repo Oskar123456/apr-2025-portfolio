@@ -35,6 +35,10 @@ public class MapBounds {
         return new Point2D((latitude - minLatitude) / width, (longitude - minLongitude) / height);
     }
 
+    public Point2D normalize(Point2D point) {
+        return new Point2D((point.x - minLatitude) / width, (point.y - minLongitude) / height);
+    }
+
     public double diagonalLength() {
         double R = 6371e3;
         double minLatRad = minLatitude * Math.PI / 180;

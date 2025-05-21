@@ -37,7 +37,7 @@ public class MapBuilding extends MapPolygon {
     }
 
     @Override
-    public javafx.scene.Node guify(Region parentRegion, MapBounds mapBounds) {
+    public javafx.scene.Node guify(Pane parentPane, MapBounds mapBounds) {
         return new Pane();
     }
 

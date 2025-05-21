@@ -15,6 +15,7 @@ import apr.examproj.ds.StreetMap;
 import apr.examproj.geom.MapBounds;
 import apr.examproj.geom.MapNode;
 import apr.examproj.geom.MapWay;
+import apr.examproj.gui.GuiFactory;
 import apr.examproj.osm.MapData;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -48,33 +49,26 @@ public class Main extends Application {
     static int W = 1200, H = 1000;
 
     public static void main(String[] args) throws IOException {
-        loadOSM("data/map.osm");
-        // launch();
+        launch();
     }
 
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException {
         root = new Group();
         scene = new Scene(root, W, H, Color.WHITE);
         scene.getStylesheets().add("styles/exam-project.css");
 
-        layout = new BorderPane();
-        layout.setId("exam-proj__layout");
-        layout.prefHeightProperty().bind(scene.heightProperty());
+        layout = GuiFactory.defaultChildBorderPane(scene, "exam-proj__layout");
         layout.prefWidthProperty().bind(scene.widthProperty());
+        layout.prefHeightProperty().bind(scene.heightProperty());
 
-        title = new HBox();
-        title.setId("exam-proj__title");
+        title = GuiFactory.defaultHBox("exam-proj__title");
         title.getChildren().add(new Text("APR 2025 EXAM PROJECT"));
         title.prefHeight(75);
-        // title.prefWidthProperty().bind(layout.widthProperty()
-        // .subtract(margins.getRight()).subtract(margins.getLeft()));
 
-        content = new Pane();
-        content.setId("exam-proj__content");
+        content = GuiFactory.defaultPane("exam-proj__content");
+        content.prefWidthProperty().bind(layout.widthProperty());
         content.prefHeightProperty().bind(layout.heightProperty()
                 .subtract(title.heightProperty()));
-        // content.prefWidthProperty().bind(layout.widthProperty()
-        // .subtract(margins.getRight()).subtract(margins.getLeft()));
 
         layout.setTop(title);
         layout.setCenter(content);
@@ -84,6 +78,8 @@ public class Main extends Application {
         stage.titleProperty().set("APR 2025 EXAM PROJECT");
         stage.setScene(scene);
         stage.show();
+
+        loadOSM("data/map.osm");
     }
 
     static void loadOSM(String path) throws IOException {
@@ -91,8 +87,13 @@ public class Main extends Application {
         MapData mapData = new MapData(osmStr);
         StreetMap streetMap = new StreetMap(mapData);
 
-        System.out.println(mapData);
-        System.out.println(streetMap);
+        // System.out.println(mapData);
+        // System.out.println(streetMap);
+
+        // content.widthProperty().addListener((e) ->
+        // System.out.println(content.getHeight()));
+        content.widthProperty().addListener((e) -> streetMap.guify(content));
+        // content.heightProperty().addListener((e) -> streetMap.guify(content));
     }
 
 }

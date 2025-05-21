@@ -2,6 +2,7 @@ package apr.examproj.gui;
 
 import apr.examproj.geom.MapBounds;
 import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 
 /**
@@ -9,6 +10,6 @@ import javafx.scene.layout.Region;
  */
 public interface GUIMapElement {
 
-    public Node guify(Region parentRegion, MapBounds mapBounds);
+    public Node guify(Pane parentPane, MapBounds mapBounds);
 
 }
