@@ -10,10 +10,12 @@ import apr.examproj.geom.MapWay;
 import apr.examproj.gui.GUIMapElement;
 import apr.examproj.gui.GuiFactory;
 import apr.examproj.osm.MapData;
+import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 /**
  * Map
@@ -24,6 +26,8 @@ public class StreetMap {
     List<MapNode> nodes = new ArrayList<>();
     List<MapWay> streets = new ArrayList<>();
     List<MapBuilding> buildings = new ArrayList<>();
+
+    Pane layout, title, content;
 
     public StreetMap(MapData mapData) {
         bounds = new MapBounds(mapData.getBounds());
@@ -56,21 +60,25 @@ public class StreetMap {
         }
     }
 
-    public javafx.scene.Node guify(Pane parentPane) {
+    public void setRenderTarget(Pane parentPane) {
         System.out.println(
                 "StreetMap.guify() : " + parentPane + " " + parentPane.getWidth() + " " + parentPane.getHeight());
 
-        parentPane.getChildren().clear();
+        if (layout == null) {
+            layout = GuiFactory.defaultChildVBox(parentPane, "street-map__street-map-layout");
+            title = GuiFactory.defaultChildHBox(layout, "street-map__street-map-title");
+            title.getChildren().add(new Text("STREET MAP VIEW OF " + bounds));
+            content = GuiFactory.defaultChildPane(layout, "street-map__street-map-content");
+            content.heightProperty().addListener(e -> draw());
+            content.widthProperty().addListener(e -> draw());
+        }
 
-        VBox content = GuiFactory.defaultChildVBox(parentPane, "street-map__content");
+        draw();
+    }
 
-        // HBox titleBox = GuiFactory.defaultChildHBox(content,
-        // "street-map__title-box");
-        // Pane main = GuiFactory.defaultChildPane(content, "street-map__main");
-
-        streets.forEach(s -> s.guify(parentPane, bounds));
-
-        return content;
+    void draw() {
+        content.getChildren().clear();
+        streets.forEach(s -> s.guify(content, bounds));
     }
 
     @Override

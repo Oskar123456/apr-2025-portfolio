@@ -39,6 +39,19 @@ public class MapBounds {
         return new Point2D((point.x - minLatitude) / width, (point.y - minLongitude) / height);
     }
 
+    public boolean isInBounds(Point2D point) {
+        return point.x >= minLatitude && point.x <= maxLatitude && point.y >= minLongitude && point.y <= maxLongitude;
+    }
+
+    public boolean isInBounds(double latitude, double longitude) {
+        return latitude >= minLatitude && latitude <= maxLatitude && longitude >= minLongitude
+                && longitude <= maxLongitude;
+    }
+
+    public boolean isInBounds(MapNode node) {
+        return isInBounds(node.lat, node.lon);
+    }
+
     public double diagonalLength() {
         double R = 6371e3;
         double minLatRad = minLatitude * Math.PI / 180;

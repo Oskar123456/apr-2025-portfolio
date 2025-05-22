@@ -13,4 +13,17 @@
     -fx-color: white;
 }
 
-#street-map__main {}
+#street-map__street-map-layout {
+    -fx-border-style: solid black 2px;
+    border-style: solid black 2px;
+}
+
+#street-map__street-map-title {
+    -fx-border-style: solid yellow 2px;
+    border-style: solid black 2px;
+}
+
+#street-map__street-map-content {
+    -fx-border-style: solid red 2px;
+    border-style: solid black 2px;
+}

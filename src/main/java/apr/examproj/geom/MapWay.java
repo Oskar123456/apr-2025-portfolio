@@ -51,7 +51,9 @@ public class MapWay extends MapLine {
     @Override
     public javafx.scene.Node guify(Pane parentPane, MapBounds mapBounds) {
         List<Double> acc = new ArrayList<>();
-        nodes.stream().map(n -> mapBounds.normalize(new Point2D(n.lat, n.lon)))
+        nodes.stream()
+                .filter(n -> mapBounds.isInBounds(n))
+                .map(n -> mapBounds.normalize(new Point2D(n.lat, n.lon)))
                 .forEach((p) -> {
                     acc.add(p.x * parentPane.widthProperty().doubleValue());
                     acc.add(p.y * parentPane.heightProperty().doubleValue());

@@ -86,14 +86,7 @@ public class Main extends Application {
         String osmStr = new String(Files.readAllBytes(Paths.get(path)));
         MapData mapData = new MapData(osmStr);
         StreetMap streetMap = new StreetMap(mapData);
-
-        // System.out.println(mapData);
-        // System.out.println(streetMap);
-
-        // content.widthProperty().addListener((e) ->
-        // System.out.println(content.getHeight()));
-        content.widthProperty().addListener((e) -> streetMap.guify(content));
-        // content.heightProperty().addListener((e) -> streetMap.guify(content));
+        streetMap.setRenderTarget(content);
     }
 
 }
