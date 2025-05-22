@@ -50,22 +50,16 @@ public class MapWay extends MapLine {
 
     @Override
     public javafx.scene.Node guify(Pane parentPane, MapBounds mapBounds) {
-        List<Double> acc = new ArrayList<>();
-        nodes.stream()
-                .filter(n -> mapBounds.isInBounds(n))
-                .map(n -> mapBounds.normalize(new Point2D(n.lat, n.lon)))
-                .forEach((p) -> {
-                    acc.add(p.x * parentPane.widthProperty().doubleValue());
-                    acc.add(p.y * parentPane.heightProperty().doubleValue());
-                });
-        Polyline poly = new Polyline(ArrayUtils.toPrimitive(acc.toArray(Double[]::new)));
-        poly.strokeWidthProperty().set(4);
-        poly.strokeProperty().set(Color.DARKRED);
+        Polyline poly = GeomFactory.polyline(mapBounds,
+                parentPane.getWidth(),
+                parentPane.getHeight(),
+                nodes, "street-map__street-map-way");
         parentPane.getChildren().add(poly);
 
-        System.out.println(
-                "MapWay.guify() : parent: " + parentPane + " " + parentPane.getWidth() + " " + parentPane.getHeight());
-        System.out.println("MapWay.guify() : " + poly.toString());
+        // System.out.println(
+        // "MapWay.guify() : parent: " + parentPane + " " + parentPane.getWidth() + " "
+        // + parentPane.getHeight());
+        // System.out.println("MapWay.guify() : " + poly.toString());
 
         return poly;
     }

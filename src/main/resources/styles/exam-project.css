@@ -14,16 +14,58 @@
 }
 
 #street-map__street-map-layout {
-    -fx-border-style: solid black 2px;
-    border-style: solid black 2px;
+    -fx-border-style: solid;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
 }
 
 #street-map__street-map-title {
-    -fx-border-style: solid yellow 2px;
-    border-style: solid black 2px;
+    -fx-border-style: solid;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
 }
 
 #street-map__street-map-content {
-    -fx-border-style: solid red 2px;
-    border-style: solid black 2px;
+    -fx-border-style: solid;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+}
+
+#street-map__street-map-way {
+    -fx-stroke: royalblue;
+    -fx-stroke-width: 4px;
+}
+
+#street-map__street-map-node {
+    -fx-stroke: blue;
+}
+
+#street-map__street-map-building {
+    -fx-fill: gray;
+    -fx-stroke: black;
+    -fx-stroke-width: 2px;
+}
+
+#street-map__street-map-address-node {
+    -fx-stroke: royalblue;
+    -fx-stroke-width: 3px;
+    -fx-fill: white;
+}
+
+#street-map__street-map-address-node-src {
+    -fx-stroke: green;
+    -fx-stroke-width: 4px;
+    -fx-fill: white;
+}
+
+#street-map__street-map-address-node-dest {
+    -fx-stroke: red;
+    -fx-stroke-width: 4px;
+    -fx-fill: white;
+}
+
+#street-map__street-map-address-text {
+    -fx-fill: black;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
 }
