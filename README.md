@@ -33,28 +33,23 @@ Map format:
   - `MapNode` [IGUI]
    + id
    + lon, lat
-   ____
    + draw()
   - `MapEdge`
    + id
    + src, dest
    + dist, weight
-   ____
    + draw()
   - `MapWay`
    + id
    + edges
    + addr details
-   ____
    + draw()
   - `MapAddress`
    + id
    + node
    + addr details
-   ____
    + draw()
   - `MapBuilding`
    + id
    + nodes
-   ____
    + draw()
