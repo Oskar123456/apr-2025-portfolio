@@ -31,25 +31,25 @@ OSM data format:
 Map format:
 
   - `MapNode` [IGUI]
-   + id
-   + lon, lat
-   + draw()
+      + id
+      + lon, lat
+      + draw()
   - `MapEdge`
-   + id
-   + src, dest
-   + dist, weight
-   + draw()
+      + id
+      + src, dest
+      + dist, weight
+      + draw()
   - `MapWay`
-   + id
-   + edges
-   + addr details
-   + draw()
+      + id
+      + edges
+      + addr details
+      + draw()
   - `MapAddress`
-   + id
-   + node
-   + addr details
-   + draw()
+      + id
+      + node
+      + addr details
+      + draw()
   - `MapBuilding`
-   + id
-   + nodes
-   + draw()
+      + id
+      + nodes
+      + draw()
