@@ -15,7 +15,7 @@ import apr.examproj.ds.StreetMap;
 import apr.examproj.geom.MapBounds;
 import apr.examproj.geom.MapNode;
 import apr.examproj.geom.MapWay;
-import apr.examproj.gui.GuiFactory;
+import apr.examproj.gui.GUIFactory;
 import apr.examproj.osm.MapData;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -57,15 +57,15 @@ public class Main extends Application {
         scene = new Scene(root, W, H, Color.WHITE);
         scene.getStylesheets().add("styles/exam-project.css");
 
-        layout = GuiFactory.defaultChildBorderPane(scene, "exam-proj__layout");
+        layout = GUIFactory.defaultChildBorderPane(scene, "exam-proj__layout");
         layout.prefWidthProperty().bind(scene.widthProperty());
         layout.prefHeightProperty().bind(scene.heightProperty());
 
-        title = GuiFactory.defaultHBox("exam-proj__title");
+        title = GUIFactory.defaultHBox("exam-proj__title");
         title.getChildren().add(new Text("APR 2025 EXAM PROJECT"));
         title.prefHeight(75);
 
-        content = GuiFactory.defaultPane("exam-proj__content");
+        content = GUIFactory.defaultPane("exam-proj__content");
         content.prefWidthProperty().bind(layout.widthProperty());
         content.prefHeightProperty().bind(layout.heightProperty()
                 .subtract(title.heightProperty()));

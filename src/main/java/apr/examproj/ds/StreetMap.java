@@ -7,7 +7,7 @@ import apr.examproj.geom.MapBounds;
 import apr.examproj.geom.MapBuilding;
 import apr.examproj.geom.MapNode;
 import apr.examproj.geom.MapWay;
-import apr.examproj.gui.GuiFactory;
+import apr.examproj.gui.GUIFactory;
 import apr.examproj.osm.MapData;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -89,7 +89,7 @@ public class StreetMap {
         System.out.println(
                 "StreetMap.guify() : " + parentPane + " " + parentPane.getWidth() + " " + parentPane.getHeight());
 
-        layout = GuiFactory.defaultChildVBox(parentPane, "street-map__street-map-layout");
+        layout = GUIFactory.defaultChildVBox(parentPane, "street-map__street-map-layout");
 
         title = new HBox();
         title.setId("street-map__street-map-title");

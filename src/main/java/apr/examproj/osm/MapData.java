@@ -10,8 +10,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
 
-import apr.examproj.geom.MapNode;
-
 /**
  * MapData
  */
@@ -22,6 +20,7 @@ public class MapData {
     List<Element> ways = new ArrayList<>();
     List<Element> streets = new ArrayList<>();
     List<Element> buildings = new ArrayList<>();
+    List<Element> addresses = new ArrayList<>();
 
     public MapData(String data) {
         Document xmlDoc = Jsoup.parse(data, Parser.xmlParser());
@@ -30,6 +29,10 @@ public class MapData {
 
         for (var e : xmlDoc.getElementsByTag("node")) {
             nodes.add(e);
+            var eTags = extractTags(e);
+            if (eTags.containsKey("addr:street")) {
+                addresses.add(e);
+            }
         }
 
         for (var e : xmlDoc.getElementsByTag("way")) {

@@ -12,7 +12,7 @@ import javafx.scene.text.Text;
 /**
  * GuiFactory
  */
-public class GuiFactory {
+public class GUIFactory {
 
     public static HBox defaultHBox(String id) {
         HBox pane = new HBox();

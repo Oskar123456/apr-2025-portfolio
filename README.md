@@ -3,32 +3,17 @@
 ## NOTES
 
 Problem: `StreetMap -> Graph -> PathFinder -> Graph -> MapPath -> Display StreetMap + MapPath`
+   
+## Data
 
-  1. Internal OSM data format `MapData.java`
-   - Ways (nodes, type, maxspeed, name)
-   - Nodes (lon, lat)
-   - Buildings (nodes, type?)
-   - Addresses (node, addr-info...)
-  2. Map edge format `MapEdge.java`
-   - Source and destination map-node reference
-   - weight
-   - way name
-  2. Map format `StreetMap.java`
-   - Set of all nodes, buildings, addresses, pathable ways
-   - Add footpaths from address-nodes to a new node created on the closest point
-   on address' associated street
-   - Set of all map-edges with their calculated weights
-  3. Map path format `MapPath.java`
-   - Collection of map-edges
-
-OSM data format:
+OSM data format (`MapData`):
 
   + nodes
   + ways
   + addresses
   + buildings
 
-Map format:
+Map format (`StreetMap`):
 
   - `MapNode` [IGUI]
       + id
@@ -38,6 +23,7 @@ Map format:
       + id
       + src, dest
       + dist, weight
+      + mapway ref
       + draw()
   - `MapWay`
       + id
@@ -53,3 +39,31 @@ Map format:
       + id
       + nodes
       + draw()
+
+## Pathing
+
+### DS
+
+Graph (`Graph`):
+
+  + nodes (`Node`)
+  + edges (`Edge`)
+
+### Alg
+
+Path finder interface (`IPathFinder`):
+
+  + `search(graph, src, dest)`
+
+## App Driver
+
+Responsibilities:
+
+  - Controls application
+  - Makes GUI out of a StreetMap
+  - Calls pathfinding
+  - Draws paths, replays of pathfinding
+
+Has: 
+
+  + StreetMap
