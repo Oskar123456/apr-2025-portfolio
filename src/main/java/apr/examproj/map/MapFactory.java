@@ -56,8 +56,8 @@ public class MapFactory {
 
         var tags = MapData.extractTags(xmlElmt);
         path.id = xmlElmt.id();
-        path.name = tags.containsKey("name") ? tags.get("name") : "";
-        path.type = tags.containsKey("highway") ? tags.get("highway") : "";
+        path.name = tags.containsKey("name") ? tags.get("name") : "unnamed";
+        path.type = tags.containsKey("highway") ? tags.get("highway") : "unknown";
         try {
             path.maxSpeed = Double.valueOf(tags.get("maxspeed"));
         } catch (Exception e) {
