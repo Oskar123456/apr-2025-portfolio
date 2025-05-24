@@ -42,6 +42,12 @@ public class Point2D extends Point {
         return this;
     }
 
+    public Point2D scale(double scaleX, double scaleY) {
+        this.x *= scaleX;
+        this.y *= scaleY;
+        return this;
+    }
+
     public Point2D normalize() {
         double len = magnitude();
         this.x /= len;

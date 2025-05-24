@@ -67,3 +67,17 @@ Responsibilities:
 Has: 
 
   + StreetMap
+
+## Design Patterns
+
+  - `GUIFactory.java`
+      + **factory**
+  - `GUIMapConfig.java`
+      + **singleton**
+
+## Programming techniques (*curriculum*)
+
+  - `GUIUtils.java`
+      + `addEventHandlerRecursive` : **reflection**
+  - `Stringify.java`
+      + `toString` : **reflection**

@@ -1,6 +1,7 @@
 package apr.examproj.map;
 
 import apr.examproj.gui.IGUIMapElement;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 
@@ -39,6 +40,18 @@ public class MapNode implements IGUIMapElement {
         var pos = bounds.normalize(lat, lon);
         parentPane.getChildren().add(dot);
         dot.relocate(pos.x * parentPane.getWidth(), pos.y * parentPane.getHeight());
+    }
+
+    @Override
+    public Node tooltip(Pane parentPane) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'tooltip'");
+    }
+
+    @Override
+    public void setHoverTooltipTarget(Pane tooltipTarget) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setHoverTooltipTarget'");
     }
 
 }

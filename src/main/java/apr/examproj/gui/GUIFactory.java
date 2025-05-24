@@ -4,9 +4,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.text.Text;
 
 /**
@@ -68,6 +67,24 @@ public class GUIFactory {
         // pane.prefWidthProperty().bind(parentPane.widthProperty());
         parentPane.getChildren().add(pane);
         return pane;
+    }
+
+    public static Pane defaultCircleSign(String text, double radius) {
+        double brdrRadius = 0.15;
+        Pane container = new Pane();
+        Ellipse outer = new Ellipse(radius, radius);
+        Ellipse inner = new Ellipse(radius * (1 - brdrRadius), radius * (1 - brdrRadius));
+        Text txt = new Text(text);
+
+        container.setId("street-map__circle-sign");
+        outer.setId("street-map__circle-sign-outer");
+        inner.setId("street-map__circle-sign-inner");
+        txt.setId("street-map__circle-sign-text");
+
+        container.getChildren().addAll(outer, inner, txt);
+        // inner.relocate(brdrRadius * radius, brdrRadius * radius);
+        txt.relocate(-radius / 2, -radius / 2);
+        return container;
     }
 
     // public static Polygon defaultChildPolygon(Pane parentPane, String id,

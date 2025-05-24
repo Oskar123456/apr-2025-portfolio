@@ -3,11 +3,14 @@ package apr.examproj.map;
 import org.jsoup.nodes.Element;
 
 import apr.datastructures.graph.Point2D;
+import apr.examproj.gui.IGUIMapElement;
+import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 
 /**
  * Bounds
  */
-public class MapBounds {
+public class MapBounds implements IGUIMapElement {
 
     public double minLatitude, maxLatitude;
     public double minLongitude, maxLongitude;
@@ -74,6 +77,24 @@ public class MapBounds {
     public String toString() {
         return String.format("%s[minLat: %f, minLon: %f, maxLat: %f, maxLon: %f]",
                 getClass().getSimpleName(), minLatitude, minLongitude, maxLatitude, maxLongitude);
+    }
+
+    @Override
+    public void draw(MapBounds bounds, Pane renderPane) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'draw'");
+    }
+
+    @Override
+    public Node tooltip(Pane parentPane) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'tooltip'");
+    }
+
+    @Override
+    public void setHoverTooltipTarget(Pane tooltipTarget) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setHoverTooltipTarget'");
     }
 
 }

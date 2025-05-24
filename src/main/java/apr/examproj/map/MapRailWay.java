@@ -1,15 +1,19 @@
 package apr.examproj.map;
 
+import java.util.List;
+
 import apr.examproj.gui.IGUIMapElement;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 /**
- * MapEdge
+ * MapRailWay
  */
-public class MapEdge implements IGUIMapElement {
+public class MapRailWay implements IGUIMapElement {
 
-    public MapEdge() {
+    List<MapNode> nodes;
+
+    public MapRailWay() {
     }
 
     @Override
@@ -29,5 +33,4 @@ public class MapEdge implements IGUIMapElement {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setHoverTooltipTarget'");
     }
-
 }

@@ -18,7 +18,7 @@ public class MapData {
     Element bounds;
     List<Element> nodes = new ArrayList<>();
     List<Element> ways = new ArrayList<>();
-    List<Element> streets = new ArrayList<>();
+    List<Element> paths = new ArrayList<>();
     List<Element> buildings = new ArrayList<>();
     List<Element> addresses = new ArrayList<>();
 
@@ -38,7 +38,7 @@ public class MapData {
         for (var e : xmlDoc.getElementsByTag("way")) {
             var eTags = extractTags(e);
             if (eTags.containsKey("highway")) {
-                streets.add(e);
+                paths.add(e);
             } else if (eTags.containsKey("building")) {
                 buildings.add(e);
             } else {
@@ -55,12 +55,20 @@ public class MapData {
         return nodes;
     }
 
-    public List<Element> getStreets() {
-        return streets;
+    public List<Element> getPaths() {
+        return paths;
+    }
+
+    public List<Element> getWays() {
+        return ways;
     }
 
     public List<Element> getBuildings() {
         return buildings;
+    }
+
+    public List<Element> getAddresses() {
+        return addresses;
     }
 
     public static Map<String, String> extractTags(Element element) {
@@ -75,8 +83,8 @@ public class MapData {
 
     @Override
     public String toString() {
-        return String.format("%s[bounds: %s, nodes: %d, streets: %d, buildings: %d]",
-                getClass().getSimpleName(), bounds.toString(), nodes.size(), streets.size(), buildings.size());
+        return String.format("%s[bounds: %s, nodes: %d, paths: %d, buildings: %d]",
+                getClass().getSimpleName(), bounds.toString(), nodes.size(), paths.size(), buildings.size());
     }
 
 }

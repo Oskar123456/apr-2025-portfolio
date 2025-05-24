@@ -18,10 +18,6 @@ public class Graph<T> {
     public Graph() {
     }
 
-    public Graph(StreetMap streetMap) {
-
-    }
-
     public List<GraphNode<T>> neighbors(GraphNode<T> node) {
         return neighbors.get(node);
     }

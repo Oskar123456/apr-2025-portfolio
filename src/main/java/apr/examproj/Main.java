@@ -3,34 +3,18 @@ package apr.examproj;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.parser.Parser;
-
-import apr.examproj.ds.StreetMap;
-import apr.examproj.geom.MapBounds;
-import apr.examproj.geom.MapNode;
-import apr.examproj.geom.MapWay;
 import apr.examproj.gui.GUIFactory;
+import apr.examproj.map.StreetMap;
 import apr.examproj.osm.MapData;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Separator;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -86,6 +70,8 @@ public class Main extends Application {
         String osmStr = new String(Files.readAllBytes(Paths.get(path)));
         MapData mapData = new MapData(osmStr);
         StreetMap streetMap = new StreetMap(mapData);
+        System.out.println("Main.loadOSM()");
+        System.out.println(streetMap);
         streetMap.setRenderTarget(content);
     }
 

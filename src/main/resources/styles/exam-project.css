@@ -69,3 +69,28 @@
     -fx-font-size: 14px;
     -fx-font-weight: 500;
 }
+
+/* NEW */
+
+#street-map__circle-sign {
+    -fx-text-alignment: center
+}
+
+#street-map__circle-sign-outer {
+    -fx-fill: black;
+}
+
+#street-map__circle-sign-inner {
+    -fx-fill: white;
+}
+
+#street-map__circle-sign-text {
+    -fx-fill: black;
+    -fx-font-size: 14px;
+    -fx-font-weight: 500;
+}
+
+#street-map__path {
+    -fx-stroke-width: 4px;
+    -fx-stroke: royalblue;
+}
