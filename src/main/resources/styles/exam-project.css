@@ -8,9 +8,15 @@
 }
 
 #exam-proj__title {
-    -fx-font-size: 45px;
-    -fx-text-fill: white;
-    -fx-color: white;
+    -fx-background-color: gray;
+    -fx-background-radius: 6px;
+    -fx-padding: 10px;
+    -fx-opacity: 0.7;
+}
+
+#exam-proj__title-text {
+    -fx-font-size: 25px;
+    -fx-fill: black;
 }
 
 /* STREET MAP */
@@ -21,21 +27,25 @@
 
 #street-map__circle-sign-outer {
     -fx-fill: black;
+    -fx-opacity: 0.85;
 }
 
 #street-map__circle-sign-inner {
     -fx-fill: white;
+    -fx-opacity: 0.85;
 }
 
 #street-map__circle-sign-text {
     -fx-fill: black;
-    -fx-font-size: 14px;
-    -fx-font-weight: 500;
+    -fx-font-size: 12px;
+    -fx-font-weight: 400;
 }
 
 #street-map__path {
-    -fx-stroke-width: 10px;
+    -fx-stroke-width: 4px;
     -fx-stroke: royalblue;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
 }
 
 /* TOOLTIP */
@@ -45,32 +55,57 @@
     padding: 10px;
     border-radius: 8px;
     -fx-background-radius: 8px;
-    -fx-background-color: rgba(111, 111, 111, 0.5);
+    -fx-background-color: rgba(75, 75, 75, 0.9);
     -fx-padding: 10px;
     -fx-border-radius: 8px;
+    -fx-alignment: top-left;
 }
 
 #street-map__tooltip-title-box {
     -fx-padding: 10px;
     padding: 10px;
+
+    -fx-alignment: top-left;
+    -fx-text-alignment: left;
 }
 
 #street-map__tooltip-content-box {
     -fx-padding: 10px;
     padding: 10px;
+
+    -fx-alignment: top-left;
+    -fx-text-alignment: left;
 }
 
 #street-map__tooltip-footnote-box {
     -fx-padding: 10px;
     padding: 10px;
+
+    -fx-alignment: top-left;
+    -fx-text-alignment: left;
 }
 
 #street-map__tooltip-title-text {
-    -fx-font-size: 12px;
-    font-size: 12px;
+    -fx-font-weight: 500;
+    -fx-font-size: 14px;
+    -fx-fill: black;
 }
 
 #street-map__tooltip-footnote-text {
+    -fx-font-weight: 400;
     -fx-font-size: 10px;
-    font-size: 10px;
+    -fx-fill: black;
+}
+
+#street-map__tooltip-content-text {
+    -fx-font-weight: 400;
+    -fx-font-size: 12px;
+    -fx-fill: black;
+}
+
+#street-map__building {
+    -fx-border-width: 2px;
+    -fx-border-fill: black;
+    -fx-fill: rgb(125, 125, 125);
+    -fx-opacity: 0.9;
 }

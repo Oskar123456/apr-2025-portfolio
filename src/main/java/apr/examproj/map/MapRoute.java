@@ -1,20 +1,17 @@
 package apr.examproj.map;
 
+import java.util.List;
+
 import apr.examproj.gui.IGUIMapElement;
-import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 /**
- * MapEdge
+ * MapRoute
  */
-public class MapEdge implements IGUIMapElement {
+public class MapRoute implements IGUIMapElement {
 
-    String name;
-    String description;
-    double dist;
-
-    public MapEdge() {
-    }
+    List<MapNode> nodes;
+    List<MapEdge> edges;
 
     @Override
     public void draw(MapBounds bounds, Pane renderPane) {

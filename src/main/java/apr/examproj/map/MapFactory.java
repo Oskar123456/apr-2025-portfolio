@@ -31,7 +31,7 @@ public class MapFactory {
         return node;
     }
 
-    public static MapAddress address(Element xmlElmt) {
+    public static MapAddress address(Element xmlElmt, List<MapPath> paths) {
         MapAddress address = new MapAddress();
         var tags = MapData.extractTags(xmlElmt);
         address.id = tags.get("osak:identifier");
@@ -40,13 +40,27 @@ public class MapFactory {
         address.housenumber = tags.get("addr:housenumber");
         address.municipality = tags.get("addr:municipality");
         address.postcode = tags.get("addr:postcode");
-        address.street = tags.get("addr:street");
         address.node = node(xmlElmt);
+        for (var p : paths) {
+            if (p.name.equals(tags.get("addr:street"))) {
+                address.street = p;
+                break;
+            }
+        }
         return address;
     }
 
-    public static MapBuilding building(Element xmlElmt) {
+    public static MapBuilding building(Element xmlElmt, List<MapNode> nodes) {
         MapBuilding building = new MapBuilding();
+
+        building.id = xmlElmt.id();
+        for (var nd : xmlElmt.getElementsByTag("nd")) {
+            for (var node : nodes) {
+                if (node.id.equals(nd.attributes().get("ref"))) {
+                    building.addNode(node);
+                }
+            }
+        }
 
         return building;
     }

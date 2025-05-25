@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 
 import apr.examproj.driver.StreetMapDriver;
 import apr.examproj.gui.GUIFactory;
+import apr.examproj.gui.Tooltip;
 import apr.examproj.map.StreetMap;
 import apr.examproj.osm.MapData;
 import javafx.application.Application;
@@ -18,6 +19,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -49,13 +51,16 @@ public class Main extends Application {
         layout.prefHeightProperty().bind(scene.heightProperty());
 
         title = GUIFactory.defaultHBox("exam-proj__title");
-        title.getChildren().add(new Text("APR 2025 EXAM PROJECT"));
-        title.prefHeight(75);
+        GUIFactory.defaultChildText(title, "APR 2025 EXAM PROJECT", "exam-proj__title-text");
 
         content = GUIFactory.defaultPane("exam-proj__content");
         content.prefWidthProperty().bind(layout.widthProperty());
         content.prefHeightProperty().bind(layout.heightProperty()
                 .subtract(title.heightProperty()));
+        Rectangle clipRect = new Rectangle();
+        clipRect.widthProperty().bind(content.widthProperty());
+        clipRect.heightProperty().bind(content.heightProperty());
+        content.setClip(clipRect);
 
         layout.setTop(title);
         layout.setCenter(content);

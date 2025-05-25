@@ -60,13 +60,12 @@ public class GUIFactory {
         return pane;
     }
 
-    public static Text defaultChildText(Pane parentPane, String id) {
-        Text pane = new Text();
-        pane.setId(id);
-        // pane.prefHeightProperty().bind(parentPane.heightProperty());
-        // pane.prefWidthProperty().bind(parentPane.widthProperty());
-        parentPane.getChildren().add(pane);
-        return pane;
+    public static Text defaultChildText(Pane parentPane, String text, String id) {
+        Text txt = new Text(text);
+        txt.setId(id);
+        txt.getStyleClass().add("text");
+        parentPane.getChildren().add(txt);
+        return txt;
     }
 
     public static Pane defaultCircleSign(String text, double radius) {
@@ -85,6 +84,13 @@ public class GUIFactory {
         // inner.relocate(brdrRadius * radius, brdrRadius * radius);
         txt.relocate(-radius / 2, -radius / 2);
         return container;
+    }
+
+    public static Text defaultText(String text) {
+        Text txt = new Text(text);
+        txt.setId("street-map__text");
+        txt.getStyleClass().add("text");
+        return txt;
     }
 
     // public static Polygon defaultChildPolygon(Pane parentPane, String id,

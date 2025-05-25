@@ -19,6 +19,7 @@ public class Tooltip extends VBox {
     public Text titleText;
 
     static Tooltip instance = new Tooltip();
+    double paddingX = 45, paddingY = -45;
 
     public Tooltip() {
         setId("street-map__tooltip");
@@ -31,14 +32,11 @@ public class Tooltip extends VBox {
         contentBox.setId("street-map__tooltip-content-box");
         footnoteBox = new HBox();
         footnoteBox.setId("street-map__tooltip-footnote-box");
-        titleText = new Text();
-        titleText.setId("street-map__tooltip-title-text");
-        titleBox.getChildren().add(titleText);
+        titleText = GUIFactory.defaultChildText(titleBox, "", "street-map__tooltip-title-text");
         footnoteText = new Text();
         footnoteText.setId("street-map__tooltip-footnote-text");
         footnoteBox.getChildren().add(footnoteText);
         getChildren().addAll(titleBox, contentBox, footnoteBox);
-        setVisible(false);
     }
 
     public Tooltip(String title, String content, String footnote) {
@@ -55,7 +53,15 @@ public class Tooltip extends VBox {
     public void setRenderTarget(Pane renderPane) {
         renderPane.getChildren().add(this);
         renderPane.addEventHandler(MouseEvent.MOUSE_MOVED, (e) -> {
-            relocate(e.getX() + 45, e.getY() - 45);
+            double x = e.getX() + paddingX;
+            double y = e.getY() + paddingY;
+            if (e.getX() + getWidth() > renderPane.getWidth()) {
+                x = e.getX() - getWidth() - paddingX;
+            }
+            if (e.getY() + getHeight() > renderPane.getHeight()) {
+                y = e.getY() - getHeight() - paddingY;
+            }
+            relocate(x, y);
         });
     }
 
