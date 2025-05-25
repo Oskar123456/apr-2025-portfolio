@@ -72,8 +72,6 @@ public class MapFactory {
             }
         }
 
-        System.out.println("MapFactory.path() : " + Stringify.toString(path));
-
         return path;
     }
 

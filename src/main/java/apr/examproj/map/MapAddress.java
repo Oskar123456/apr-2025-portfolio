@@ -4,7 +4,10 @@ import apr.examproj.gui.GUIFactory;
 import apr.examproj.gui.GUIMapConfig;
 import apr.examproj.gui.GUIUtils;
 import apr.examproj.gui.IGUIMapElement;
-import javafx.scene.Node;
+import apr.examproj.gui.Tooltip;
+import javafx.event.Event;
+import javafx.event.EventType;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 /**
@@ -30,19 +33,27 @@ public class MapAddress implements IGUIMapElement {
                 GUIMapConfig.getInstance().getAddrRadius() * renderPane.getWidth());
         var point = GUIUtils.mapNodeCoordsToPane(bounds, renderPane, node);
         sign.relocate(point.x, point.y);
-        renderPane.getChildren().add(sign);
+
+        sign.addEventHandler(MouseEvent.MOUSE_ENTERED, (e) -> showTooltip(renderPane, e));
+        sign.addEventHandler(MouseEvent.MOUSE_EXITED, (e) -> hideTooltip(renderPane));
+
+        renderPane.getChildren().addAll(sign);
+    }
+
+    private void hideTooltip(Pane renderPane) {
+        Tooltip.getInstance().setVisible(false);
+    }
+
+    private void showTooltip(Pane renderPane, MouseEvent event) {
+        Tooltip.getInstance().setTitle(toString());
+        Tooltip.getInstance().clearContent();
+        Tooltip.getInstance().setFootnote(id);
+        Tooltip.getInstance().setVisible(true);
     }
 
     @Override
-    public Node tooltip(Pane parentPane) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'tooltip'");
-    }
-
-    @Override
-    public void setHoverTooltipTarget(Pane tooltipTarget) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setHoverTooltipTarget'");
+    public String toString() {
+        return String.format("%s, %s, %s, %s, %s", street, housenumber, postcode, city, country);
     }
 
 }

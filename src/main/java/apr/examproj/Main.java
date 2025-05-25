@@ -1,9 +1,12 @@
 package apr.examproj;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import apr.examproj.driver.StreetMapDriver;
 import apr.examproj.gui.GUIFactory;
 import apr.examproj.map.StreetMap;
 import apr.examproj.osm.MapData;
@@ -63,7 +66,8 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
 
-        loadOSM("data/map.osm");
+        StreetMapDriver driver = new StreetMapDriver();
+        driver.start(content);
     }
 
     static void loadOSM(String path) throws IOException {

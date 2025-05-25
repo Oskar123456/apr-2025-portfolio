@@ -51,4 +51,10 @@ public class GUIUtils {
         return arr;
     }
 
+    public static String paneValsString(Pane pane) {
+        return String.format("Pane[pos: (%f, %f), w/h: (%f, %f)]",
+                pane.getLayoutX(), pane.getLayoutY(),
+                pane.getWidth(), pane.getHeight());
+    }
+
 }

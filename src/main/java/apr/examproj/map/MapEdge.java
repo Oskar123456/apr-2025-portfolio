@@ -18,16 +18,4 @@ public class MapEdge implements IGUIMapElement {
         throw new UnsupportedOperationException("Unimplemented method 'draw'");
     }
 
-    @Override
-    public Node tooltip(Pane parentPane) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'tooltip'");
-    }
-
-    @Override
-    public void setHoverTooltipTarget(Pane tooltipTarget) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setHoverTooltipTarget'");
-    }
-
 }
