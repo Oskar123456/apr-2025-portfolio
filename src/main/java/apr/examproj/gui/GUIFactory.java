@@ -1,10 +1,12 @@
 package apr.examproj.gui;
 
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.text.Text;
 
@@ -70,18 +72,38 @@ public class GUIFactory {
 
     public static Pane defaultCircleSign(String text, double radius) {
         double brdrRadius = 0.15;
+
         Pane container = new Pane();
+        container.setPrefHeight(0);
+        container.setPrefWidth(0);
+
         Ellipse outer = new Ellipse(radius, radius);
-        Ellipse inner = new Ellipse(radius * (1 - brdrRadius), radius * (1 - brdrRadius));
         Text txt = new Text(text);
+
+        outer.addEventHandler(MouseEvent.MOUSE_ENTERED, (e) -> {
+            outer.setStroke(Color.RED);
+            outer.fillProperty().set(Color.DARKSALMON);
+        });
+        outer.addEventHandler(MouseEvent.MOUSE_EXITED, (e) -> {
+            outer.setStroke(Color.BLACK);
+            outer.fillProperty().set(Color.ALICEBLUE);
+        });
+        txt.hoverProperty().subscribe((a, b) -> {
+            if (a) {
+                outer.setStroke(Color.BLACK);
+                outer.fillProperty().set(Color.ALICEBLUE);
+            }
+            if (b) {
+                outer.setStroke(Color.RED);
+                outer.fillProperty().set(Color.DARKSALMON);
+            }
+        });
 
         container.setId("street-map__circle-sign");
         outer.setId("street-map__circle-sign-outer");
-        inner.setId("street-map__circle-sign-inner");
         txt.setId("street-map__circle-sign-text");
 
-        container.getChildren().addAll(outer, inner, txt);
-        // inner.relocate(brdrRadius * radius, brdrRadius * radius);
+        container.getChildren().addAll(outer, txt);
         txt.relocate(-radius / 2, -radius / 2);
         return container;
     }
@@ -92,14 +114,5 @@ public class GUIFactory {
         txt.getStyleClass().add("text");
         return txt;
     }
-
-    // public static Polygon defaultChildPolygon(Pane parentPane, String id,
-    // double... points) {
-    // Polygon poly = new Polygon();
-    // poly.setId(id);
-    // poly.prefHeightProperty().bind(parentPane.heightProperty());
-    // poly.prefWidthProperty().bind(parentPane.widthProperty());
-    // return poly;
-    // }
 
 }

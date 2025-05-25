@@ -27,8 +27,6 @@ public class StreetMapDriver {
         MapData mapData = new MapData(osmStr);
         streetMap = new StreetMap(mapData);
         streetMap.setRenderTarget(renderPane);
-        Tooltip.getInstance().setRenderTarget(renderPane);
-        Tooltip.getInstance().setVisible(false);
         System.out.println("StreetMapDriver.start()");
         System.out.println(streetMap);
     }

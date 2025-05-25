@@ -22,13 +22,22 @@
 /* STREET MAP */
 
 #street-map__circle-sign {
-    -fx-text-alignment: center
+    -fx-text-alignment: center;
 }
 
 #street-map__circle-sign-outer {
-    -fx-fill: black;
+    -fx-fill: white;
     -fx-opacity: 0.85;
+    -fx-stroke-width: 2px;
+    -fx-stroke: black;
 }
+
+/* #street-map__circle-sign-outer:hover { */
+/*     -fx-fill: pink; */
+/*     -fx-opacity: 0.95; */
+/*     -fx-stroke-width: 4px; */
+/*     -fx-stroke: red; */
+/* } */
 
 #street-map__circle-sign-inner {
     -fx-fill: white;
@@ -48,16 +57,23 @@
     -fx-background-radius: 6px;
 }
 
+#street-map__path:hover {
+    -fx-stroke: red;
+    -fx-stroke-width: 5px;
+}
+
 /* TOOLTIP */
 
 #street-map__tooltip {
-    background-color: rgba(111, 111, 111, 0.5);
+    background-color: rgba(222, 222, 222, 0.75);
     padding: 10px;
     border-radius: 8px;
     -fx-background-radius: 8px;
-    -fx-background-color: rgba(75, 75, 75, 0.9);
+    -fx-background-color: rgba(222, 222, 222, 0.9);
     -fx-padding: 10px;
     -fx-border-radius: 8px;
+    -fx-border-width: 2px;
+    -fx-border-color: black;
     -fx-alignment: top-left;
 }
 
@@ -108,4 +124,9 @@
     -fx-border-fill: black;
     -fx-fill: rgb(125, 125, 125);
     -fx-opacity: 0.9;
+}
+
+#street-map__building:hover {
+    -fx-stroke: red;
+    -fx-stroke-width: 3px;
 }

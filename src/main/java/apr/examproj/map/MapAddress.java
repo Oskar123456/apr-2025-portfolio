@@ -32,8 +32,10 @@ public class MapAddress implements IGUIMapElement {
         var point = GUIUtils.mapNodeCoordsToPane(bounds, renderPane, node);
         sign.relocate(point.x, point.y);
 
-        sign.addEventHandler(MouseEvent.MOUSE_ENTERED, (e) -> showTooltip(renderPane, e));
-        sign.addEventHandler(MouseEvent.MOUSE_EXITED, (e) -> hideTooltip(renderPane));
+        for (var child : sign.getChildren()) {
+            child.addEventHandler(MouseEvent.MOUSE_ENTERED, (e) -> showTooltip(renderPane, e));
+            child.addEventHandler(MouseEvent.MOUSE_EXITED, (e) -> hideTooltip(renderPane));
+        }
 
         renderPane.getChildren().addAll(sign);
     }

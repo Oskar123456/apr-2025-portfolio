@@ -10,6 +10,7 @@ import apr.examproj.gui.IGUIMapElement;
 import apr.examproj.gui.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polyline;
 
 /**
@@ -67,9 +68,14 @@ public class MapPath implements IGUIMapElement {
         line.setId("street-map__path");
         renderPane.getChildren().add(line);
 
-        for (var n : nodes) {
-            n.draw(bounds, renderPane);
-        }
+        // for (var n : nodes) {
+        // n.draw(bounds, renderPane);
+        // }
+
+        // line.addEventHandler(MouseEvent.MOUSE_ENTERED, (e) ->
+        // line.setStroke(Color.RED));
+        // line.addEventHandler(MouseEvent.MOUSE_EXITED, (e) ->
+        // line.setStroke(Color.ROYALBLUE));
 
         line.addEventHandler(MouseEvent.MOUSE_ENTERED, (e) -> showTooltip(renderPane, e));
         line.addEventHandler(MouseEvent.MOUSE_EXITED, (e) -> hideTooltip(renderPane));

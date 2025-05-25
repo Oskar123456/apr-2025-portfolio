@@ -59,7 +59,10 @@ public class Tooltip extends VBox {
                 x = e.getX() - getWidth() - paddingX;
             }
             if (e.getY() + getHeight() > renderPane.getHeight()) {
-                y = e.getY() - getHeight() - paddingY;
+                y = e.getY() - getHeight() + paddingY;
+            }
+            if (e.getY() - getHeight() <= 0) {
+                y = e.getY() - paddingY;
             }
             relocate(x, y);
         });
@@ -80,7 +83,7 @@ public class Tooltip extends VBox {
 
     public void setContentText(String text) {
         contentBox.getChildren().clear();
-        contentBox.getChildren().add(new Text(text));
+        GUIFactory.defaultChildText(contentBox, text, "street-map__tooltip-content-text");
     }
 
     public void setTitle(String text) {

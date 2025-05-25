@@ -10,7 +10,8 @@ public class MapEdge implements IGUIMapElement {
 
     String name;
     String description;
-    double dist;
+    MapNode src, dest;
+    double dist, time;
 
     public MapEdge() {
     }

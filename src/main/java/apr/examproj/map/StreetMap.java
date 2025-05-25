@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import apr.examproj.gui.IGUIMapElement;
+import apr.examproj.gui.Tooltip;
 import apr.examproj.osm.MapData;
 import apr.examproj.utils.Stringify;
 import javafx.scene.layout.Pane;
@@ -17,6 +18,7 @@ public class StreetMap implements IGUIMapElement {
     List<MapNode> nodes = new ArrayList<>();
     List<MapWay> ways = new ArrayList<>(); // misc
     List<MapPath> paths = new ArrayList<>(); // pathable
+    List<MapPath> linkPaths = new ArrayList<>(); // pathable
     List<MapEdge> edges = new ArrayList<>(); // granular paths
     List<MapBuilding> buildings = new ArrayList<>();
     List<MapAddress> addresses = new ArrayList<>();
@@ -41,7 +43,7 @@ public class StreetMap implements IGUIMapElement {
                 }
             }
         }
-        paths.addAll(newPaths);
+        linkPaths.addAll(newPaths);
     }
 
     public void setRenderTarget(Pane renderPane) {
@@ -55,10 +57,13 @@ public class StreetMap implements IGUIMapElement {
     public void draw(MapBounds bounds, Pane renderPane) {
         renderPane.getChildren().clear();
 
-        nodes.forEach(n -> n.draw(bounds, renderPane));
+        // nodes.forEach(n -> n.draw(bounds, renderPane));
         paths.forEach(p -> p.draw(bounds, renderPane));
         buildings.forEach(b -> b.draw(bounds, renderPane));
         addresses.forEach(a -> a.draw(bounds, renderPane));
+
+        Tooltip.getInstance().setRenderTarget(renderPane);
+        Tooltip.getInstance().setVisible(false);
     }
 
     @Override
