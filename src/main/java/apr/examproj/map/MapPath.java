@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.UUID;
 
 import apr.examproj.config.ApplicationConfig;
-import apr.examproj.gui.GUIMapConfig;
 import apr.examproj.gui.GUIUtils;
 import apr.examproj.gui.IGUIMapElement;
 import apr.examproj.gui.Tooltip;

@@ -1,14 +1,11 @@
 package apr.examproj;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import apr.examproj.driver.StreetMapDriver;
 import apr.examproj.gui.GUIFactory;
-import apr.examproj.gui.Tooltip;
 import apr.examproj.map.StreetMap;
 import apr.examproj.osm.MapData;
 import javafx.application.Application;
@@ -20,7 +17,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**

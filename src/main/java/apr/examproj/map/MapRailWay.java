@@ -3,7 +3,6 @@ package apr.examproj.map;
 import java.util.List;
 
 import apr.examproj.gui.IGUIMapElement;
-import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 /**

@@ -5,8 +5,6 @@ import apr.examproj.gui.GUIMapConfig;
 import apr.examproj.gui.GUIUtils;
 import apr.examproj.gui.IGUIMapElement;
 import apr.examproj.gui.Tooltip;
-import javafx.event.Event;
-import javafx.event.EventType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 

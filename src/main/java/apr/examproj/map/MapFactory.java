@@ -5,7 +5,6 @@ import java.util.List;
 import org.jsoup.nodes.Element;
 
 import apr.examproj.osm.MapData;
-import apr.examproj.utils.Stringify;
 
 /**
  * MapFactory
