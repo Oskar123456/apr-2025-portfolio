@@ -43,7 +43,8 @@ public class MapPath implements IGUIMapElement {
         addr.street = this;
         var closestNode = addr.node.findClosest(nodes);
         var newNode = new MapNode(UUID.randomUUID().toString());
-        MapPath newPath = new MapPath(UUID.randomUUID().toString(), "", "footpath",
+        MapPath newPath = new MapPath(UUID.randomUUID().toString(),
+                "unnamed", "footpath",
                 ApplicationConfig.getWalkingSpeed());
         for (int i = 0; i < nodes.size(); i++) {
             if (nodes.get(i) == closestNode) {
@@ -53,8 +54,8 @@ public class MapPath implements IGUIMapElement {
                 newNode.lat = middlePoint.x;
                 newNode.lon = middlePoint.y;
                 nodes.add(i + 1 < nodes.size() ? i + 1 : i, newNode);
-                System.out.printf("added new node %s to path %s for addr: %s%n",
-                        newNode.toString(), name, addr.toString());
+                newPath.addNode(addr.node);
+                newPath.addNode(newNode);
                 break;
             }
         }

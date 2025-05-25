@@ -23,12 +23,13 @@ public class StreetMap implements IGUIMapElement {
 
     public StreetMap(MapData mapData) {
         bounds = MapFactory.bounds(mapData.getBounds());
-        nodes = mapData.getNodes().stream().map(MapFactory::node).toList();
-        buildings = mapData.getBuildings().stream().map(b -> MapFactory.building(b, nodes)).toList();
-        paths = mapData.getPaths().stream().map(p -> MapFactory.path(p, nodes)).toList();
-        ways = mapData.getWays().stream().map(MapFactory::way).toList();
-        addresses = mapData.getAddresses().stream().map(a -> MapFactory.address(a, paths)).toList();
-        linkAddresses();
+        nodes = new ArrayList<>(mapData.getNodes().stream().map(MapFactory::node).toList());
+        buildings = new ArrayList<>(mapData.getBuildings().stream().map(b -> MapFactory.building(b, nodes)).toList());
+        paths = new ArrayList<>(mapData.getPaths().stream().map(p -> MapFactory.path(p, nodes)).toList());
+        ways = new ArrayList<>(mapData.getWays().stream().map(MapFactory::way).toList());
+        addresses = new ArrayList<>(mapData.getAddresses().stream().map(a -> MapFactory.address(a, paths)).toList());
+        linkAddresses(); // TODO : change to nearest point, and fix responsibility, a litte weird call
+                         // hierarchy atm.
     }
 
     private void linkAddresses() {
