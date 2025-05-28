@@ -32,13 +32,6 @@
     -fx-stroke: black;
 }
 
-/* #street-map__circle-sign-outer:hover { */
-/*     -fx-fill: pink; */
-/*     -fx-opacity: 0.95; */
-/*     -fx-stroke-width: 4px; */
-/*     -fx-stroke: red; */
-/* } */
-
 #street-map__circle-sign-inner {
     -fx-fill: white;
     -fx-opacity: 0.85;
@@ -129,4 +122,21 @@
 #street-map__building:hover {
     -fx-stroke: red;
     -fx-stroke-width: 3px;
+}
+
+/* PATHING */
+
+#street-map__edge {
+    -fx-stroke: #FFD700;
+    -fx-stroke-width: 8px;
+    -fx-stroke-dash-array: 12 2 4 2;
+    -fx-stroke-dash-offset: 6;
+    -fx-stroke-line-cap: butt;
+    -fx-opacity: 0.8;
+}
+
+#street-map__edge:hover {
+    -fx-stroke: red;
+    -fx-stroke-width: 10px;
+    -fx-opacity: 0.8;
 }

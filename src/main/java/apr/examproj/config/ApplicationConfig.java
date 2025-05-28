@@ -5,10 +5,15 @@ package apr.examproj.config;
  */
 public class ApplicationConfig {
 
-    static double walkingSpeed = 5;
+    static double walkSpeed = 5;
+    static double bikeSpeed = 5;
 
     public static double getWalkingSpeed() {
-        return walkingSpeed;
+        return walkSpeed;
+    }
+
+    public static double getBikingSpeed() {
+        return bikeSpeed;
     }
 
 }

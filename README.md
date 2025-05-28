@@ -55,6 +55,12 @@ Path finder interface (`IPathFinder`):
 
   + `search(graph, src, dest)`
 
+Need to map `StreetMap -> edges w/ weights + nodes -> graph -> alg -> graph -> edges w/ weights -> MapRoute`
+
+  - take edges & nodes from streetmap
+  - for each mapnode make node with original mapnode's ID as its data
+  - for each mapedge, make edge with proper weight, and mapedge's info as its data
+
 ## App Driver
 
 Responsibilities:
@@ -72,7 +78,7 @@ Has:
 
   - `GUIFactory.java`
       + **factory**
-  - `GUIMapConfig.java`
+  - `ApplicationConfig.java`
       + **singleton**
 
 ## Programming techniques (*curriculum*)

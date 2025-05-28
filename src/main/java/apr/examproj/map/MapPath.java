@@ -67,29 +67,9 @@ public class MapPath implements IGUIMapElement {
         Polyline line = new Polyline(GUIUtils.mapNodesToCoordArray(bounds, renderPane, nodes));
         line.setId("street-map__path");
         renderPane.getChildren().add(line);
-
-        // for (var n : nodes) {
-        // n.draw(bounds, renderPane);
-        // }
-
-        // line.addEventHandler(MouseEvent.MOUSE_ENTERED, (e) ->
-        // line.setStroke(Color.RED));
-        // line.addEventHandler(MouseEvent.MOUSE_EXITED, (e) ->
-        // line.setStroke(Color.ROYALBLUE));
-
-        line.addEventHandler(MouseEvent.MOUSE_ENTERED, (e) -> showTooltip(renderPane, e));
-        line.addEventHandler(MouseEvent.MOUSE_EXITED, (e) -> hideTooltip(renderPane));
-    }
-
-    private void hideTooltip(Pane renderPane) {
-        Tooltip.getInstance().setVisible(false);
-    }
-
-    private void showTooltip(Pane renderPane, MouseEvent event) {
-        Tooltip.getInstance().setTitle(toString());
-        Tooltip.getInstance().setContentText(String.format("type: %s%nmax speed: %.1fkm/hr", type, maxSpeed));
-        Tooltip.getInstance().setFootnote(id);
-        Tooltip.getInstance().setVisible(true);
+        Tooltip.setTooltip(line, toString(),
+                String.format("type: %s%nmax speed: %.1fkm/hr", type, maxSpeed),
+                "id: " + id);
     }
 
     @Override

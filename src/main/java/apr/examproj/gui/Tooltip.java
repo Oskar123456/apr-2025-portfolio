@@ -94,4 +94,16 @@ public class Tooltip extends VBox {
         footnoteText.setText(text);
     }
 
+    public static void setTooltip(Node node, String title, String content, String footnote) {
+        node.addEventHandler(MouseEvent.MOUSE_ENTERED, (e) -> {
+            instance.setTitle(title);
+            instance.setContentText(content);
+            instance.setFootnote(footnote);
+            instance.setVisible(true);
+        });
+        node.addEventHandler(MouseEvent.MOUSE_EXITED, (e) -> {
+            instance.setVisible(false);
+        });
+    }
+
 }

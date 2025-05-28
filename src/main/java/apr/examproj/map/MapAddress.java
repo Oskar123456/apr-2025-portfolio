@@ -33,22 +33,10 @@ public class MapAddress implements IGUIMapElement {
         sign.relocate(point.x, point.y);
 
         for (var child : sign.getChildren()) {
-            child.addEventHandler(MouseEvent.MOUSE_ENTERED, (e) -> showTooltip(renderPane, e));
-            child.addEventHandler(MouseEvent.MOUSE_EXITED, (e) -> hideTooltip(renderPane));
+            Tooltip.setTooltip(child, toString(), "", "id: " + id);
         }
 
         renderPane.getChildren().addAll(sign);
-    }
-
-    private void hideTooltip(Pane renderPane) {
-        Tooltip.getInstance().setVisible(false);
-    }
-
-    private void showTooltip(Pane renderPane, MouseEvent event) {
-        Tooltip.getInstance().setTitle(toString());
-        Tooltip.getInstance().clearContent();
-        Tooltip.getInstance().setFootnote(id);
-        Tooltip.getInstance().setVisible(true);
     }
 
     @Override

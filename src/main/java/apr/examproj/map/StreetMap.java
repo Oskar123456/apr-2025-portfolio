@@ -18,7 +18,7 @@ public class StreetMap implements IGUIMapElement {
     List<MapNode> nodes = new ArrayList<>();
     List<MapWay> ways = new ArrayList<>(); // misc
     List<MapPath> paths = new ArrayList<>(); // pathable
-    List<MapPath> linkPaths = new ArrayList<>(); // pathable
+    List<MapPath> linkPaths = new ArrayList<>(); // pathable, links unreachable nodes by footpath, should not be drawn
     List<MapEdge> edges = new ArrayList<>(); // granular paths
     List<MapBuilding> buildings = new ArrayList<>();
     List<MapAddress> addresses = new ArrayList<>();
@@ -32,6 +32,29 @@ public class StreetMap implements IGUIMapElement {
         addresses = new ArrayList<>(mapData.getAddresses().stream().map(a -> MapFactory.address(a, paths)).toList());
         linkAddresses(); // TODO : change to nearest point, and fix responsibility, a litte weird call
                          // hierarchy atm.
+    }
+
+    public List<MapEdge> getAllEdges() {
+        if (edges == null || edges.size() < 1) {
+            makeEdges();
+        }
+        return edges;
+    }
+
+    private void makeEdges() {
+        List<MapEdge> edges = new ArrayList<>();
+
+        for (var p : paths) {
+            for (int i = 1; i < p.nodes.size(); i++) {
+                edges.add(new MapEdge(p.nodes.get(i - 1), p.nodes.get(i), p));
+            }
+        }
+
+        for (var p : linkPaths) {
+            edges.add(new MapEdge(p.nodes.get(0), p.nodes.get(1), p));
+        }
+
+        this.edges = edges;
     }
 
     private void linkAddresses() {
@@ -57,10 +80,10 @@ public class StreetMap implements IGUIMapElement {
     public void draw(MapBounds bounds, Pane renderPane) {
         renderPane.getChildren().clear();
 
-        // nodes.forEach(n -> n.draw(bounds, renderPane));
         paths.forEach(p -> p.draw(bounds, renderPane));
         buildings.forEach(b -> b.draw(bounds, renderPane));
         addresses.forEach(a -> a.draw(bounds, renderPane));
+        // getAllEdges().forEach(a -> a.draw(bounds, renderPane));
 
         Tooltip.getInstance().setRenderTarget(renderPane);
         Tooltip.getInstance().setVisible(false);

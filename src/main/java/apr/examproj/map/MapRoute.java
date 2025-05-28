@@ -4,6 +4,7 @@ import java.util.List;
 
 import apr.examproj.gui.IGUIMapElement;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Polyline;
 
 /**
  * MapRoute
