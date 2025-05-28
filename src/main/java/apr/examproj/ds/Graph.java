@@ -96,6 +96,19 @@ public class Graph<T> {
         return dists.get(node);
     }
 
+    /**
+     * minimum weight of edges going from scr to dest
+     */
+    public Double dist(GraphNode<T> src, GraphNode<T> dest) {
+        Double min = Double.POSITIVE_INFINITY;
+        for (var edge : outgoingEdges.get(src)) {
+            if (edge.dest == dest && edge.weight < min) {
+                min = edge.weight;
+            }
+        }
+        return min;
+    }
+
     public List<GraphNode<T>> neighbors(GraphNode<T> node) {
         return neighbors.get(node);
     }
@@ -114,14 +127,16 @@ public class Graph<T> {
 
     public void addNode(GraphNode<T> node) {
         nodes.add(node);
-        neighbors.put(node, new ArrayList<>());
+        if (!neighbors.containsKey(node)) {
+            neighbors.put(node, new ArrayList<>());
+        }
         dists.put(node, Double.POSITIVE_INFINITY);
         size++;
     }
 
     public void addEdge(GraphEdge<T> edge) {
-        nodes.add(edge.src);
-        nodes.add(edge.dest);
+        addNode(edge.src);
+        addNode(edge.dest);
         edges.add(edge);
         neighbors.get(edge.src).add(edge.dest);
         outgoingEdges.get(edge.src).add(edge);

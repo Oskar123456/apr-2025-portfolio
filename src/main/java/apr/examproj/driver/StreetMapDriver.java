@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import apr.examproj.gui.Tooltip;
+import apr.examproj.ds.Graph;
 import apr.examproj.map.MapNode;
 import apr.examproj.map.MapPath;
 import apr.examproj.map.StreetMap;
@@ -19,6 +19,8 @@ public class StreetMapDriver {
     StreetMap streetMap;
     MapNode src, dest;
     MapPath path;
+
+    Graph<MapNode> graph;
 
     /* GUI */
 

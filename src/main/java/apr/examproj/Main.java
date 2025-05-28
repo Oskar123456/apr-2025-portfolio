@@ -71,13 +71,4 @@ public class Main extends Application {
         driver.start(content);
     }
 
-    static void loadOSM(String path) throws IOException {
-        String osmStr = new String(Files.readAllBytes(Paths.get(path)));
-        MapData mapData = new MapData(osmStr);
-        StreetMap streetMap = new StreetMap(mapData);
-        System.out.println("Main.loadOSM()");
-        System.out.println(streetMap);
-        streetMap.setRenderTarget(content);
-    }
-
 }

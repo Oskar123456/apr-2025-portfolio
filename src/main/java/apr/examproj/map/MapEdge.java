@@ -13,11 +13,11 @@ import javafx.scene.shape.Polyline;
  */
 public class MapEdge implements IGUIMapElement {
 
-    String name;
-    String description;
-    MapNode src, dest;
-    TransportationMode transportationMode = TransportationMode.WALK;
-    double dist, maxSpeed;
+    public String name;
+    public String description;
+    public MapNode src, dest;
+    public TransportationMode transportationMode = TransportationMode.WALK;
+    public double dist, maxSpeed;
 
     public MapEdge() {
     }

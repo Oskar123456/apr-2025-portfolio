@@ -140,3 +140,19 @@
     -fx-stroke-width: 10px;
     -fx-opacity: 0.8;
 }
+
+/* DRIVER */
+
+#street-map__options {
+    -fx-padding: 4px;
+}
+
+#street-map__options-button {
+    -fx-fill: white;
+    -fx-padding: 2px;
+    -fx-border-width: 1px;
+}
+
+#street-map__options-button:hover {
+    -fx-fill: gray;
+}
