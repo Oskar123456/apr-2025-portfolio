@@ -141,9 +141,6 @@ public class StreetMap implements IGUIMapElement {
 
         pathFinder.search(graph);
         var pathNodes = graph.getPathNodes();
-        for (var node : pathNodes) {
-            System.out.println(node);
-        }
         var pathEdges = graph.getPathEdges();
 
         List<MapEdge> routeEdges = pathEdges.stream().map(e -> edgeMap.get(e)).toList();

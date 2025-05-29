@@ -65,7 +65,8 @@ public class MapNode implements IGUIMapElement {
     }
 
     public String toString() {
-        return String.format("Node[id: %s, lat: %f, lon: %f]", id, lat, lon);
+        return String.format("Node[id: %s]", id.substring(0, 5));
+        // return String.format("Node[id: %s, lat: %f, lon: %f]", id, lat, lon);
     }
 
     @Override

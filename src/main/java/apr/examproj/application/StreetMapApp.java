@@ -3,6 +3,9 @@ package apr.examproj.application;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 import apr.examproj.alg.AStar;
@@ -58,8 +61,6 @@ public class StreetMapApp {
         System.out.println("StreetMapDriver.start()");
         System.out.println(streetMap);
 
-        pathFinder = pathFinders.get("dijkstra");
-
         initGUI(renderPane);
         draw();
     }
@@ -112,8 +113,11 @@ public class StreetMapApp {
 
         toolPanel = new ToolPanel();
         toolPanel.addButton(e -> run(), "run");
-        toolPanel.addChoiceBox((e, o, n) -> System.out.println(n),
+        List<String> sortedAlgNames = new ArrayList<>(
                 pathFinders.entrySet().stream().map(ent -> ent.getKey()).toList());
+        sortedAlgNames.sort(Comparator.naturalOrder());
+        toolPanel.addChoiceBox((e, o, n) -> pathFinder = pathFinders.get(n), sortedAlgNames);
+        pathFinder = pathFinders.get(sortedAlgNames.get(0));
 
         renderPane.widthProperty().addListener((e) -> draw());
         renderPane.heightProperty().addListener((e) -> draw());
@@ -126,6 +130,7 @@ public class StreetMapApp {
             dest = null;
         }
         src = node;
+        route = null;
         System.out.println("StreetMapApp.setSrc(): " + src);
         draw();
     }
@@ -135,6 +140,7 @@ public class StreetMapApp {
             src = null;
         }
         dest = node;
+        route = null;
         System.out.println("StreetMapApp.setDest(): " + dest);
         draw();
     }
@@ -145,11 +151,11 @@ public class StreetMapApp {
             return;
         }
         try {
+            System.out.println("StreetMapApp.run(): " + pathFinder.getClass().getSimpleName());
             route = streetMap.getRoute(transportationMode, pathFinder, src, dest);
-            System.out.println("StreetMapApp.run(): " + route);
+            draw();
         } catch (Exception e) {
             System.out.println("StreetMapApp.run(): error: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 

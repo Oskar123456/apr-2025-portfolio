@@ -28,6 +28,7 @@ public class MapRoute implements IGUIMapElement {
             nodes.add(e.src);
             nodes.add(e.dest);
         });
+        dist = edges.stream().map(e -> e.dist).reduce(0D, (acc, value) -> acc += value);
     }
 
     @Override

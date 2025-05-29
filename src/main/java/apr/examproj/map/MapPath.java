@@ -71,9 +71,9 @@ public class MapPath implements IGUIMapElement {
         Tooltip.setTooltip(line, toString(),
                 String.format("type: %s%nmax speed: %.1fkm/hr", type, maxSpeed),
                 "id: " + id);
-        for (var node : nodes) {
-            node.draw(bounds, renderPane);
-        }
+        // for (var node : nodes) {
+        // node.draw(bounds, renderPane);
+        // }
     }
 
     @Override

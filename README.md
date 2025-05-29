@@ -4,6 +4,7 @@
 
   - MapEdge traveltime weirdness
   - Think about visiting nodes in alg that already have been visited, how do we avoid it? if PQ was a unique set/map
+  - Animate path finding
 
 ## NOTES
 

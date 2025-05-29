@@ -18,9 +18,20 @@ public class Dijkstra<T> implements PathFinder<T> {
 
         System.out.println("Dijkstra.search(): " + graph.toString());
 
-        // for (var edge : graph.getEdges()) {
-        // System.out.println("Dijkstra.search(): " + edge);
-        // }
+        graph.srcs.clear();
+        for (var node : graph.nodes) {
+            graph.dists.put(node, Double.POSITIVE_INFINITY);
+        }
+        if (!graph.dists.containsKey(graph.getStart())) {
+            System.out.println("Dijkstra.search(): start does not show up in nodes...");
+            return false;
+        }
+        if (!graph.dists.containsKey(graph.getDestination())) {
+            System.out.println("Dijkstra.search(): destination does not show up in nodes...");
+            return false;
+        }
+        graph.dists.put(graph.src, 0D);
+        graph.updateDist(graph.src, 0D);
 
         PQ.add(new Pair<GraphNode<T>, Double>(graph.getStart(), 0D));
         while (!PQ.isEmpty()) {
@@ -28,23 +39,15 @@ public class Dijkstra<T> implements PathFinder<T> {
             var curNode = curPair.first;
             var curDist = curPair.second;
             graph.markAsVisited(curNode);
-            // System.out.println("Dijkstra.search(): visiting " + curNode + " it has " +
-            // graph.edgesFrom(curNode).size()
-            // + " out edges");
             if (curNode == graph.getDestination()) {
                 break;
             }
             for (var edge : graph.edgesFrom(curNode)) {
                 var neighbor = edge.dest;
                 var dist = curDist + edge.weight;
-                if (dist < 0 || graph.dist(neighbor) < 0 || edge.weight < 0) {
-                    System.out.println("Dijkstra.search() : negative weight");
-                    System.exit(1);
-                }
-                if (graph.dist(neighbor) > dist) {
-                    graph.updateDist(neighbor, dist);
-                    graph.updateSrcs(edge);
-                    graph.markAsSeen(neighbor);
+                if (graph.dists.get(neighbor) > dist) {
+                    graph.dists.put(neighbor, dist);
+                    graph.srcs.put(neighbor, curNode);
                     PQ.add(new Pair<GraphNode<T>, Double>(neighbor, dist));
                 }
             }

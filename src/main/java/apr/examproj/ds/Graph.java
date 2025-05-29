@@ -7,22 +7,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import apr.examproj.utils.Stringify;
+
 /**
  * Graph
  */
 public class Graph<T> {
 
-    GraphNode<T> src, dest;
-    Set<GraphNode<T>> nodes = new HashSet<>();
-    Set<GraphEdge<T>> edges = new HashSet<>();
-    Map<GraphNode<T>, List<GraphNode<T>>> neighbors = new HashMap<>();
-    Map<GraphNode<T>, List<GraphEdge<T>>> outgoingEdges = new HashMap<>();
-    Map<GraphNode<T>, Double> dists = new HashMap<>();
-    Map<GraphNode<T>, GraphNode<T>> srcs = new HashMap<>();
-    Set<GraphEdge<T>> path = new HashSet<>();
+    public GraphNode<T> src, dest;
+    public Set<GraphNode<T>> nodes = new HashSet<>();
+    public Set<GraphEdge<T>> edges = new HashSet<>();
+    public Map<GraphNode<T>, List<GraphNode<T>>> neighbors = new HashMap<>();
+    public Map<GraphNode<T>, List<GraphEdge<T>>> outgoingEdges = new HashMap<>();
+    public Map<GraphNode<T>, Double> dists = new HashMap<>();
+    public Map<GraphNode<T>, GraphNode<T>> srcs = new HashMap<>();
+    public Set<GraphEdge<T>> path = new HashSet<>();
 
-    List<GraphNode<T>> visitOrder = new ArrayList<>();
-    List<GraphNode<T>> seenOrder = new ArrayList<>();
+    public List<GraphNode<T>> visitOrder = new ArrayList<>();
+    public List<GraphNode<T>> seenOrder = new ArrayList<>();
 
     int size;
 
@@ -53,7 +55,7 @@ public class Graph<T> {
             }
             nextNode = curNode;
             curNode = srcs.get(curNode);
-            System.out.println("Graph.getPathEdges(): " + nextNode + " : " + curNode);
+            // System.out.println("Graph.getPathEdges(): " + nextNode + " : " + curNode);
         }
 
         return path;
@@ -125,6 +127,9 @@ public class Graph<T> {
 
     public void updateSrcs(GraphEdge<T> edge) {
         srcs.put(edge.dest, edge.src);
+        // System.out.printf("updating %s from %s (w: %.5f)%n",
+        // edge.dest.data.toString(), edge.src.data.toString(),
+        // edge.weight);
     }
 
     public void updateDist(GraphNode<T> node, Double dist) {
@@ -182,6 +187,11 @@ public class Graph<T> {
         edges.add(edge);
         neighbors.get(edge.src).add(edge.dest);
         outgoingEdges.get(edge.src).add(edge);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s[size: %d edges: %d]", getClass().getSimpleName(), nodes.size(), edges.size());
     }
 
 }
