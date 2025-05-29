@@ -42,7 +42,7 @@ public class MapPath implements IGUIMapElement {
     public MapPath attachAddress(MapAddress addr) {
         addr.street = this;
         var closestNode = addr.node.findClosest(nodes);
-        var newNode = new MapNode(UUID.randomUUID().toString());
+        var newNode = new MapNode();
         MapPath newPath = new MapPath(UUID.randomUUID().toString(),
                 "unnamed", "footpath",
                 ApplicationConfig.getWalkingSpeed());
@@ -51,6 +51,7 @@ public class MapPath implements IGUIMapElement {
                 var index = i + 1 < nodes.size() ? (i + 1) : (i - 1);
                 var secondClosestNode = nodes.get(index);
                 var middlePoint = closestNode.middlePoint(secondClosestNode);
+                newNode.id = UUID.randomUUID().toString();
                 newNode.lat = middlePoint.x;
                 newNode.lon = middlePoint.y;
                 nodes.add(i + 1 < nodes.size() ? i + 1 : i, newNode);
@@ -70,6 +71,9 @@ public class MapPath implements IGUIMapElement {
         Tooltip.setTooltip(line, toString(),
                 String.format("type: %s%nmax speed: %.1fkm/hr", type, maxSpeed),
                 "id: " + id);
+        for (var node : nodes) {
+            node.draw(bounds, renderPane);
+        }
     }
 
     @Override

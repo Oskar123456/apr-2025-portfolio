@@ -1,22 +1,31 @@
 #exam-proj__layout {
     -fx-background-color: gray;
     background-color: gray;
+    background-color: gray;
 }
 
 #exam-proj__content {
     -fx-background-color: lightgray;
+    background-color: lightgray;
+    background-color: lightgray;
 }
 
 #exam-proj__title {
     -fx-background-color: gray;
+    background-color: gray;
+    background-color: gray;
     -fx-background-radius: 6px;
     -fx-padding: 10px;
+    padding: 10px;
     -fx-opacity: 0.7;
+    opacity: 0.7;
 }
 
 #exam-proj__title-text {
     -fx-font-size: 25px;
+    font-size: 25px;
     -fx-fill: black;
+    fill: black;
 }
 
 /* STREET MAP */
@@ -27,32 +36,46 @@
 
 #street-map__circle-sign-outer {
     -fx-fill: white;
+    fill: white;
     -fx-opacity: 0.85;
+    opacity: 0.85;
     -fx-stroke-width: 2px;
+    stroke-width: 2px;
     -fx-stroke: black;
+    stroke: black;
 }
 
 #street-map__circle-sign-inner {
     -fx-fill: white;
+    fill: white;
     -fx-opacity: 0.85;
+    opacity: 0.85;
 }
 
 #street-map__circle-sign-text {
     -fx-fill: black;
+    fill: black;
     -fx-font-size: 12px;
+    font-size: 12px;
     -fx-font-weight: 400;
+    font-weight: 400;
 }
 
 #street-map__path {
     -fx-stroke-width: 4px;
+    stroke-width: 4px;
     -fx-stroke: royalblue;
+    stroke: royalblue;
     -fx-border-radius: 6px;
+    border-radius: 6px;
     -fx-background-radius: 6px;
 }
 
 #street-map__path:hover {
     -fx-stroke: red;
+    stroke: red;
     -fx-stroke-width: 5px;
+    stroke-width: 5px;
 }
 
 /* TOOLTIP */
@@ -63,15 +86,21 @@
     border-radius: 8px;
     -fx-background-radius: 8px;
     -fx-background-color: rgba(222, 222, 222, 0.9);
+    background-color: rgba(222, 222, 222, 0.9);
     -fx-padding: 10px;
+    padding: 10px;
     -fx-border-radius: 8px;
+    border-radius: 8px;
     -fx-border-width: 2px;
+    border-width: 2px;
     -fx-border-color: black;
+    border-color: black;
     -fx-alignment: top-left;
 }
 
 #street-map__tooltip-title-box {
     -fx-padding: 10px;
+    padding: 10px;
     padding: 10px;
 
     -fx-alignment: top-left;
@@ -81,6 +110,7 @@
 #street-map__tooltip-content-box {
     -fx-padding: 10px;
     padding: 10px;
+    padding: 10px;
 
     -fx-alignment: top-left;
     -fx-text-alignment: left;
@@ -89,6 +119,7 @@
 #street-map__tooltip-footnote-box {
     -fx-padding: 10px;
     padding: 10px;
+    padding: 10px;
 
     -fx-alignment: top-left;
     -fx-text-alignment: left;
@@ -96,102 +127,146 @@
 
 #street-map__tooltip-title-text {
     -fx-font-weight: 500;
+    font-weight: 500;
     -fx-font-size: 14px;
+    font-size: 14px;
     -fx-fill: black;
+    fill: black;
 }
 
 #street-map__tooltip-footnote-text {
     -fx-font-weight: 400;
+    font-weight: 400;
     -fx-font-size: 10px;
+    font-size: 10px;
     -fx-fill: black;
+    fill: black;
 }
 
 #street-map__tooltip-content-text {
     -fx-font-weight: 400;
+    font-weight: 400;
     -fx-font-size: 12px;
+    font-size: 12px;
     -fx-fill: black;
+    fill: black;
 }
 
 #street-map__building {
     -fx-border-width: 2px;
+    border-width: 2px;
     -fx-border-fill: black;
     -fx-fill: rgb(125, 125, 125);
+    fill: rgb(125, 125, 125);
     -fx-opacity: 0.9;
+    opacity: 0.9;
 }
 
 #street-map__building:hover {
     -fx-stroke: red;
+    stroke: red;
     -fx-stroke-width: 3px;
+    stroke-width: 3px;
 }
 
 /* PATHING */
 
 #street-map__edge {
     -fx-stroke: #FFD700;
+    stroke: #FFD700;
     -fx-stroke-width: 8px;
+    stroke-width: 8px;
     -fx-stroke-dash-array: 12 2 4 2;
     -fx-stroke-dash-offset: 6;
     -fx-stroke-line-cap: butt;
     -fx-opacity: 0.8;
+    opacity: 0.8;
 }
 
 #street-map__edge:hover {
     -fx-stroke: red;
+    stroke: red;
     -fx-stroke-width: 10px;
+    stroke-width: 10px;
     -fx-opacity: 0.8;
+    opacity: 0.8;
 }
 
 /* APPLICATION */
 
 #street-map__options {
     -fx-padding: 4px;
+    padding: 4px;
     -fx-background-color: rgba(222, 222, 222, 0.9);
+    background-color: rgba(222, 222, 222, 0.9);
 }
 
 #street-map__options-button {
     -fx-fill: white;
+    fill: white;
     -fx-padding: 2px;
+    padding: 2px;
     -fx-border-width: 1px;
+    border-width: 1px;
     -fx-text-alignment: center;
 }
 
 #street-map__options-button:hover {
     -fx-fill: gray;
+    fill: gray;
 }
 
 #street-map__src-pane,
 #street-map__dest-pane {
     -fx-padding: 4px;
+    padding: 4px;
     -fx-background-color: rgba(222, 222, 222, 0.9);
+    background-color: rgba(222, 222, 222, 0.9);
     -fx-text-alignment: center;
     -fx-alignment: center;
     -fx-background-radius: 8px;
     -fx-background-color: rgba(222, 222, 222, 0.9);
+    background-color: rgba(222, 222, 222, 0.9);
     -fx-border-radius: 8px;
+    border-radius: 8px;
     -fx-border-width: 2px;
+    border-width: 2px;
     -fx-border-color: black;
+    border-color: black;
 }
 
 #street-map__src-text {
     -fx-font-size: 15px;
+    font-size: 15px;
     -fx-fill: green;
+    fill: green;
 }
 
 #street-map__dest-text {
     -fx-font-size: 15px;
+    font-size: 15px;
     -fx-fill: red;
+    fill: red;
 }
 
 #street-map__toolpanel {
     -fx-padding: 4px;
+    padding: 4px;
     -fx-spacing: 10px;
     -fx-text-alignment: center;
     -fx-alignment: center;
     -fx-background-radius: 2px;
     -fx-background-color: rgba(200, 200, 222, 0.9);
+    background-color: rgba(200, 200, 222, 0.9);
     -fx-border-radius: 2px;
+    border-radius: 2px;
     -fx-border-width: 2px;
+    border-width: 2px;
     -fx-border-color: royalblue;
+    border-color: royalblue;
 }
 
-#street-map__toolpanel-button {}
+#street-map__toolpanel-button {
+    -fx-border-color: gray;
+    border-color: gray;
+}

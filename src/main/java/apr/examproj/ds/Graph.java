@@ -37,10 +37,30 @@ public class Graph<T> {
         if (src == null || dest == null) {
             throw new Exception("no src or dest in graph");
         }
-        if (dists.get(dest).equals(Double.POSITIVE_INFINITY)) {
+        if (!srcs.containsKey(dest)) {
             throw new Exception("no path from src to dest in graph");
         }
+
+        path = new HashSet<>();
+        var nextNode = dest;
+        var curNode = srcs.get(dest);
+        while (curNode != null) {
+            for (var edge : outgoingEdges.get(curNode)) {
+                if (edge.dest == nextNode) {
+                    path.add(edge);
+                    break;
+                }
+            }
+            nextNode = curNode;
+            curNode = srcs.get(curNode);
+            System.out.println("Graph.getPathEdges(): " + nextNode + " : " + curNode);
+        }
+
         return path;
+    }
+
+    public Set<GraphEdge<T>> getEdges() {
+        return edges;
     }
 
     public List<GraphNode<T>> getPathNodes() throws Exception {
@@ -105,7 +125,6 @@ public class Graph<T> {
 
     public void updateSrcs(GraphEdge<T> edge) {
         srcs.put(edge.dest, edge.src);
-        path.add(edge);
     }
 
     public void updateDist(GraphNode<T> node, Double dist) {

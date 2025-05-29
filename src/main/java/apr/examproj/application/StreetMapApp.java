@@ -3,9 +3,9 @@ package apr.examproj.application;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Map;
 
+import apr.examproj.alg.AStar;
 import apr.examproj.alg.Dijkstra;
 import apr.examproj.alg.PathFinder;
 import apr.examproj.ds.Graph;
@@ -38,9 +38,8 @@ public class StreetMapApp {
     static Graph<MapNode> graph;
     static TransportationMode transportationMode = TransportationMode.WALK;
     static PathFinder<MapNode> pathFinder;
+    static Map<String, PathFinder<MapNode>> pathFinders = Map.of("A*", new AStar<>(), "dijkstra", new Dijkstra<>());
     static MapRoute route;
-
-    Map<String, PathFinder<MapNode>> pathFinders = Map.of("dijkstra", (g) -> );
 
     /* GUI */
     static Pane renderPane;
@@ -58,6 +57,8 @@ public class StreetMapApp {
         /* DEBUG PRINTING */
         System.out.println("StreetMapDriver.start()");
         System.out.println(streetMap);
+
+        pathFinder = pathFinders.get("dijkstra");
 
         initGUI(renderPane);
         draw();
@@ -87,6 +88,10 @@ public class StreetMapApp {
             route.draw(bounds, renderPane);
         }
 
+        // for (var edge : streetMap.getAllEdges()) {
+        // edge.draw(bounds, renderPane);
+        // }
+
         toolPanel.position(renderPane);
         renderPane.getChildren().addAll(srcPane, destPane, toolPanel);
 
@@ -107,7 +112,8 @@ public class StreetMapApp {
 
         toolPanel = new ToolPanel();
         toolPanel.addButton(e -> run(), "run");
-        toolPanel.addChoiceBox((e, o, n) -> System.out.println(n), List.of("dijkstra", "A*"));
+        toolPanel.addChoiceBox((e, o, n) -> System.out.println(n),
+                pathFinders.entrySet().stream().map(ent -> ent.getKey()).toList());
 
         renderPane.widthProperty().addListener((e) -> draw());
         renderPane.heightProperty().addListener((e) -> draw());
@@ -148,13 +154,8 @@ public class StreetMapApp {
     }
 
     static void setAlg(String name) {
-        switch (name) {
-            case "dijkstra":
-                pathFinder = Dijkstra;
-                break;
-
-            default:
-                break;
+        if (pathFinders.containsKey(name)) {
+            pathFinder = pathFinders.get(name);
         }
     }
 
