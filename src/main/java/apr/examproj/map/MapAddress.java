@@ -1,9 +1,12 @@
 package apr.examproj.map;
 
+import apr.examproj.application.StreetMapApp;
+import apr.examproj.config.ApplicationConfig;
 import apr.examproj.gui.GUIFactory;
 import apr.examproj.gui.GUIMapConfig;
 import apr.examproj.gui.GUIUtils;
 import apr.examproj.gui.IGUIMapElement;
+import apr.examproj.gui.Options;
 import apr.examproj.gui.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -27,13 +30,25 @@ public class MapAddress implements IGUIMapElement {
 
     @Override
     public void draw(MapBounds bounds, Pane renderPane) {
-        var sign = GUIFactory.defaultCircleSign(housenumber,
-                GUIMapConfig.getInstance().getAddrRadius() * renderPane.getWidth());
+        var sign = GUIFactory.defaultCircleSign(housenumber, getRadius(renderPane));
         var point = GUIUtils.mapNodeCoordsToPane(bounds, renderPane, node);
         sign.relocate(point.x, point.y);
 
         for (var child : sign.getChildren()) {
             Tooltip.setTooltip(child, toString(), "", "id: " + id);
+            child.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
+                if (!e.isSecondaryButtonDown()) {
+                    return;
+                }
+                Options.clear();
+                Options.addOption(evt -> StreetMapApp.setSrc(this), "set as source");
+                Options.addOption(evt -> StreetMapApp.setDest(this), "set as dest");
+                var pos = GUIUtils.mapNodeCoordsToPane(bounds, renderPane, node);
+                Options.getInstance().relocate(pos.x, pos.y);
+                Options.show();
+                Tooltip.hide();
+                e.consume();
+            });
         }
 
         renderPane.getChildren().addAll(sign);
@@ -43,6 +58,11 @@ public class MapAddress implements IGUIMapElement {
     public String toString() {
         return String.format("%s, %s, %s, %s, %s", street != null ? street.toString() : "", housenumber, postcode, city,
                 country);
+    }
+
+    public static double getRadius(Pane renderPane) {
+        double rScale = Math.min(renderPane.getWidth(), renderPane.getHeight());
+        return Math.min(ApplicationConfig.mapAddressRadius * rScale, ApplicationConfig.mapAddressRadiusMax);
     }
 
 }

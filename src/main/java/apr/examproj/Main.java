@@ -1,13 +1,9 @@
 package apr.examproj;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
-import apr.examproj.driver.StreetMapDriver;
+import apr.examproj.application.StreetMapApp;
 import apr.examproj.gui.GUIFactory;
-import apr.examproj.map.StreetMap;
-import apr.examproj.osm.MapData;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -31,7 +27,7 @@ public class Main extends Application {
     static HBox title;
     Insets margins = new Insets(10);
 
-    static int W = 1200, H = 1000;
+    static int W = 1000, H = 800;
 
     public static void main(String[] args) throws IOException {
         launch();
@@ -67,8 +63,8 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
 
-        StreetMapDriver driver = new StreetMapDriver();
-        driver.start(content);
+        StreetMapApp app = new StreetMapApp();
+        app.start(content);
     }
 
 }

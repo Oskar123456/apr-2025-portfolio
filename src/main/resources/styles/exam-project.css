@@ -141,18 +141,57 @@
     -fx-opacity: 0.8;
 }
 
-/* DRIVER */
+/* APPLICATION */
 
 #street-map__options {
     -fx-padding: 4px;
+    -fx-background-color: rgba(222, 222, 222, 0.9);
 }
 
 #street-map__options-button {
     -fx-fill: white;
     -fx-padding: 2px;
     -fx-border-width: 1px;
+    -fx-text-alignment: center;
 }
 
 #street-map__options-button:hover {
     -fx-fill: gray;
 }
+
+#street-map__src-pane,
+#street-map__dest-pane {
+    -fx-padding: 4px;
+    -fx-background-color: rgba(222, 222, 222, 0.9);
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-background-radius: 8px;
+    -fx-background-color: rgba(222, 222, 222, 0.9);
+    -fx-border-radius: 8px;
+    -fx-border-width: 2px;
+    -fx-border-color: black;
+}
+
+#street-map__src-text {
+    -fx-font-size: 15px;
+    -fx-fill: green;
+}
+
+#street-map__dest-text {
+    -fx-font-size: 15px;
+    -fx-fill: red;
+}
+
+#street-map__toolpanel {
+    -fx-padding: 4px;
+    -fx-spacing: 10px;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-background-radius: 2px;
+    -fx-background-color: rgba(200, 200, 222, 0.9);
+    -fx-border-radius: 2px;
+    -fx-border-width: 2px;
+    -fx-border-color: royalblue;
+}
+
+#street-map__toolpanel-button {}

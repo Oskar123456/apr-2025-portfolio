@@ -42,8 +42,8 @@ public class GUIFactory {
     public static Pane defaultChildPane(Pane parentPane, String id) {
         Pane pane = new Pane();
         pane.setId(id);
-        pane.prefHeightProperty().bind(parentPane.heightProperty());
-        pane.prefWidthProperty().bind(parentPane.widthProperty());
+        // pane.prefHeightProperty().bind(parentPane.heightProperty());
+        // pane.prefWidthProperty().bind(parentPane.widthProperty());
         parentPane.getChildren().add(pane);
         return pane;
     }

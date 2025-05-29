@@ -1,12 +1,19 @@
 package apr.examproj.map;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import apr.examproj.alg.PathFinder;
+import apr.examproj.ds.Graph;
+import apr.examproj.ds.GraphEdge;
+import apr.examproj.ds.GraphNode;
+import apr.examproj.enums.TransportationMode;
 import apr.examproj.gui.IGUIMapElement;
-import apr.examproj.gui.Tooltip;
 import apr.examproj.osm.MapData;
 import apr.examproj.utils.Stringify;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 /**
@@ -70,23 +77,64 @@ public class StreetMap implements IGUIMapElement {
     }
 
     public void setRenderTarget(Pane renderPane) {
-        System.out.println("StreetMap.setRenderTarget()");
-        renderPane.widthProperty().addListener((e) -> draw(bounds, renderPane));
-        renderPane.heightProperty().addListener((e) -> draw(bounds, renderPane));
+        // System.out.println("StreetMap.setRenderTarget()");
         draw(bounds, renderPane);
     }
 
     @Override
     public void draw(MapBounds bounds, Pane renderPane) {
-        renderPane.getChildren().clear();
-
         paths.forEach(p -> p.draw(bounds, renderPane));
         buildings.forEach(b -> b.draw(bounds, renderPane));
         addresses.forEach(a -> a.draw(bounds, renderPane));
         // getAllEdges().forEach(a -> a.draw(bounds, renderPane));
+    }
 
-        Tooltip.getInstance().setRenderTarget(renderPane);
-        Tooltip.getInstance().setVisible(false);
+    public Graph<MapNode> toGraph(TransportationMode transportationMode, MapNode src, MapNode dest) {
+        Graph<MapNode> graph = new Graph<>();
+
+        for (var edge : getAllEdges()) {
+            GraphNode<MapNode> srcNode = new GraphNode<MapNode>(edge.src, edge.src.lat, edge.src.lon);
+            GraphNode<MapNode> destNode = new GraphNode<MapNode>(edge.dest, edge.src.lat, edge.src.lon);
+            GraphEdge<MapNode> newEdge = new GraphEdge<>(srcNode, destNode, edge.getTravelTime(transportationMode));
+            graph.addEdge(newEdge);
+            if (edge.src == src) {
+                graph.setStart(srcNode);
+            }
+            if (edge.dest == dest) {
+                graph.setDestination(destNode);
+            }
+        }
+
+        return graph;
+    }
+
+    public MapRoute getRoute(TransportationMode transportationMode, PathFinder pathFinder, MapAddress src,
+            MapAddress dest)
+            throws Exception {
+
+        Map<GraphEdge<MapNode>, MapEdge> edgeMap = new HashMap<>();
+        Graph<MapNode> graph = new Graph<>();
+
+        for (var edge : getAllEdges()) {
+            GraphNode<MapNode> srcNode = new GraphNode<MapNode>(edge.src, edge.src.lat, edge.src.lon);
+            GraphNode<MapNode> destNode = new GraphNode<MapNode>(edge.dest, edge.src.lat, edge.src.lon);
+            GraphEdge<MapNode> newEdge = new GraphEdge<>(srcNode, destNode, edge.getTravelTime(transportationMode));
+            graph.addEdge(newEdge);
+            edgeMap.put(newEdge, edge);
+            if (edge.src == src.node) {
+                graph.setStart(srcNode);
+            }
+            if (edge.dest == dest.node) {
+                graph.setDestination(destNode);
+            }
+        }
+
+        pathFinder.search(graph);
+        var pathEdges = graph.getPathEdges();
+
+        List<MapEdge> routeEdges = pathEdges.stream().map(e -> edgeMap.get(e)).toList();
+
+        return new MapRoute(src, dest, routeEdges);
     }
 
     @Override

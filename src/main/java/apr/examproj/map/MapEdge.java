@@ -1,5 +1,7 @@
 package apr.examproj.map;
 
+import java.util.List;
+
 import apr.examproj.config.ApplicationConfig;
 import apr.examproj.enums.TransportationMode;
 import apr.examproj.gui.IGUIMapElement;
@@ -67,6 +69,18 @@ public class MapEdge implements IGUIMapElement {
         renderPane.getChildren().add(line);
         // src.draw(bounds, renderPane);
         // dest.draw(bounds, renderPane);
+    }
+
+    public static MapEdge findMin(List<MapEdge> edges) {
+        MapEdge minEdge = null;
+        double min = Double.POSITIVE_INFINITY;
+        for (var edge : edges) {
+            if (edge.dist < min) {
+                min = edge.dist;
+                minEdge = edge;
+            }
+        }
+        return minEdge;
     }
 
 }

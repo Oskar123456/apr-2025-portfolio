@@ -6,8 +6,8 @@ import apr.examproj.ds.GraphNode;
 /**
  * PathFinder
  */
-public interface IPathFinder {
+public interface PathFinder<T> {
 
-    public <T> boolean search(Graph<T> graph, GraphNode<T> src, GraphNode<T> dest);
+    public boolean search(Graph<T> graph);
 
 }

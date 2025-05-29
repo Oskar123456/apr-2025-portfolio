@@ -9,20 +9,20 @@ import apr.examproj.ds.GraphNode;
 /**
  * Dijkstra
  */
-public class Dijkstra implements IPathFinder {
+public class Dijkstra<T> implements PathFinder<T> {
 
     @Override
-    public <T> boolean search(Graph<T> graph, GraphNode<T> src, GraphNode<T> dest) {
+    public boolean search(Graph<T> graph) {
         PriorityQueue<Pair<GraphNode<T>, Double>> PQ = new PriorityQueue<>(
                 (a, b) -> a.second.compareTo(b.second));
 
-        PQ.add(new Pair<GraphNode<T>, Double>(src, 0D));
+        PQ.add(new Pair<GraphNode<T>, Double>(graph.getStart(), 0D));
         while (!PQ.isEmpty()) {
             var curPair = PQ.remove();
             var curNode = curPair.first;
             var curDist = curPair.second;
             graph.markAsVisited(curNode);
-            if (curNode == dest) {
+            if (curNode == graph.getDestination()) {
                 break;
             }
             for (var edge : graph.edgesFrom(curNode)) {
@@ -30,14 +30,14 @@ public class Dijkstra implements IPathFinder {
                 var dist = curDist + edge.weight;
                 if (graph.dist(neighbor) > dist) {
                     graph.updateDist(neighbor, dist);
-                    graph.updateSrcs(curNode, neighbor);
+                    graph.updateSrcs(edge);
                     graph.markAsSeen(neighbor);
                     PQ.add(new Pair<GraphNode<T>, Double>(neighbor, dist));
                 }
             }
         }
 
-        return !graph.dist(dest).equals(Double.POSITIVE_INFINITY);
+        return !graph.dist(graph.getDestination()).equals(Double.POSITIVE_INFINITY);
     }
 
 }

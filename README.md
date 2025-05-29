@@ -1,5 +1,10 @@
 # APR 2025 EXAM PORTFOLIO
 
+## TODO
+
+  - MapEdge traveltime weirdness
+  - Think about visiting nodes in alg that already have been visited, how do we avoid it? if PQ was a unique set/map
+
 ## NOTES
 
 Problem: `StreetMap -> Graph -> PathFinder -> Graph -> MapPath -> Display StreetMap + MapPath`

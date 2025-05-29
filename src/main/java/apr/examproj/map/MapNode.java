@@ -4,6 +4,7 @@ import java.util.List;
 
 import apr.datastructures.graph.Point2D;
 import apr.datastructures.graph.TwoTuple;
+import apr.examproj.config.ApplicationConfig;
 import apr.examproj.gui.IGUIMapElement;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
@@ -13,11 +14,8 @@ import javafx.scene.shape.Ellipse;
  */
 public class MapNode implements IGUIMapElement {
 
-    static String cssClassName = "street-map__node";
-
     public String id;
     public double lat, lon;
-    public double radius = 0.005;
 
     public MapNode() {
     }
@@ -81,11 +79,15 @@ public class MapNode implements IGUIMapElement {
         Pane pane = new Pane();
         pane.relocate(pos.x * renderPane.getWidth(), pos.y * renderPane.getHeight());
 
-        double rScale = Math.min(renderPane.getWidth(), renderPane.getHeight());
-        Ellipse dot = new Ellipse(radius * rScale, radius * rScale);
-        dot.setId(cssClassName);
+        Ellipse dot = new Ellipse(getRadius(renderPane), getRadius(renderPane));
+        dot.setId(ApplicationConfig.cssIdMapNode);
         pane.getChildren().add(dot);
         renderPane.getChildren().add(pane);
+    }
+
+    public static double getRadius(Pane renderPane) {
+        double rScale = Math.min(renderPane.getWidth(), renderPane.getHeight());
+        return ApplicationConfig.mapNodeRadius * rScale;
     }
 
 }

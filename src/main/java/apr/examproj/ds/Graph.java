@@ -19,6 +19,7 @@ public class Graph<T> {
     Map<GraphNode<T>, List<GraphEdge<T>>> outgoingEdges = new HashMap<>();
     Map<GraphNode<T>, Double> dists = new HashMap<>();
     Map<GraphNode<T>, GraphNode<T>> srcs = new HashMap<>();
+    Set<GraphEdge<T>> path = new HashSet<>();
 
     List<GraphNode<T>> visitOrder = new ArrayList<>();
     List<GraphNode<T>> seenOrder = new ArrayList<>();
@@ -32,7 +33,17 @@ public class Graph<T> {
         return size;
     }
 
-    public List<GraphNode<T>> getPath() throws Exception {
+    public Set<GraphEdge<T>> getPathEdges() throws Exception {
+        if (src == null || dest == null) {
+            throw new Exception("no src or dest in graph");
+        }
+        if (dists.get(dest).equals(Double.POSITIVE_INFINITY)) {
+            throw new Exception("no path from src to dest in graph");
+        }
+        return path;
+    }
+
+    public List<GraphNode<T>> getPathNodes() throws Exception {
         if (src == null || dest == null) {
             throw new Exception("no src or dest in graph");
         }
@@ -62,11 +73,19 @@ public class Graph<T> {
         return seenOrder;
     }
 
+    public GraphNode<T> getDestination() {
+        return this.dest;
+    }
+
     public void setDestination(GraphNode<T> node) {
         if (this.src == node) {
             this.src = null;
         }
         this.dest = node;
+    }
+
+    public GraphNode<T> getStart() {
+        return this.src;
     }
 
     public void setStart(GraphNode<T> node) {
@@ -84,8 +103,9 @@ public class Graph<T> {
         return srcs.get(dest);
     }
 
-    public void updateSrcs(GraphNode<T> src, GraphNode<T> dest) {
-        srcs.put(dest, src);
+    public void updateSrcs(GraphEdge<T> edge) {
+        srcs.put(edge.dest, edge.src);
+        path.add(edge);
     }
 
     public void updateDist(GraphNode<T> node, Double dist) {
@@ -129,6 +149,9 @@ public class Graph<T> {
         nodes.add(node);
         if (!neighbors.containsKey(node)) {
             neighbors.put(node, new ArrayList<>());
+        }
+        if (!outgoingEdges.containsKey(node)) {
+            outgoingEdges.put(node, new ArrayList<>());
         }
         dists.put(node, Double.POSITIVE_INFINITY);
         size++;
