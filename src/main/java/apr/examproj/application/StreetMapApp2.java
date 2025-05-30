@@ -15,7 +15,6 @@ import apr.examproj.ds.Graph;
 import apr.examproj.enums.TransportationMode;
 import apr.examproj.gui.GUIFactory;
 import apr.examproj.gui.GUIMap;
-import apr.examproj.gui.GUIUtils;
 import apr.examproj.gui.Options;
 import apr.examproj.gui.PathingAnimator;
 import apr.examproj.gui.TextPanel;
@@ -97,6 +96,11 @@ public class StreetMapApp2 {
         toolPanel = new ToolPanel();
         toolPanel.addButton(e -> run(), "run");
         toolPanel.addButton(e -> pause(), "pause");
+        toolPanel.addSlider("Duration: %d secs", 1, 20, 5, (e, o, n) -> {
+            if (pathingAnimator != null) {
+                PathingAnimator.setDuration(n.longValue());
+            }
+        });
         toolPanel.position(renderPane);
 
         textPanel = new TextPanel();

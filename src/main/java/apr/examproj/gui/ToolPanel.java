@@ -7,9 +7,12 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 /**
  * ToolPanel
@@ -29,6 +32,27 @@ public class ToolPanel extends HBox {
             eventHandler.handle(e);
         });
         getChildren().add(button);
+    }
+
+    public void addSlider(String title, long min, long max, long init,
+            ChangeListener<? super Number> changeListener) {
+        VBox vbox = new VBox();
+        vbox.setId("street-map__slider-box");
+        Text txt = new Text(String.format(title, init));
+        txt.setId("street-map__slider-text");
+        Slider slider = new Slider();
+        slider.setId("street-map__slider");
+        slider.setValue(init);
+        slider.setMin(min);
+        slider.setMax(max);
+        slider.setShowTickMarks(true);
+        slider.setShowTickLabels(true);
+        slider.setMajorTickUnit((max - min) / 10);
+        slider.setBlockIncrement((max - min) / 100);
+        slider.valueProperty().addListener(changeListener);
+        slider.valueProperty().addListener((e, o, n) -> txt.setText(String.format(title, n.longValue())));
+        vbox.getChildren().addAll(txt, slider);
+        getChildren().add(vbox);
     }
 
     public void addChoiceBox(ChangeListener<String> eventHandler, List<String> titles) {

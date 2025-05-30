@@ -82,7 +82,7 @@
                 <version>0.0.8</version>
                 <configuration>
                     <mainClass>${project.groupId}.examproj.Main</mainClass>
-                    <commandlineArgs>data/map.osm</commandlineArgs>
+                    <commandlineArgs>data/map-medium.osm</commandlineArgs>
                 </configuration>
             </plugin>
         </plugins>

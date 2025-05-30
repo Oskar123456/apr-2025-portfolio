@@ -18,15 +18,14 @@ import javafx.scene.layout.Pane;
 public class PathingAnimator extends AnimationTimer {
 
     static final long bln = 1000000000L;
-    static final long ups = 10;
+    static long durationS = 5;
 
     Pane renderPane;
     Parent containerPane;
     TextPanel textPanel;
 
     long startNS, lastUpdateNS, deltaNS;
-    long updateFreqNS = bln / ups;
-    long durationS = 5;
+    long updateFreqNS;
 
     int frame;
     Graph<MapNode> graph;
@@ -40,9 +39,11 @@ public class PathingAnimator extends AnimationTimer {
         this.graph = route.graph;
         this.route = route;
         this.bounds = bounds;
-        updateFreqNS = (durationS * bln) / route.graph.getVisitOrder().size();
-        System.out
-                .println("PathingAnimator.PathingAnimator(): update every: " + (updateFreqNS / (double) bln) + " sec");
+        setDuration(durationS);
+    }
+
+    public static void setDuration(long seconds) {
+        durationS = seconds;
     }
 
     public void setTextPanel(TextPanel textPanel) {
@@ -51,6 +52,7 @@ public class PathingAnimator extends AnimationTimer {
 
     @Override
     public void handle(long nowNS) {
+        updateFreqNS = (durationS * bln) / route.graph.getVisitOrder().size();
         if (startNS == 0) {
             startNS = nowNS;
             lastUpdateNS = nowNS;
