@@ -133,15 +133,13 @@ public class StreetMapApp2 {
             mouseY = e.getY();
         });
 
-        renderPane.getChildren().addAll(map, toolPanel, textPanel);
-        map.getChildren().addAll(srcPane, destPane);
+        renderPane.getChildren().addAll(map);
+        map.getChildren().addAll(srcPane, destPane, toolPanel, textPanel);
         Options.getInstance().setRenderTarget(map);
         Tooltip.getInstance().setRenderTarget(map);
 
-        toolPanel.reposition(renderPane);
-        textPanel.reposition(renderPane);
-        renderPane.widthProperty().addListener(e -> toolPanel.reposition(renderPane));
-        renderPane.heightProperty().addListener(e -> toolPanel.reposition(renderPane));
+        toolPanel.reposition(map);
+        textPanel.reposition(map);
 
         Options.hide();
         Tooltip.hide();
