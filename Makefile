@@ -1,6 +1,6 @@
 groupId="apr"
 mainClass="App"
-args=""
+args="data/map.osm"
 
 build:
 	@mvn -q compile

@@ -57,4 +57,8 @@ public class GUIUtils {
                 pane.getWidth(), pane.getHeight());
     }
 
+    public static String timeFormat(double hours) {
+        return String.format("%.3fmins", hours * 60);
+    }
+
 }

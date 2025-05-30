@@ -26,6 +26,10 @@ public class MapBuilding implements IGUIMapElement {
         nodes.add(node);
     }
 
+    public List<MapNode> getNodes() {
+        return nodes;
+    }
+
     @Override
     public void draw(MapBounds bounds, Pane renderPane) {
         Polygon line = new Polygon(GUIUtils.mapNodesToCoordArray(bounds, renderPane, nodes));

@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import apr.examproj.utils.Stringify;
-
 /**
  * Graph
  */
@@ -138,6 +136,22 @@ public class Graph<T> {
 
     public Double dist(GraphNode<T> node) {
         return dists.get(node);
+    }
+
+    public void reset() {
+        srcs.clear();
+        for (var node : nodes) {
+            dists.put(node, Double.POSITIVE_INFINITY);
+        }
+        if (!dists.containsKey(getStart())) {
+            System.out.println("Graph.reset(): start does not show up in nodes...");
+            return;
+        }
+        if (!dists.containsKey(getDestination())) {
+            System.out.println("Graph.reset(): destination does not show up in nodes...");
+            return;
+        }
+        dists.put(src, 0D);
     }
 
     /**

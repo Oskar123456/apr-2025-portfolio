@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import apr.examproj.alg.PathFinder;
-import apr.examproj.application.StreetMapApp;
 import apr.examproj.ds.Graph;
 import apr.examproj.ds.GraphEdge;
 import apr.examproj.ds.GraphNode;
@@ -14,7 +13,6 @@ import apr.examproj.enums.TransportationMode;
 import apr.examproj.gui.IGUIMapElement;
 import apr.examproj.osm.MapData;
 import apr.examproj.utils.Stringify;
-import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 /**
@@ -22,17 +20,18 @@ import javafx.scene.layout.Pane;
  */
 public class StreetMap implements IGUIMapElement {
 
-    // MapBounds bounds;
-    List<MapNode> nodes = new ArrayList<>();
-    List<MapWay> ways = new ArrayList<>(); // misc
-    List<MapPath> paths = new ArrayList<>(); // pathable
-    List<MapPath> linkPaths = new ArrayList<>(); // pathable, links unreachable nodes by footpath, should not be drawn
-    List<MapEdge> edges = new ArrayList<>(); // granular paths
-    List<MapBuilding> buildings = new ArrayList<>();
-    List<MapAddress> addresses = new ArrayList<>();
+    public MapBounds mapbounds;
+    public List<MapNode> nodes = new ArrayList<>();
+    public List<MapWay> ways = new ArrayList<>(); // misc
+    public List<MapPath> paths = new ArrayList<>(); // pathable
+    public List<MapPath> linkPaths = new ArrayList<>(); // pathable, links unreachable nodes by footpath, should not be
+                                                        // drawn
+    public List<MapEdge> edges = new ArrayList<>(); // granular paths
+    public List<MapBuilding> buildings = new ArrayList<>();
+    public List<MapAddress> addresses = new ArrayList<>();
 
     public StreetMap(MapData mapData) {
-        // bounds = MapFactory.bounds(mapData.getBounds());
+        mapbounds = MapFactory.bounds(mapData.getBounds());
         nodes = new ArrayList<>(mapData.getNodes().stream().map(MapFactory::node).toList());
         buildings = new ArrayList<>(mapData.getBuildings().stream().map(b -> MapFactory.building(b, nodes)).toList());
         paths = new ArrayList<>(mapData.getPaths().stream().map(p -> MapFactory.path(p, nodes)).toList());
@@ -86,9 +85,11 @@ public class StreetMap implements IGUIMapElement {
 
     @Override
     public void draw(MapBounds bounds, Pane renderPane) {
+        // nodes.forEach(n -> n.draw(bounds, renderPane));
         paths.forEach(p -> p.draw(bounds, renderPane));
         buildings.forEach(b -> b.draw(bounds, renderPane));
         addresses.forEach(a -> a.draw(bounds, renderPane));
+        linkPaths.forEach(p -> p.drawSubtle(bounds, renderPane));
         // getAllEdges().forEach(a -> a.draw(bounds, renderPane));
     }
 
@@ -145,7 +146,7 @@ public class StreetMap implements IGUIMapElement {
 
         List<MapEdge> routeEdges = pathEdges.stream().map(e -> edgeMap.get(e)).toList();
 
-        return new MapRoute(src, dest, routeEdges);
+        return new MapRoute(graph, src, dest, routeEdges);
     }
 
     @Override

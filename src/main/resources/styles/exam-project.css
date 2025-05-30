@@ -71,6 +71,23 @@
     -fx-background-radius: 6px;
 }
 
+#street-map__path-subtle {
+    -fx-stroke-width: 3px;
+    stroke-width: 3px;
+    -fx-stroke: gray;
+    stroke: gray;
+    -fx-border-radius: 5px;
+    border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+#street-map__path-subtle:hover {
+    -fx-stroke: red;
+    stroke: red;
+    -fx-stroke-width: 4px;
+    stroke-width: 4px;
+}
+
 #street-map__path:hover {
     -fx-stroke: red;
     stroke: red;
@@ -192,6 +209,39 @@
     opacity: 0.8;
 }
 
+#street-map__default-node {
+    -fx-stroke: black;
+    stroke: black;
+    -fx-stroke-width: 1px;
+    stroke-width: 1px;
+    -fx-background-color: rgba(222, 222, 222, 0.9);
+    -fx-fill: rgba(222, 222, 222, 0.9);
+    fill: rgba(222, 222, 222, 0.9);
+    background-color: rgba(222, 222, 222, 0.9);
+}
+
+#street-map__visited-node {
+    -fx-stroke: gray;
+    stroke: gray;
+    -fx-stroke-width: 2px;
+    stroke-width: 4px;
+    -fx-background-color: rgba(100, 100, 100, 0.9);
+    -fx-fill: rgba(100, 100, 100, 0.9);
+    fill: rgba(222, 222, 222, 0.9);
+    background-color: rgba(222, 150, 150, 0.9);
+}
+
+#street-map__highlight-node {
+    -fx-stroke: red;
+    stroke: black;
+    -fx-stroke-width: 4px;
+    stroke-width: 4px;
+    -fx-background-color: rgba(222, 150, 150, 0.9);
+    -fx-fill: rgba(222, 150, 150, 0.9);
+    fill: rgba(222, 222, 222, 0.9);
+    background-color: rgba(222, 150, 150, 0.9);
+}
+
 /* APPLICATION */
 
 #street-map__options {
@@ -269,4 +319,31 @@
 #street-map__toolpanel-button {
     -fx-border-color: gray;
     border-color: gray;
+}
+
+#street-map__textpanel {
+    -fx-padding: 4px;
+    padding: 4px;
+    -fx-spacing: 10px;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-background-radius: 2px;
+    -fx-background-color: rgba(200, 200, 222, 0.9);
+    background-color: rgba(200, 200, 222, 0.9);
+    -fx-border-radius: 2px;
+    border-radius: 2px;
+    -fx-border-width: 2px;
+    border-width: 2px;
+    -fx-border-color: royalblue;
+    border-color: royalblue;
+}
+
+#street-map__textpanel-text {
+    -fx-font-size: 15px;
+    -fx-font-weight: 500;
+}
+
+#street-map__path-container {
+    -fx-background-color: rgba(200, 200, 222, 0.9);
+    background-color: rgba(200, 200, 222, 0.9);
 }

@@ -3,6 +3,7 @@ package apr.examproj;
 import java.io.IOException;
 
 import apr.examproj.application.StreetMapApp;
+import apr.examproj.application.StreetMapApp2;
 import apr.examproj.gui.GUIFactory;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -28,8 +29,14 @@ public class Main extends Application {
     Insets margins = new Insets(10);
 
     static int W = 800, H = 800;
+    static String osmPath;
 
     public static void main(String[] args) throws IOException {
+        if (args.length < 1) {
+            System.out.println("Main.main(): error: please provide osm data path as argument");
+            System.exit(1);
+        }
+        osmPath = args[0];
         launch();
     }
 
@@ -63,8 +70,8 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
 
-        StreetMapApp app = new StreetMapApp();
-        app.start(content);
+        // StreetMapApp.start(osmPath, content);
+        StreetMapApp2.start(osmPath, content);
     }
 
 }

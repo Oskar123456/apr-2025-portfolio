@@ -1,5 +1,10 @@
 package apr.examproj.gui;
 
+import apr.examproj.config.ApplicationConfig;
+import apr.examproj.map.MapBounds;
+import apr.examproj.map.MapNode;
+import apr.examproj.utils.Geometry;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -113,6 +118,73 @@ public class GUIFactory {
         txt.setId("street-map__text");
         txt.getStyleClass().add("text");
         return txt;
+    }
+
+    public static Node defaultMapNode2(MapNode node) {
+        Pane pane = new Pane();
+        double r = ApplicationConfig.mapNodeRadius;
+        Ellipse dot = new Ellipse(r, r);
+        dot.setId("street-map__default-node");
+        Geometry.relocateToScreenCoords(pane, node.getPos());
+        pane.getChildren().add(dot);
+        return pane;
+    }
+
+    public static Node visitedMapNode2(MapNode node) {
+        Pane pane = new Pane();
+        double r = ApplicationConfig.mapNodeRadius * 1.05;
+        Ellipse dot = new Ellipse(r, r);
+        dot.setId("street-map__visited-node");
+        Geometry.relocateToScreenCoords(pane, node.getPos());
+        pane.getChildren().add(dot);
+        return pane;
+    }
+
+    public static Node highlightedMapNode2(MapNode node) {
+        Pane pane = new Pane();
+        double r = ApplicationConfig.mapNodeRadius * 1.25;
+        Ellipse dot = new Ellipse(r, r);
+        dot.setId("street-map__highlighet-node");
+        Geometry.relocateToScreenCoords(pane, node.getPos());
+        pane.getChildren().add(dot);
+        return pane;
+    }
+
+    public static Node defaultMapNode(Pane renderPane, MapBounds bounds, MapNode node) {
+        Pane pane = new Pane();
+        double radius = ApplicationConfig.mapNodeRadius
+                * Math.min(renderPane.getWidth(), renderPane.getHeight());
+        Ellipse dot = new Ellipse(radius, radius);
+        dot.setId("street-map__default-node");
+        var pos = GUIUtils.mapNodeCoordsToPane(bounds, renderPane, node);
+        pane.relocate(pos.x, pos.y);
+        pane.getChildren().add(dot);
+        renderPane.getChildren().add(pane);
+        return pane;
+    }
+
+    public static Node visitedMapNode(Pane renderPane, MapBounds bounds, MapNode node) {
+        Pane pane = new Pane();
+        double radius = ApplicationConfig.mapNodeRadius
+                * Math.min(renderPane.getWidth(), renderPane.getHeight());
+        Ellipse dot = new Ellipse(radius, radius);
+        dot.setId("street-map__visited-node");
+        var pos = GUIUtils.mapNodeCoordsToPane(bounds, renderPane, node);
+        pane.relocate(pos.x, pos.y);
+        pane.getChildren().add(dot);
+        // renderPane.getChildren().add(pane);
+        return pane;
+    }
+
+    public static Node highlightedMapNode(Pane renderPane, MapBounds bounds, MapNode node) {
+        double radius = 1.2 * ApplicationConfig.mapNodeRadius
+                * Math.min(renderPane.getWidth(), renderPane.getHeight());
+        Ellipse dot = new Ellipse(radius, radius);
+        dot.setId("street-map__highlight-node");
+        var pos = GUIUtils.mapNodeCoordsToPane(bounds, renderPane, node);
+        dot.relocate(pos.x, pos.y);
+        // renderPane.getChildren().add(dot);
+        return dot;
     }
 
 }

@@ -1,0 +1,134 @@
+package apr.examproj.gui;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import apr.examproj.ds.Graph;
+import apr.examproj.map.MapBounds;
+import apr.examproj.map.MapNode;
+import apr.examproj.map.MapRoute;
+import javafx.animation.AnimationTimer;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.layout.Pane;
+
+/**
+ * PathingAnimator
+ */
+public class PathingAnimator extends AnimationTimer {
+
+    static final long bln = 1000000000L;
+    static final long ups = 10;
+
+    Pane renderPane;
+    Parent containerPane;
+    TextPanel textPanel;
+
+    long startNS, lastUpdateNS, deltaNS;
+    long updateFreqNS = bln / ups;
+    long durationS = 5;
+
+    int frame;
+    Graph<MapNode> graph;
+    MapRoute route;
+    MapBounds bounds;
+
+    List<Node> guiElements = new ArrayList<>();
+
+    public PathingAnimator(Pane renderPane, MapBounds bounds, MapRoute route) {
+        this.renderPane = renderPane;
+        this.graph = route.graph;
+        this.route = route;
+        this.bounds = bounds;
+        updateFreqNS = (durationS * bln) / route.graph.getVisitOrder().size();
+        System.out
+                .println("PathingAnimator.PathingAnimator(): update every: " + (updateFreqNS / (double) bln) + " sec");
+    }
+
+    public void setTextPanel(TextPanel textPanel) {
+        this.textPanel = textPanel;
+    }
+
+    @Override
+    public void handle(long nowNS) {
+        if (startNS == 0) {
+            startNS = nowNS;
+            lastUpdateNS = nowNS;
+        }
+        deltaNS = nowNS - lastUpdateNS;
+        if (deltaNS < updateFreqNS) {
+            return;
+        }
+        lastUpdateNS = nowNS;
+
+        draw();
+
+        if (textPanel != null) {
+            textPanel.setTexts(describe());
+        }
+
+        frame++;
+    }
+
+    public void detach() {
+        for (var elmt : guiElements) {
+            renderPane.getChildren().remove(elmt);
+        }
+    }
+
+    public void draw() {
+        for (var elmt : guiElements) {
+            renderPane.getChildren().remove(elmt);
+        }
+        guiElements.clear();
+        if (frame < graph.getVisitOrder().size()) {
+            drawPathing();
+        } else {
+            drawRoute();
+        }
+    }
+
+    void drawPathing() {
+        for (int i = 0; i < frame; ++i) {
+            var node = graph.getVisitOrder().get(i);
+            var mapNode = node.data;
+            javafx.scene.Node mapGUINode;
+            if (i + 1 < frame) {
+                mapGUINode = GUIFactory.visitedMapNode2(mapNode);
+            } else {
+                mapGUINode = GUIFactory.highlightedMapNode2(mapNode);
+            }
+            guiElements.add(mapGUINode);
+            Tooltip.setTooltip(mapGUINode,
+                    String.format("lat: %.4f, lon: %.4f", mapNode.lat, mapNode.lon),
+                    String.format("dist: %.1fm", graph.dist(node)),
+                    "id: " + mapNode.id);
+        }
+        renderPane.getChildren().addAll(guiElements);
+    }
+
+    String[] describe() {
+        if (frame < graph.getVisitOrder().size()) {
+            return new String[] {
+                    route.getDescription(),
+                    "Nodes visited: " + (frame + 1)
+            };
+        } else {
+            return new String[] {
+                    route.getDescription(),
+                    "Time: " + GUIUtils.timeFormat(route.hours),
+                    String.format("Length: %.1fm", route.dist),
+                    "Nodes: " + graph.getVisitOrder().size()
+            };
+        }
+    }
+
+    void drawRoute() {
+        guiElements.addAll(route.drawNodes());
+        renderPane.getChildren().addAll(guiElements);
+        System.out.println(
+                "PathingAnimator.drawRoute(): took " + (((double) lastUpdateNS - startNS) / bln) + " secs to complete");
+        stop();
+    }
+
+}

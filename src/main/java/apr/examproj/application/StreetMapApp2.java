@@ -14,6 +14,7 @@ import apr.examproj.alg.PathFinder;
 import apr.examproj.ds.Graph;
 import apr.examproj.enums.TransportationMode;
 import apr.examproj.gui.GUIFactory;
+import apr.examproj.gui.GUIMap;
 import apr.examproj.gui.GUIUtils;
 import apr.examproj.gui.Options;
 import apr.examproj.gui.PathingAnimator;
@@ -28,6 +29,7 @@ import apr.examproj.map.MapNode;
 import apr.examproj.map.MapRoute;
 import apr.examproj.map.StreetMap;
 import apr.examproj.osm.MapData;
+import apr.examproj.utils.Geometry;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
@@ -36,8 +38,9 @@ import javafx.scene.layout.Pane;
 /**
  * StreetMapDriver
  */
-public class StreetMapApp {
+public class StreetMapApp2 {
 
+    static GUIMap map;
     static StreetMap streetMap;
     static MapAddress src, dest;
     static MapBounds bounds;
@@ -56,21 +59,19 @@ public class StreetMapApp {
     static ToolPanel toolPanel;
     static TextPanel textPanel;
     static double mouseX, mouseY;
-    static boolean dragging;
+    static double dragSpeed = 1;
+    static double zoomSpeed = 0.0008;
     static PathingAnimator pathingAnimator;
     static boolean paused;
 
-    static double pixelsPerDegree = 246153;
-
     public static void start(String osmPath, Pane renderPane) throws IOException {
         init(osmPath);
-        System.out.println("StreetMapDriver.start(): streetMap: " + streetMap);
+
+        System.out.println("StreetMapApp2.start(): streetMap = " + streetMap);
 
         initGUI(renderPane);
 
-        draw();
-
-        System.out.println("StreetMapApp.start(): bounds: " + bounds
+        System.out.println("StreetMapApp2.start(): bounds: " + bounds
                 + " (" + bounds.width + "," + bounds.height + " / "
                 + renderPane.getWidth() + "," + renderPane.getHeight() + ")");
     }
@@ -80,45 +81,12 @@ public class StreetMapApp {
         MapData mapData = new MapData(osmStr);
         bounds = MapFactory.bounds(mapData.getBounds());
         streetMap = new StreetMap(mapData);
-        streetMap.setRenderTarget(renderPane);
-    }
-
-    public static void draw() {
-        renderPane.getChildren().clear();
-        streetMap.draw(bounds, renderPane);
-
-        if (src != null) {
-            var srcPos = GUIUtils.mapNodeCoordsToPane(bounds, renderPane, src.node);
-            srcPane.relocate(srcPos.x - destPane.getWidth() / 2, srcPos.y + MapAddress.getRadius(renderPane) + 5);
-            srcPane.setVisible(true);
-        } else {
-            srcPane.setVisible(false);
-        }
-
-        if (dest != null) {
-            var destPos = GUIUtils.mapNodeCoordsToPane(bounds, renderPane, dest.node);
-            destPane.relocate(destPos.x - destPane.getWidth() / 2, destPos.y + MapAddress.getRadius(renderPane) + 5);
-            destPane.setVisible(true);
-        } else {
-            destPane.setVisible(false);
-        }
-
-        if (pathingAnimator != null) {
-            pathingAnimator.draw();
-        }
-
-        toolPanel.reposition(renderPane);
-        textPanel.reposition(renderPane);
-        renderPane.getChildren().addAll(srcPane, destPane, toolPanel, textPanel);
-
-        Options.getInstance().setRenderTarget(renderPane);
-        Options.hide();
-        Tooltip.getInstance().setRenderTarget(renderPane);
-        Tooltip.hide();
+        map = new GUIMap(streetMap);
     }
 
     static void initGUI(Pane renderPane) {
-        StreetMapApp.renderPane = renderPane;
+        StreetMapApp2.renderPane = renderPane;
+
         srcPane = new HBox();
         srcPane.setId("street-map__src-pane");
         destPane = new HBox();
@@ -143,27 +111,42 @@ public class StreetMapApp {
         toolPanel.addChoiceBox((e, o, n) -> pathFinder = pathFinders.get(n), sortedAlgNames);
         pathFinder = pathFinders.get(sortedAlgNames.get(0));
 
-        renderPane.widthProperty().addListener((e) -> draw());
-        renderPane.heightProperty().addListener((e) -> draw());
-
         renderPane.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> Options.hide());
         renderPane.addEventHandler(ScrollEvent.SCROLL, e -> {
-            bounds.zoom(e.getDeltaY());
-            draw();
+            map.zoom(zoomSpeed * e.getDeltaY());
+            // map.getChildren().addAll(srcPane, destPane);
+            // if (pathingAnimator != null) {
+            // pathingAnimator.setRenderPane(map);
+            // }
         });
 
         renderPane.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
-            if (e.isMiddleButtonDown()) {
-                mouseX = e.getX();
-                mouseY = e.getY();
-            }
-        });
-        renderPane.addEventHandler(MouseEvent.MOUSE_DRAGGED, e -> {
-            bounds.move(e.getX() - mouseX, e.getY() - mouseY);
             mouseX = e.getX();
             mouseY = e.getY();
-            draw();
         });
+        renderPane.addEventHandler(MouseEvent.MOUSE_DRAGGED, e -> {
+            double dx = e.getX() - mouseX;
+            double dy = e.getY() - mouseY;
+            map.translateXProperty().set(map.getTranslateX() + dragSpeed * dx);
+            map.translateYProperty().set(map.getTranslateY() + dragSpeed * dy);
+            mouseX = e.getX();
+            mouseY = e.getY();
+        });
+
+        renderPane.getChildren().addAll(map, toolPanel, textPanel);
+        map.getChildren().addAll(srcPane, destPane);
+        Options.getInstance().setRenderTarget(map);
+        Tooltip.getInstance().setRenderTarget(map);
+
+        toolPanel.reposition(renderPane);
+        textPanel.reposition(renderPane);
+        renderPane.widthProperty().addListener(e -> toolPanel.reposition(renderPane));
+        renderPane.heightProperty().addListener(e -> toolPanel.reposition(renderPane));
+
+        Options.hide();
+        Tooltip.hide();
+        srcPane.setVisible(false);
+        destPane.setVisible(false);
     }
 
     public static double getMouseY() {
@@ -174,18 +157,14 @@ public class StreetMapApp {
         return mouseX;
     }
 
-    public static boolean isDragging() {
-        return dragging;
-    }
-
     public static void setSrc(MapAddress node) {
         if (dest == node) {
             dest = null;
         }
         src = node;
         route = null;
-        System.out.println("StreetMapApp.setSrc(): " + src);
-        draw();
+        Geometry.relocateToScreenCoords(srcPane, src.node.getPos());
+        srcPane.setVisible(true);
     }
 
     public static void setDest(MapAddress node) {
@@ -194,8 +173,8 @@ public class StreetMapApp {
         }
         dest = node;
         route = null;
-        System.out.println("StreetMapApp.setDest(): " + dest);
-        draw();
+        Geometry.relocateToScreenCoords(destPane, dest.node.getPos());
+        destPane.setVisible(true);
     }
 
     static void run() {
@@ -207,15 +186,16 @@ public class StreetMapApp {
             System.out.println("StreetMapApp.run(): " + pathFinder.getClass().getSimpleName());
             route = streetMap.getRoute(transportationMode, pathFinder, src, dest);
             if (pathingAnimator != null) {
+                pathingAnimator.detach();
                 pathingAnimator.stop();
             }
-            pathingAnimator = new PathingAnimator(renderPane, bounds, route);
+            pathingAnimator = new PathingAnimator(map, bounds, route);
             pathingAnimator.setTextPanel(textPanel);
             pathingAnimator.start();
             paused = false;
-            draw();
         } catch (Exception e) {
             System.out.println("StreetMapApp.run(): error: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

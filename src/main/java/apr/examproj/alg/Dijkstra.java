@@ -18,20 +18,7 @@ public class Dijkstra<T> implements PathFinder<T> {
 
         System.out.println("Dijkstra.search(): " + graph.toString());
 
-        graph.srcs.clear();
-        for (var node : graph.nodes) {
-            graph.dists.put(node, Double.POSITIVE_INFINITY);
-        }
-        if (!graph.dists.containsKey(graph.getStart())) {
-            System.out.println("Dijkstra.search(): start does not show up in nodes...");
-            return false;
-        }
-        if (!graph.dists.containsKey(graph.getDestination())) {
-            System.out.println("Dijkstra.search(): destination does not show up in nodes...");
-            return false;
-        }
-        graph.dists.put(graph.src, 0D);
-        graph.updateDist(graph.src, 0D);
+        graph.reset();
 
         PQ.add(new Pair<GraphNode<T>, Double>(graph.getStart(), 0D));
         while (!PQ.isEmpty()) {

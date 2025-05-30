@@ -28,9 +28,6 @@ public class ToolPanel extends HBox {
         button.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
             eventHandler.handle(e);
         });
-        // button.prefHeightProperty().bind(heightProperty()
-        // .subtract(paddingProperty().getValue().getTop())
-        // .subtract(paddingProperty().getValue().getBottom()));
         getChildren().add(button);
     }
 
@@ -46,7 +43,12 @@ public class ToolPanel extends HBox {
     }
 
     public void position(Pane renderPane) {
-        relocate(10, renderPane.getHeight() - prefHeightProperty().doubleValue() - 10);
+        renderPane.widthProperty().addListener(e -> reposition(renderPane));
+        renderPane.heightProperty().addListener(e -> reposition(renderPane));
+    }
+
+    public void reposition(Pane renderPane) {
+        relocate(10, renderPane.getHeight() - getHeight() - 10);
     }
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import apr.datastructures.graph.Point2D;
 import apr.datastructures.graph.TwoTuple;
 import apr.examproj.config.ApplicationConfig;
+import apr.examproj.gui.GUIFactory;
 import apr.examproj.gui.IGUIMapElement;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
@@ -64,6 +65,10 @@ public class MapNode implements IGUIMapElement {
                 + (this.lon - other.lon) * (this.lon - other.lon));
     }
 
+    public Point2D getPos() {
+        return new Point2D(lat, lon);
+    }
+
     public String toString() {
         return String.format("Node[id: %s]", id.substring(0, 5));
         // return String.format("Node[id: %s, lat: %f, lon: %f]", id, lat, lon);
@@ -75,15 +80,16 @@ public class MapNode implements IGUIMapElement {
             return;
         }
 
-        var pos = bounds.normalize(lat, lon);
-
-        Pane pane = new Pane();
-        pane.relocate(pos.x * renderPane.getWidth(), pos.y * renderPane.getHeight());
-
-        Ellipse dot = new Ellipse(getRadius(renderPane), getRadius(renderPane));
-        dot.setId(ApplicationConfig.cssIdMapNode);
-        pane.getChildren().add(dot);
-        renderPane.getChildren().add(pane);
+        // var pos = bounds.normalize(lat, lon);
+        //
+        // Pane pane = new Pane();
+        // pane.relocate(pos.x * renderPane.getWidth(), pos.y * renderPane.getHeight());
+        //
+        // Ellipse dot = new Ellipse(getRadius(renderPane), getRadius(renderPane));
+        // dot.setId(ApplicationConfig.cssIdMapNode);
+        // pane.getChildren().add(dot);
+        // renderPane.getChildren().add();
+        GUIFactory.defaultMapNode(renderPane, bounds, this);
     }
 
     public static double getRadius(Pane renderPane) {

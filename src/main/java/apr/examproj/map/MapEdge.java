@@ -4,9 +4,11 @@ import java.util.List;
 
 import apr.examproj.config.ApplicationConfig;
 import apr.examproj.enums.TransportationMode;
+import apr.examproj.gui.GUIUtils;
 import apr.examproj.gui.IGUIMapElement;
 import apr.examproj.gui.Tooltip;
 import apr.examproj.utils.Geometry;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polyline;
 
@@ -22,6 +24,13 @@ public class MapEdge implements IGUIMapElement {
     public double dist, maxSpeed;
 
     public MapEdge() {
+    }
+
+    public MapEdge(MapNode src, MapNode dest, double maxSpeed) {
+        this.src = src;
+        this.dest = dest;
+        this.dist = Geometry.greatCicleDistance(src, dest);
+        this.maxSpeed = maxSpeed;
     }
 
     public MapEdge(MapNode src, MapNode dest, MapPath path) {
@@ -56,19 +65,43 @@ public class MapEdge implements IGUIMapElement {
         }
     }
 
+    public double getTravelTime() {
+        return getTravelTime(transportationMode);
+    }
+
     @Override
-    public void draw(MapBounds bounds, Pane renderPane) {
-        var srcP = bounds.normalize(src.lat, src.lon);
-        var destP = bounds.normalize(dest.lat, dest.lon);
+    public void draw(MapBounds mapBounds, Pane renderPane) {
+        var srcP = Geometry.toScreenCoords(Geometry.normalize(src.lat, src.lon));
+        var destP = Geometry.toScreenCoords(Geometry.normalize(dest.lat, dest.lon));
         Polyline line = new Polyline(srcP.x * renderPane.getWidth(), srcP.y * renderPane.getHeight(),
                 destP.x * renderPane.getWidth(), destP.y * renderPane.getHeight());
         line.setId("street-map__edge");
         Tooltip.setTooltip(line, name,
-                String.format("dist: %.1fm%ntime: %.2fhrs", dist, getTravelTime(transportationMode)),
+                String.format("dist: %.1fm%n%s", dist, GUIUtils.timeFormat(getTravelTime(transportationMode))),
                 transportationMode.toString());
         renderPane.getChildren().add(line);
-        // src.draw(bounds, renderPane);
-        // dest.draw(bounds, renderPane);
+    }
+
+    public void draw(Pane renderPane) {
+        var srcP = Geometry.toScreenCoords(Geometry.normalize(src.lat, src.lon));
+        var destP = Geometry.toScreenCoords(Geometry.normalize(dest.lat, dest.lon));
+        Polyline line = new Polyline(srcP.x, srcP.y, destP.x, destP.y);
+        line.setId("street-map__edge");
+        Tooltip.setTooltip(line, name,
+                String.format("dist: %.1fm%n%s", dist, GUIUtils.timeFormat(getTravelTime(transportationMode))),
+                transportationMode.toString());
+        renderPane.getChildren().add(line);
+    }
+
+    public Node drawNode() {
+        var srcP = Geometry.toScreenCoords(Geometry.normalize(src.lat, src.lon));
+        var destP = Geometry.toScreenCoords(Geometry.normalize(dest.lat, dest.lon));
+        Polyline line = new Polyline(srcP.x, srcP.y, destP.x, destP.y);
+        line.setId("street-map__edge");
+        Tooltip.setTooltip(line, name,
+                String.format("dist: %.1fm%n%s", dist, GUIUtils.timeFormat(getTravelTime(transportationMode))),
+                transportationMode.toString());
+        return line;
     }
 
     public static MapEdge findMin(List<MapEdge> edges) {
