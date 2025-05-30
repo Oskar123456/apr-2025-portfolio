@@ -48,7 +48,7 @@ public class ToolPanel extends HBox {
     }
 
     public void reposition(Pane renderPane) {
-        relocate(10, renderPane.getHeight() - getHeight() - 10);
+        relocate(10, renderPane.getHeight() - prefHeightProperty().doubleValue() - 10);
     }
 
 }

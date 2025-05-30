@@ -8,6 +8,7 @@ import apr.examproj.gui.GUIUtils;
 import apr.examproj.gui.IGUIMapElement;
 import apr.examproj.gui.Options;
 import apr.examproj.gui.Tooltip;
+import apr.examproj.utils.Geometry;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
@@ -43,8 +44,9 @@ public class MapAddress implements IGUIMapElement {
                 Options.clear();
                 Options.addOption(evt -> StreetMapApp.setSrc(this), "set as source");
                 Options.addOption(evt -> StreetMapApp.setDest(this), "set as dest");
-                var pos = GUIUtils.mapNodeCoordsToPane(bounds, renderPane, node);
-                Options.getInstance().relocate(pos.x, pos.y);
+                Geometry.relocateToScreenCoords(Options.getInstance(), node.getPos());
+                // var pos = GUIUtils.mapNodeCoordsToPane(bounds, renderPane, node);
+                // Options.getInstance().relocate(pos.x, pos.y);
                 Options.show();
                 Tooltip.hide();
                 e.consume();

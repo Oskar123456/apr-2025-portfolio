@@ -96,9 +96,7 @@ public class StreetMapApp2 {
 
         toolPanel = new ToolPanel();
         toolPanel.addButton(e -> run(), "run");
-        toolPanel.addButton(e -> {
-            pause();
-        }, "pause");
+        toolPanel.addButton(e -> pause(), "pause");
         toolPanel.position(renderPane);
 
         textPanel = new TextPanel();
@@ -112,13 +110,7 @@ public class StreetMapApp2 {
         pathFinder = pathFinders.get(sortedAlgNames.get(0));
 
         renderPane.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> Options.hide());
-        renderPane.addEventHandler(ScrollEvent.SCROLL, e -> {
-            map.zoom(zoomSpeed * e.getDeltaY());
-            // map.getChildren().addAll(srcPane, destPane);
-            // if (pathingAnimator != null) {
-            // pathingAnimator.setRenderPane(map);
-            // }
-        });
+        renderPane.addEventHandler(ScrollEvent.SCROLL, e -> map.zoom(zoomSpeed * e.getDeltaY()));
 
         renderPane.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
             mouseX = e.getX();
@@ -133,13 +125,13 @@ public class StreetMapApp2 {
             mouseY = e.getY();
         });
 
-        renderPane.getChildren().addAll(map);
-        map.getChildren().addAll(srcPane, destPane, toolPanel, textPanel);
+        renderPane.getChildren().addAll(map, toolPanel, textPanel);
+        map.getChildren().addAll(srcPane, destPane);
         Options.getInstance().setRenderTarget(map);
         Tooltip.getInstance().setRenderTarget(map);
 
-        toolPanel.reposition(map);
-        textPanel.reposition(map);
+        toolPanel.reposition(renderPane);
+        textPanel.reposition(renderPane);
 
         Options.hide();
         Tooltip.hide();
