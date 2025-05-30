@@ -25,6 +25,7 @@ import apr.examproj.map.MapNode;
 import apr.examproj.map.MapRoute;
 import apr.examproj.map.StreetMap;
 import apr.examproj.osm.MapData;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
@@ -49,9 +50,11 @@ public class StreetMapApp {
     static Pane renderPane;
     static HBox srcPane, destPane;
     static ToolPanel toolPanel;
+    static double mouseX, mouseY;
+    static boolean dragging;
 
     public static void start(Pane renderPane) throws IOException {
-        String osmStr = new String(Files.readAllBytes(Paths.get("data/map.osm")));
+        String osmStr = new String(Files.readAllBytes(Paths.get("data/map-medium.osm")));
         MapData mapData = new MapData(osmStr);
 
         bounds = MapFactory.bounds(mapData.getBounds());
@@ -129,6 +132,31 @@ public class StreetMapApp {
             bounds.zoom(e.getDeltaY());
             draw();
         });
+
+        renderPane.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+            if (e.isMiddleButtonDown()) {
+                mouseX = e.getX();
+                mouseY = e.getY();
+            }
+        });
+        renderPane.addEventHandler(MouseEvent.MOUSE_DRAGGED, e -> {
+            bounds.move(e.getX() - mouseX, e.getY() - mouseY);
+            mouseX = e.getX();
+            mouseY = e.getY();
+            draw();
+        });
+    }
+
+    public static double getMouseY() {
+        return mouseY;
+    }
+
+    public static double getMouseX() {
+        return mouseX;
+    }
+
+    public static boolean isDragging() {
+        return dragging;
     }
 
     public static void setSrc(MapAddress node) {

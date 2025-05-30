@@ -53,18 +53,16 @@ public class MapBounds implements IGUIMapElement {
     }
 
     public void move(double x, double y) {
-        minLatitude += x * zoomSpeed;
-        maxLatitude -= x * zoomSpeed;
-        minLongitude += y * zoomSpeed;
-        maxLongitude -= y * zoomSpeed;
-        minLatitude = Math.max(origMinLatitude, minLatitude);
-        maxLatitude = Math.min(origMaxLatitude, maxLatitude);
-        minLongitude = Math.max(origMinLongitude, minLongitude);
-        maxLongitude = Math.min(origMaxLongitude, maxLongitude);
-        this.width = maxLatitude - minLatitude;
-        this.height = maxLongitude - minLongitude;
-        System.out.printf("MapBounds.zoom(): %.5f, %.5f, %.5f, %.5f%n",
-                minLatitude, maxLatitude, minLongitude, maxLongitude);
+        double xMove = -x * moveSpeed;
+        double yMove = -y * moveSpeed;
+        if (minLatitude + xMove < origMinLatitude || maxLatitude + xMove > origMaxLatitude
+                || minLongitude + yMove < origMinLongitude || maxLongitude + yMove > origMaxLongitude) {
+            return;
+        }
+        minLatitude += xMove;
+        maxLatitude += xMove;
+        minLongitude += yMove;
+        maxLongitude += yMove;
     }
 
     public void zoom(double value) {
@@ -78,8 +76,6 @@ public class MapBounds implements IGUIMapElement {
         maxLongitude = Math.min(origMaxLongitude, maxLongitude);
         this.width = maxLatitude - minLatitude;
         this.height = maxLongitude - minLongitude;
-        System.out.printf("MapBounds.zoom(): %.5f, %.5f, %.5f, %.5f%n",
-                minLatitude, maxLatitude, minLongitude, maxLongitude);
     }
 
     public Point2D normalize(double latitude, double longitude) {
