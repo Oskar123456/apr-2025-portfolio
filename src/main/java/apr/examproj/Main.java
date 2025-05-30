@@ -27,7 +27,7 @@ public class Main extends Application {
     static HBox title;
     Insets margins = new Insets(10);
 
-    static int W = 1000, H = 800;
+    static int W = 800, H = 800;
 
     public static void main(String[] args) throws IOException {
         launch();

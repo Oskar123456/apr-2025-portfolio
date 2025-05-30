@@ -12,13 +12,7 @@ import apr.examproj.osm.MapData;
 public class MapFactory {
 
     public static MapBounds bounds(Element xmlElmt) {
-        MapBounds bounds = new MapBounds();
-        bounds.minLatitude = Double.valueOf(xmlElmt.attributes().get("minlat"));
-        bounds.maxLatitude = Double.valueOf(xmlElmt.attributes().get("maxlat"));
-        bounds.minLongitude = Double.valueOf(xmlElmt.attributes().get("minlon"));
-        bounds.maxLongitude = Double.valueOf(xmlElmt.attributes().get("maxlon"));
-        bounds.width = bounds.maxLatitude - bounds.minLatitude;
-        bounds.height = bounds.maxLongitude - bounds.minLongitude;
+        MapBounds bounds = new MapBounds(xmlElmt);
         return bounds;
     }
 

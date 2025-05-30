@@ -11,9 +11,15 @@ import javafx.scene.layout.Pane;
  */
 public class MapBounds implements IGUIMapElement {
 
+    public double origMinLatitude, origMinLongitude;
+    public double origMaxLatitude, origMaxLongitude;
     public double minLatitude, maxLatitude;
     public double minLongitude, maxLongitude;
     public double width, height;
+    public double ratio;
+
+    static double zoomSpeed = 0.000005;
+    static double moveSpeed = 0.000005;
 
     public MapBounds() {
     }
@@ -23,8 +29,13 @@ public class MapBounds implements IGUIMapElement {
         this.maxLatitude = maxLatitude;
         this.minLongitude = minLongitude;
         this.maxLongitude = maxLongitude;
+        this.origMinLatitude = minLatitude;
+        this.origMaxLatitude = maxLatitude;
+        this.origMinLongitude = minLongitude;
+        this.origMaxLongitude = maxLongitude;
         this.width = maxLatitude - minLatitude;
         this.height = maxLongitude - minLongitude;
+        this.ratio = width / height;
     }
 
     public MapBounds(Element xmlElmt) {
@@ -32,8 +43,43 @@ public class MapBounds implements IGUIMapElement {
         this.maxLatitude = Double.valueOf(xmlElmt.attributes().get("maxlat"));
         this.minLongitude = Double.valueOf(xmlElmt.attributes().get("minlon"));
         this.maxLongitude = Double.valueOf(xmlElmt.attributes().get("maxlon"));
+        this.origMinLatitude = minLatitude;
+        this.origMaxLatitude = maxLatitude;
+        this.origMinLongitude = minLongitude;
+        this.origMaxLongitude = maxLongitude;
         this.width = maxLatitude - minLatitude;
         this.height = maxLongitude - minLongitude;
+        this.ratio = height / width;
+    }
+
+    public void move(double x, double y) {
+        minLatitude += x * zoomSpeed;
+        maxLatitude -= x * zoomSpeed;
+        minLongitude += y * zoomSpeed;
+        maxLongitude -= y * zoomSpeed;
+        minLatitude = Math.max(origMinLatitude, minLatitude);
+        maxLatitude = Math.min(origMaxLatitude, maxLatitude);
+        minLongitude = Math.max(origMinLongitude, minLongitude);
+        maxLongitude = Math.min(origMaxLongitude, maxLongitude);
+        this.width = maxLatitude - minLatitude;
+        this.height = maxLongitude - minLongitude;
+        System.out.printf("MapBounds.zoom(): %.5f, %.5f, %.5f, %.5f%n",
+                minLatitude, maxLatitude, minLongitude, maxLongitude);
+    }
+
+    public void zoom(double value) {
+        minLatitude += value * zoomSpeed;
+        maxLatitude -= value * zoomSpeed;
+        minLongitude += (value * zoomSpeed) * ratio;
+        maxLongitude -= (value * zoomSpeed) * ratio;
+        minLatitude = Math.max(origMinLatitude, minLatitude);
+        maxLatitude = Math.min(origMaxLatitude, maxLatitude);
+        minLongitude = Math.max(origMinLongitude, minLongitude);
+        maxLongitude = Math.min(origMaxLongitude, maxLongitude);
+        this.width = maxLatitude - minLatitude;
+        this.height = maxLongitude - minLongitude;
+        System.out.printf("MapBounds.zoom(): %.5f, %.5f, %.5f, %.5f%n",
+                minLatitude, maxLatitude, minLongitude, maxLongitude);
     }
 
     public Point2D normalize(double latitude, double longitude) {

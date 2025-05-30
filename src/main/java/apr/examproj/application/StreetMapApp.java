@@ -26,6 +26,7 @@ import apr.examproj.map.MapRoute;
 import apr.examproj.map.StreetMap;
 import apr.examproj.osm.MapData;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
@@ -54,6 +55,7 @@ public class StreetMapApp {
         MapData mapData = new MapData(osmStr);
 
         bounds = MapFactory.bounds(mapData.getBounds());
+        System.out.println("StreetMapApp.start(): bounds: " + bounds);
         streetMap = new StreetMap(mapData);
         streetMap.setRenderTarget(renderPane);
 
@@ -123,6 +125,10 @@ public class StreetMapApp {
         renderPane.heightProperty().addListener((e) -> draw());
 
         renderPane.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> Options.hide());
+        renderPane.addEventHandler(ScrollEvent.SCROLL, e -> {
+            bounds.zoom(e.getDeltaY());
+            draw();
+        });
     }
 
     public static void setSrc(MapAddress node) {

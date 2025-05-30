@@ -22,7 +22,7 @@ import javafx.scene.layout.Pane;
  */
 public class StreetMap implements IGUIMapElement {
 
-    MapBounds bounds;
+    // MapBounds bounds;
     List<MapNode> nodes = new ArrayList<>();
     List<MapWay> ways = new ArrayList<>(); // misc
     List<MapPath> paths = new ArrayList<>(); // pathable
@@ -32,7 +32,7 @@ public class StreetMap implements IGUIMapElement {
     List<MapAddress> addresses = new ArrayList<>();
 
     public StreetMap(MapData mapData) {
-        bounds = MapFactory.bounds(mapData.getBounds());
+        // bounds = MapFactory.bounds(mapData.getBounds());
         nodes = new ArrayList<>(mapData.getNodes().stream().map(MapFactory::node).toList());
         buildings = new ArrayList<>(mapData.getBuildings().stream().map(b -> MapFactory.building(b, nodes)).toList());
         paths = new ArrayList<>(mapData.getPaths().stream().map(p -> MapFactory.path(p, nodes)).toList());
@@ -81,7 +81,7 @@ public class StreetMap implements IGUIMapElement {
 
     public void setRenderTarget(Pane renderPane) {
         // System.out.println("StreetMap.setRenderTarget()");
-        draw(bounds, renderPane);
+        // draw(bounds, renderPane);
     }
 
     @Override
