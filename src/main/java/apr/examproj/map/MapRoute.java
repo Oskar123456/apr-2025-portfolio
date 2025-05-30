@@ -60,7 +60,7 @@ public class MapRoute implements IGUIMapElement {
     }
 
     public String getDescription() {
-        return String.format("Route from %s to %s:", src.toString(), dest.toString());
+        return String.format("Route from:%n\t%s%nto:%n\t%s:", src.toString(), dest.toString());
     }
 
     @Override

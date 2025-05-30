@@ -2,16 +2,17 @@ package apr.examproj.gui;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 /**
  * TextPanel
  */
-public class TextPanel extends HBox {
+public class TextPanel extends VBox {
 
     public TextPanel() {
         setId("street-map__textpanel");
-        setPrefHeight(65);
+        // setPrefHeight(150);
     }
 
     public void setTexts(String... texts) {
@@ -32,6 +33,6 @@ public class TextPanel extends HBox {
 
     public void reposition(Pane renderPane) {
         relocate(renderPane.getWidth() - getWidth() - 10,
-                renderPane.getHeight() - prefHeightProperty().doubleValue() - 10);
+                renderPane.getHeight() - heightProperty().doubleValue() - 10);
     }
 }

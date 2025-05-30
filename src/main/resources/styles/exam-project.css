@@ -325,8 +325,8 @@
     -fx-padding: 4px;
     padding: 4px;
     -fx-spacing: 10px;
-    -fx-text-alignment: center;
-    -fx-alignment: center;
+    -fx-text-alignment: left;
+    -fx-alignment: top-left;
     -fx-background-radius: 2px;
     -fx-background-color: rgba(200, 200, 222, 0.9);
     background-color: rgba(200, 200, 222, 0.9);
@@ -339,8 +339,9 @@
 }
 
 #street-map__textpanel-text {
-    -fx-font-size: 15px;
+    -fx-font-size: 14px;
     -fx-font-weight: 500;
+    -fx-text-alignment: left;
 }
 
 #street-map__path-container {
