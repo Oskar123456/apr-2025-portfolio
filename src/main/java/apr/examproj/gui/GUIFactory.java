@@ -48,8 +48,6 @@ public class GUIFactory {
     }
 
     public static Pane defaultCircleSign(String text, double radius) {
-        double brdrRadius = 0.15;
-
         Pane container = new Pane();
         container.setPrefHeight(0);
         container.setPrefWidth(0);

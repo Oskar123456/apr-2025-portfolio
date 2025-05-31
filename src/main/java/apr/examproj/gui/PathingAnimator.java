@@ -11,7 +11,6 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
-import lombok.Setter;
 
 /**
  * PathingAnimator

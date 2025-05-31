@@ -3,12 +3,10 @@ package apr.examproj.gui;
 import java.util.List;
 
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import lombok.Getter;
 
 /**
  * MultiSelection

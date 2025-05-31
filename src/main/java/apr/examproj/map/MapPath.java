@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import apr.datastructures.graph.Point2D;
 import apr.examproj.config.ApplicationConfig;
 import apr.examproj.gui.GUIUtils;
 import apr.examproj.gui.IGUIMapElement;
 import apr.examproj.gui.Tooltip;
-import apr.examproj.utils.Geometry;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Polyline;
 
 /**
@@ -53,8 +50,9 @@ public class MapPath implements IGUIMapElement {
                 var secondClosestNode = nodes.get(index);
                 var middlePoint = closestNode.middlePoint(secondClosestNode);
 
-                var closestPoint = Geometry.closestPoint(addr.node.getPos(), closestNode.getPos(),
-                        secondClosestNode.getPos());
+                // var closestPoint = Geometry.closestPoint(addr.node.getPos(),
+                // closestNode.getPos(),
+                // secondClosestNode.getPos());
 
                 newNode.id = UUID.randomUUID().toString();
                 newNode.lat = middlePoint.x;

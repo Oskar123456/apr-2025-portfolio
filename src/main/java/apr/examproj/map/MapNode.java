@@ -8,7 +8,6 @@ import apr.examproj.config.ApplicationConfig;
 import apr.examproj.gui.GUIFactory;
 import apr.examproj.gui.IGUIMapElement;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Ellipse;
 
 /**
  * MapNode

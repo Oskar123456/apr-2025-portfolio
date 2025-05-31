@@ -33,9 +33,9 @@ public class Geometry {
     }
 
     public static Point2D closestPoint(Point2D fromP, Point2D toA, Point2D toB) {
-        Point2D aVec = toA.subtract(toB);
-        Point2D bVec = toB.subtract(fromP);
-        Point2D cVec = fromP.subtract(toA);
+        // Point2D aVec = toA.subtract(toB);
+        // Point2D bVec = toB.subtract(fromP);
+        // Point2D cVec = fromP.subtract(toA);
 
         Point2D paraVec = toB.subtract(toA);
         Point2D perpVec = new Point2D(-paraVec.y, paraVec.x).normalize();

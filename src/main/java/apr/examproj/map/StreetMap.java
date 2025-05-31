@@ -14,7 +14,6 @@ import apr.examproj.gui.IGUIMapElement;
 import apr.examproj.osm.MapData;
 import apr.examproj.utils.Stringify;
 import javafx.scene.layout.Pane;
-import lombok.Getter;
 
 /**
  * StreetMap
