@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import apr.examproj.application.StreetMapApp;
 import apr.examproj.application.StreetMapApp2;
 import apr.examproj.gui.GUIFactory;
 import apr.examproj.gui.SelectionList;
