@@ -7,6 +7,7 @@ import apr.datastructures.graph.TwoTuple;
 import apr.examproj.config.ApplicationConfig;
 import apr.examproj.gui.GUIFactory;
 import apr.examproj.gui.IGUIMapElement;
+import apr.examproj.utils.Geometry;
 import javafx.scene.layout.Pane;
 
 /**
@@ -60,8 +61,7 @@ public class MapNode implements IGUIMapElement {
     }
 
     public double dist(MapNode other) {
-        return Math.sqrt((this.lat - other.lat) * (this.lat - other.lat)
-                + (this.lon - other.lon) * (this.lon - other.lon));
+        return Geometry.greatCicleDistance(this, other);
     }
 
     public Point2D getPos() {

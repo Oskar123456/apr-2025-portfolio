@@ -12,6 +12,8 @@ import apr.examproj.alg.AStar;
 import apr.examproj.alg.Dijkstra;
 import apr.examproj.alg.PathFinder;
 import apr.examproj.enums.TransportationMode;
+
+import static apr.examproj.enums.TransportationMode.*;
 import apr.examproj.gui.GUIFactory;
 import apr.examproj.gui.GUIMap;
 import apr.examproj.gui.Options;
@@ -21,7 +23,6 @@ import apr.examproj.gui.ToolPanel;
 import apr.examproj.gui.Tooltip;
 import apr.examproj.map.MapAddress;
 import apr.examproj.map.MapBounds;
-import apr.examproj.map.MapEdge;
 import apr.examproj.map.MapFactory;
 import apr.examproj.map.MapNode;
 import apr.examproj.map.MapRoute;
@@ -36,18 +37,17 @@ import javafx.scene.layout.Pane;
 /**
  * StreetMapDriver
  */
-public class StreetMapApp
-{
+public class StreetMapApp {
 
     static GUIMap map;
     static StreetMap streetMap;
     static MapAddress src, dest;
     static MapBounds bounds;
 
-    static TransportationMode transportationMode = TransportationMode.WALK;
+    static TransportationMode transportationMode = WALK;
     static PathFinder<MapNode> pathFinder;
     static Map<String, PathFinder<MapNode>> pathFinders = Map.of(
-            "A*", new AStar<>((a, b) -> new MapEdge(a.data, b.data, 5).getTravelTime()),
+            "A*", new AStar<>((a, b) -> Geometry.travelTime(a.data, b.data, WALK)),
             "dijkstra", new Dijkstra<>());
     static MapRoute route;
 
@@ -103,7 +103,7 @@ public class StreetMapApp
         toolPanel.position(renderPane);
 
         textPanel = new TextPanel();
-        textPanel.setTexts("lol", "ok");
+        textPanel.setTexts("Route");
         textPanel.position(renderPane);
 
         List<String> sortedAlgNames = new ArrayList<>(

@@ -1,6 +1,8 @@
 package apr.examproj.utils;
 
 import apr.datastructures.graph.Point2D;
+import apr.examproj.config.ApplicationConfig;
+import apr.examproj.enums.TransportationMode;
 import apr.examproj.map.MapBounds;
 import apr.examproj.map.MapNode;
 import javafx.scene.Node;
@@ -73,6 +75,13 @@ public class Geometry {
     public static Point2D normalize(double latitude, double longitude) {
         return new Point2D((latitude - mapBounds.minLatitude) / mapBounds.width,
                 (longitude - mapBounds.minLongitude) / mapBounds.height);
+    }
+
+    public static double travelTime(MapNode src, MapNode dest, TransportationMode transportationMode) {
+        switch (transportationMode) {
+            default:
+                return (src.dist(dest) / 1000D) / ApplicationConfig.getWalkingSpeed();
+        }
     }
 
 }
