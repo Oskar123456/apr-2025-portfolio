@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import apr.examproj.map.MapNode;
+
 /**
  * Graph
  */
@@ -59,10 +61,6 @@ public class Graph<T> {
         return path;
     }
 
-    public Set<GraphEdge<T>> getEdges() {
-        return edges;
-    }
-
     public List<GraphNode<T>> getPathNodes() throws Exception {
         if (src == null || dest == null) {
             throw new Exception("no src or dest in graph");
@@ -83,14 +81,6 @@ public class Graph<T> {
         }
 
         return path.reversed();
-    }
-
-    public List<GraphNode<T>> getVisitOrder() {
-        return visitOrder;
-    }
-
-    public List<GraphNode<T>> getSeenOrder() {
-        return seenOrder;
     }
 
     public GraphNode<T> getDestination() {
@@ -158,7 +148,7 @@ public class Graph<T> {
      * minimum weight of edges going from scr to dest
      */
     public Double dist(GraphNode<T> src, GraphNode<T> dest) {
-        Double min = Double.POSITIVE_INFINITY;
+        double min = Double.POSITIVE_INFINITY;
         for (var edge : outgoingEdges.get(src)) {
             if (edge.dest == dest && edge.weight < min) {
                 min = edge.weight;
@@ -206,6 +196,10 @@ public class Graph<T> {
     @Override
     public String toString() {
         return String.format("%s[size: %d edges: %d]", getClass().getSimpleName(), nodes.size(), edges.size());
+    }
+
+    public List<GraphNode<T>> getVisitOrder() {
+        return visitOrder;
     }
 
 }

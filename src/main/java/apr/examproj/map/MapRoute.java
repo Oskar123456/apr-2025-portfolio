@@ -18,7 +18,7 @@ public class MapRoute implements IGUIMapElement {
 
     MapAddress src, dest;
     Set<MapNode> nodes = new HashSet<>();
-    List<MapEdge> edges = new ArrayList<>();
+    List<MapEdge> edges;
 
     public Graph<MapNode> graph;
     public double hours, dist;

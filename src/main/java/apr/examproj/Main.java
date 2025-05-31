@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import apr.examproj.application.StreetMapApp2;
+import apr.examproj.application.StreetMapApp;
 import apr.examproj.gui.GUIFactory;
 import apr.examproj.gui.SelectionList;
 import javafx.application.Application;
@@ -89,7 +89,7 @@ public class Main extends Application {
         Pane subContent = new Pane();
         content.getChildren().add(subContent);
         try {
-            StreetMapApp2.start(osmPath, subContent);
+            StreetMapApp.start(osmPath, subContent);
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);

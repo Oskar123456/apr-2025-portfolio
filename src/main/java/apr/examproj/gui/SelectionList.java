@@ -19,9 +19,7 @@ public class SelectionList extends VBox {
         Button button = new Button();
         button.setId("street-map__button");
         button.setText(text);
-        button.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
-            eventHandler.handle(e);
-        });
+        button.addEventHandler(MouseEvent.MOUSE_PRESSED, eventHandler);
         getChildren().add(button);
     }
 

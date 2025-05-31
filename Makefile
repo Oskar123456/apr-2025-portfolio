@@ -7,6 +7,6 @@ build:
 run: build
 	@mvn -q exec:java -Dexec.mainClass="$(groupId).$(mainClass)" -Dexec.args="$(args)"
 javafx:
-	@mvn clean javafx:run
+	@mvn clean compile javafx:run
 clean:
 	@mvn clean

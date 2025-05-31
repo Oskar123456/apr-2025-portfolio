@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import lombok.Getter;
 
 /**
  * MultiSelection
@@ -19,10 +20,6 @@ public class Options extends VBox {
     public Options() {
         setId("street-map__options");
         setPrefWidth(100);
-    }
-
-    public static Options getInstance() {
-        return instance;
     }
 
     public static void hide() {
@@ -45,6 +42,10 @@ public class Options extends VBox {
                 .subtract(instance.paddingProperty().getValue().getRight())
                 .subtract(instance.paddingProperty().getValue().getLeft()));
         instance.getChildren().add(button);
+    }
+
+    public static Options getInstance() {
+        return instance;
     }
 
     public static void clear() {

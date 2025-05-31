@@ -10,7 +10,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.text.Text;
@@ -23,39 +22,6 @@ public class GUIFactory {
     public static HBox defaultHBox(String id) {
         HBox pane = new HBox();
         pane.setId(id);
-        return pane;
-    }
-
-    public static HBox defaultChildHBox(Pane parentPane, String id) {
-        HBox pane = new HBox();
-        pane.setId(id);
-        pane.prefHeightProperty().bind(parentPane.heightProperty());
-        pane.prefWidthProperty().bind(parentPane.widthProperty());
-        parentPane.getChildren().add(pane);
-        return pane;
-    }
-
-    public static VBox defaultVBox(String id) {
-        VBox pane = new VBox();
-        pane.setId(id);
-        return pane;
-    }
-
-    public static VBox defaultChildVBox(Pane parentPane, String id) {
-        VBox pane = new VBox();
-        pane.setId(id);
-        pane.prefHeightProperty().bind(parentPane.heightProperty());
-        pane.prefWidthProperty().bind(parentPane.widthProperty());
-        parentPane.getChildren().add(pane);
-        return pane;
-    }
-
-    public static Pane defaultChildPane(Pane parentPane, String id) {
-        Pane pane = new Pane();
-        pane.setId(id);
-        // pane.prefHeightProperty().bind(parentPane.heightProperty());
-        // pane.prefWidthProperty().bind(parentPane.widthProperty());
-        parentPane.getChildren().add(pane);
         return pane;
     }
 
@@ -126,7 +92,7 @@ public class GUIFactory {
         return txt;
     }
 
-    public static Node defaultMapNode2(MapNode node) {
+    public static Node defaultMapNode(MapNode node) {
         Pane pane = new Pane();
         double r = ApplicationConfig.mapNodeRadius;
         Ellipse dot = new Ellipse(r, r);
@@ -136,7 +102,7 @@ public class GUIFactory {
         return pane;
     }
 
-    public static Node visitedMapNode2(MapNode node) {
+    public static Node visitedMapNode(MapNode node) {
         Pane pane = new Pane();
         double r = ApplicationConfig.mapNodeRadius * 1.05;
         Ellipse dot = new Ellipse(r, r);
@@ -146,7 +112,7 @@ public class GUIFactory {
         return pane;
     }
 
-    public static Node highlightedMapNode2(MapNode node) {
+    public static Node highlightedMapNode(MapNode node) {
         Pane pane = new Pane();
         double r = ApplicationConfig.mapNodeRadius * 1.25;
         Ellipse dot = new Ellipse(r, r);

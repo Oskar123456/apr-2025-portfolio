@@ -1,5 +1,6 @@
 package apr.examproj.alg;
 
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 import apr.datastructures.Pair;
@@ -14,13 +15,13 @@ public class Dijkstra<T> implements PathFinder<T> {
     @Override
     public boolean search(Graph<T> graph) {
         PriorityQueue<Pair<GraphNode<T>, Double>> PQ = new PriorityQueue<>(
-                (a, b) -> a.second.compareTo(b.second));
+                Comparator.comparing(a -> a.second));
 
         System.out.println("Dijkstra.search(): " + graph.toString());
 
         graph.reset();
 
-        PQ.add(new Pair<GraphNode<T>, Double>(graph.getStart(), 0D));
+        PQ.add(new Pair<>(graph.getStart(), 0D));
         while (!PQ.isEmpty()) {
             var curPair = PQ.remove();
             var curNode = curPair.first;
@@ -35,7 +36,7 @@ public class Dijkstra<T> implements PathFinder<T> {
                 if (graph.dists.get(neighbor) > dist) {
                     graph.dists.put(neighbor, dist);
                     graph.srcs.put(neighbor, curNode);
-                    PQ.add(new Pair<GraphNode<T>, Double>(neighbor, dist));
+                    PQ.add(new Pair<>(neighbor, dist));
                 }
             }
         }

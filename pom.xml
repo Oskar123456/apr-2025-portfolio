@@ -9,8 +9,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release>
         <maven.compiler.source>21</maven.compiler.source>
-        <jackson.version>2.16.0</jackson.version>
         <maven.compiler.target>21</maven.compiler.target>
+        <jackson.version>2.16.0</jackson.version>
         <lombok.version>1.18.34</lombok.version>
     </properties>
 
@@ -81,6 +81,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
+                    <!-- <mainClass>${project.groupId}.AppGui</mainClass> -->
                     <mainClass>${project.groupId}.examproj.Main</mainClass>
                     <commandlineArgs>data/map-gigantic.osm</commandlineArgs>
                 </configuration>

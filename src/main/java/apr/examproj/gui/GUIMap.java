@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import apr.datastructures.graph.Point2D;
-import apr.examproj.application.StreetMapApp2;
+import apr.examproj.application.StreetMapApp;
 import apr.examproj.config.ApplicationConfig;
 import apr.examproj.map.MapAddress;
 import apr.examproj.map.MapBuilding;
 import apr.examproj.map.MapPath;
 import apr.examproj.map.StreetMap;
 import apr.examproj.utils.Geometry;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -139,8 +138,8 @@ public class GUIMap extends Pane {
                     return;
                 }
                 Options.clear();
-                Options.addOption(evt -> StreetMapApp2.setSrc(address), "set as source");
-                Options.addOption(evt -> StreetMapApp2.setDest(address), "set as dest");
+                Options.addOption(evt -> StreetMapApp.setSrc(address), "set as source");
+                Options.addOption(evt -> StreetMapApp.setDest(address), "set as dest");
                 relocateToScreenCoords(Options.getInstance(), address.node.getPos());
                 Options.show();
                 Tooltip.hide();

@@ -1,14 +1,18 @@
 package apr.examproj.osm;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
+
+import apr.examproj.map.MapNode;
 
 /**
  * MapData
@@ -47,30 +51,6 @@ public class MapData {
         }
     }
 
-    public Element getBounds() {
-        return bounds;
-    }
-
-    public List<Element> getNodes() {
-        return nodes;
-    }
-
-    public List<Element> getPaths() {
-        return paths;
-    }
-
-    public List<Element> getWays() {
-        return ways;
-    }
-
-    public List<Element> getBuildings() {
-        return buildings;
-    }
-
-    public List<Element> getAddresses() {
-        return addresses;
-    }
-
     public static Map<String, String> extractTags(Element element) {
         Map<String, String> map = new HashMap<>();
 
@@ -85,6 +65,30 @@ public class MapData {
     public String toString() {
         return String.format("%s[bounds: %s, nodes: %d, paths: %d, buildings: %d]",
                 getClass().getSimpleName(), bounds.toString(), nodes.size(), paths.size(), buildings.size());
+    }
+
+    public Element getBounds() {
+        return bounds;
+    }
+
+    public List<Element> getNodes() {
+        return nodes;
+    }
+
+    public List<Element> getBuildings() {
+        return buildings;
+    }
+
+    public List<Element> getPaths() {
+        return paths;
+    }
+
+    public List<Element> getWays() {
+        return ways;
+    }
+
+    public List<Element> getAddresses() {
+        return addresses;
     }
 
 }

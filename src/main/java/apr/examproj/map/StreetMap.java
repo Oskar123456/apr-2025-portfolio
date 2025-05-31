@@ -10,11 +10,11 @@ import apr.examproj.ds.Graph;
 import apr.examproj.ds.GraphEdge;
 import apr.examproj.ds.GraphNode;
 import apr.examproj.enums.TransportationMode;
-import apr.examproj.gui.GUIFactory;
 import apr.examproj.gui.IGUIMapElement;
 import apr.examproj.osm.MapData;
 import apr.examproj.utils.Stringify;
 import javafx.scene.layout.Pane;
+import lombok.Getter;
 
 /**
  * StreetMap
@@ -51,7 +51,7 @@ public class StreetMap implements IGUIMapElement {
     }
 
     public List<MapEdge> getAllEdges() {
-        if (edges == null || edges.size() < 1) {
+        if (edges == null || edges.isEmpty()) {
             makeEdges();
         }
         return edges;
@@ -87,11 +87,6 @@ public class StreetMap implements IGUIMapElement {
         linkPaths.addAll(newPaths);
     }
 
-    public void setRenderTarget(Pane renderPane) {
-        // System.out.println("StreetMap.setRenderTarget()");
-        // draw(bounds, renderPane);
-    }
-
     @Override
     public void draw(MapBounds bounds, Pane renderPane) {
         // nodes.forEach(n -> n.draw(bounds, renderPane));
@@ -100,25 +95,6 @@ public class StreetMap implements IGUIMapElement {
         addresses.forEach(a -> a.draw(bounds, renderPane));
         linkPaths.forEach(p -> p.drawSubtle(bounds, renderPane));
         // getAllEdges().forEach(a -> a.draw(bounds, renderPane));
-    }
-
-    public Graph<MapNode> toGraph(TransportationMode transportationMode, MapNode src, MapNode dest) {
-        Graph<MapNode> graph = new Graph<>();
-
-        for (var edge : getAllEdges()) {
-            GraphNode<MapNode> srcNode = new GraphNode<MapNode>(edge.src, edge.src.lat, edge.src.lon);
-            GraphNode<MapNode> destNode = new GraphNode<MapNode>(edge.dest, edge.src.lat, edge.src.lon);
-            GraphEdge<MapNode> newEdge = new GraphEdge<>(srcNode, destNode, edge.getTravelTime(transportationMode));
-            graph.addEdge(newEdge);
-            if (edge.src == src) {
-                graph.setStart(srcNode);
-            }
-            if (edge.dest == dest) {
-                graph.setDestination(destNode);
-            }
-        }
-
-        return graph;
     }
 
     public MapRoute getRoute(TransportationMode transportationMode, PathFinder<MapNode> pathFinder, MapAddress src,
@@ -150,7 +126,6 @@ public class StreetMap implements IGUIMapElement {
         }
 
         pathFinder.search(graph);
-        var pathNodes = graph.getPathNodes();
         var pathEdges = graph.getPathEdges();
 
         List<MapEdge> routeEdges = pathEdges.stream().map(e -> edgeMap.get(e)).toList();

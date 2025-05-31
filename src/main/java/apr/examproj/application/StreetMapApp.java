@@ -11,7 +11,6 @@ import java.util.Map;
 import apr.examproj.alg.AStar;
 import apr.examproj.alg.Dijkstra;
 import apr.examproj.alg.PathFinder;
-import apr.examproj.ds.Graph;
 import apr.examproj.enums.TransportationMode;
 import apr.examproj.gui.GUIFactory;
 import apr.examproj.gui.GUIMap;
@@ -37,14 +36,14 @@ import javafx.scene.layout.Pane;
 /**
  * StreetMapDriver
  */
-public class StreetMapApp2 {
+public class StreetMapApp
+{
 
     static GUIMap map;
     static StreetMap streetMap;
     static MapAddress src, dest;
     static MapBounds bounds;
 
-    static Graph<MapNode> graph;
     static TransportationMode transportationMode = TransportationMode.WALK;
     static PathFinder<MapNode> pathFinder;
     static Map<String, PathFinder<MapNode>> pathFinders = Map.of(
@@ -84,7 +83,7 @@ public class StreetMapApp2 {
     }
 
     static void initGUI(Pane renderPane) {
-        StreetMapApp2.renderPane = renderPane;
+        StreetMapApp.renderPane = renderPane;
 
         srcPane = new HBox();
         srcPane.setId("street-map__src-pane");
@@ -108,10 +107,10 @@ public class StreetMapApp2 {
         textPanel.position(renderPane);
 
         List<String> sortedAlgNames = new ArrayList<>(
-                pathFinders.entrySet().stream().map(ent -> ent.getKey()).toList());
+                pathFinders.keySet().stream().toList());
         sortedAlgNames.sort(Comparator.naturalOrder());
         toolPanel.addChoiceBox((e, o, n) -> pathFinder = pathFinders.get(n), sortedAlgNames);
-        pathFinder = pathFinders.get(sortedAlgNames.get(0));
+        pathFinder = pathFinders.get(sortedAlgNames.getFirst());
 
         renderPane.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> Options.hide());
         renderPane.addEventHandler(ScrollEvent.SCROLL, e -> map.zoom(zoomSpeed * e.getDeltaY()));
@@ -141,14 +140,6 @@ public class StreetMapApp2 {
         Tooltip.hide();
         srcPane.setVisible(false);
         destPane.setVisible(false);
-    }
-
-    public static double getMouseY() {
-        return mouseY;
-    }
-
-    public static double getMouseX() {
-        return mouseX;
     }
 
     public static void setSrc(MapAddress node) {
@@ -190,12 +181,6 @@ public class StreetMapApp2 {
         } catch (Exception e) {
             System.out.println("StreetMapApp.run(): error: " + e.getMessage());
             e.printStackTrace();
-        }
-    }
-
-    static void setAlg(String name) {
-        if (pathFinders.containsKey(name)) {
-            pathFinder = pathFinders.get(name);
         }
     }
 

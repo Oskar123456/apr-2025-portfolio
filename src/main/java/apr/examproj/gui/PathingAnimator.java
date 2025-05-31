@@ -11,6 +11,7 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
+import lombok.Setter;
 
 /**
  * PathingAnimator
@@ -44,10 +45,6 @@ public class PathingAnimator extends AnimationTimer {
 
     public static void setDuration(long seconds) {
         durationS = seconds;
-    }
-
-    public void setTextPanel(TextPanel textPanel) {
-        this.textPanel = textPanel;
     }
 
     @Override
@@ -96,9 +93,9 @@ public class PathingAnimator extends AnimationTimer {
             var mapNode = node.data;
             javafx.scene.Node mapGUINode;
             if (i + 1 < frame) {
-                mapGUINode = GUIFactory.visitedMapNode2(mapNode);
+                mapGUINode = GUIFactory.visitedMapNode(mapNode);
             } else {
-                mapGUINode = GUIFactory.highlightedMapNode2(mapNode);
+                mapGUINode = GUIFactory.highlightedMapNode(mapNode);
             }
             guiElements.add(mapGUINode);
             Tooltip.setTooltip(mapGUINode,
@@ -131,6 +128,10 @@ public class PathingAnimator extends AnimationTimer {
         System.out.println(
                 "PathingAnimator.drawRoute(): took " + (((double) lastUpdateNS - startNS) / bln) + " secs to complete");
         stop();
+    }
+
+    public void setTextPanel(TextPanel textPanel) {
+        this.textPanel = textPanel;
     }
 
 }

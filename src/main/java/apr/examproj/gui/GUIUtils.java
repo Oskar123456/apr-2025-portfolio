@@ -21,7 +21,7 @@ public class GUIUtils {
     public static <T extends Event> void addEventHandlerRecursive(Node node, EventType<T> eventType,
             EventHandler<? super T> eventHandler) {
         node.addEventHandler(eventType, eventHandler);
-        if (!Parent.class.isAssignableFrom(Parent.class)) {
+        if (!Parent.class.isAssignableFrom(node.getClass())) {
             return;
         }
         for (Node child : ((Parent) node).getChildrenUnmodifiable()) {
