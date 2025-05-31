@@ -1,6 +1,7 @@
 package apr.examproj.map;
 
 import java.util.List;
+import java.util.Map;
 
 import org.jsoup.nodes.Element;
 
@@ -43,22 +44,20 @@ public class MapFactory {
         return address;
     }
 
-    public static MapBuilding building(Element xmlElmt, List<MapNode> nodes) {
+    public static MapBuilding building(Element xmlElmt, Map<String, MapNode> nodes) {
         MapBuilding building = new MapBuilding();
 
         building.id = xmlElmt.id();
         for (var nd : xmlElmt.getElementsByTag("nd")) {
-            for (var node : nodes) {
-                if (node.id.equals(nd.attributes().get("ref"))) {
-                    building.addNode(node);
-                }
+            if (nodes.containsKey(nd.attributes().get("ref"))) {
+                building.addNode(nodes.get(nd.attributes().get("ref")));
             }
         }
 
         return building;
     }
 
-    public static MapPath path(Element xmlElmt, List<MapNode> nodes) {
+    public static MapPath path(Element xmlElmt, Map<String, MapNode> nodes) {
         MapPath path = new MapPath();
 
         var tags = MapData.extractTags(xmlElmt);
@@ -72,10 +71,8 @@ public class MapFactory {
         }
 
         for (var nd : xmlElmt.getElementsByTag("nd")) {
-            for (var node : nodes) {
-                if (node.id.equals(nd.attributes().get("ref"))) {
-                    path.addNode(node);
-                }
+            if (nodes.containsKey(nd.attributes().get("ref"))) {
+                path.addNode(nodes.get(nd.attributes().get("ref")));
             }
         }
 

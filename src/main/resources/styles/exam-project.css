@@ -6,8 +6,10 @@
 
 #exam-proj__content {
     -fx-background-color: lightgray;
+    -fx-padding: 40px;
     background-color: lightgray;
     background-color: lightgray;
+    -fx-alignment: center;
 }
 
 #exam-proj__title {
@@ -347,4 +349,23 @@
 #street-map__path-container {
     -fx-background-color: rgba(200, 200, 222, 0.9);
     background-color: rgba(200, 200, 222, 0.9);
+}
+
+#street-map__button {
+    -fx-font-size: 20px;
+    -fx-border-radius: 5px;
+    -fx-border-color: gray;
+    -fx-background-color: rgba(200, 200, 222, 0.9);
+    background-color: rgba(200, 200, 222, 0.9);
+}
+
+#street-map__button:hover {
+    -fx-background-color: rgba(100, 100, 100, 0.9);
+    background-color: rgba(100, 100, 100, 0.9);
+}
+
+#street-map__selection-list {
+    -fx-padding: 25px;
+    -fx-alignment: center;
+    -fx-spacing: 15px;
 }

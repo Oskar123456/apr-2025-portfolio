@@ -35,6 +35,12 @@ public class GUIFactory {
         return pane;
     }
 
+    public static VBox defaultVBox(String id) {
+        VBox pane = new VBox();
+        pane.setId(id);
+        return pane;
+    }
+
     public static VBox defaultChildVBox(Pane parentPane, String id) {
         VBox pane = new VBox();
         pane.setId(id);

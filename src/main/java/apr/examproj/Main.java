@@ -1,10 +1,14 @@
 package apr.examproj;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import apr.examproj.application.StreetMapApp;
 import apr.examproj.application.StreetMapApp2;
 import apr.examproj.gui.GUIFactory;
+import apr.examproj.gui.SelectionList;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -29,14 +33,8 @@ public class Main extends Application {
     Insets margins = new Insets(10);
 
     static int W = 800, H = 800;
-    static String osmPath;
 
     public static void main(String[] args) throws IOException {
-        if (args.length < 1) {
-            System.out.println("Main.main(): error: please provide osm data path as argument");
-            System.exit(1);
-        }
-        osmPath = args[0];
         launch();
     }
 
@@ -52,7 +50,7 @@ public class Main extends Application {
         title = GUIFactory.defaultHBox("exam-proj__title");
         GUIFactory.defaultChildText(title, "APR 2025 EXAM PROJECT", "exam-proj__title-text");
 
-        content = GUIFactory.defaultPane("exam-proj__content");
+        content = GUIFactory.defaultHBox("exam-proj__content");
         content.prefWidthProperty().bind(layout.widthProperty());
         content.prefHeightProperty().bind(layout.heightProperty()
                 .subtract(title.heightProperty()));
@@ -70,8 +68,33 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
 
-        // StreetMapApp.start(osmPath, content);
-        StreetMapApp2.start(osmPath, content);
+        SelectionList selList = new SelectionList();
+        content.getChildren().add(selList);
+
+        List<File> osmFiles = new ArrayList<>();
+        File dataDir = new File("data");
+        for (var f : dataDir.listFiles()) {
+            if (f.isFile() && f.getName().endsWith("osm")) {
+                osmFiles.add(f);
+            }
+        }
+        for (var osm : osmFiles) {
+            selList.addButton(e -> launchStreetMaps(osm.getAbsolutePath()),
+                    String.format("%s (%.2fmb)", osm.getName(), osm.length() / 1000000D));
+        }
+
+    }
+
+    void launchStreetMaps(String osmPath) {
+        content.getChildren().clear();
+        Pane subContent = new Pane();
+        content.getChildren().add(subContent);
+        try {
+            StreetMapApp2.start(osmPath, subContent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 
 }

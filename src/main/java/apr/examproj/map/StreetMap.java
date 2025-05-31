@@ -10,6 +10,7 @@ import apr.examproj.ds.Graph;
 import apr.examproj.ds.GraphEdge;
 import apr.examproj.ds.GraphNode;
 import apr.examproj.enums.TransportationMode;
+import apr.examproj.gui.GUIFactory;
 import apr.examproj.gui.IGUIMapElement;
 import apr.examproj.osm.MapData;
 import apr.examproj.utils.Stringify;
@@ -22,6 +23,7 @@ public class StreetMap implements IGUIMapElement {
 
     public MapBounds mapbounds;
     public List<MapNode> nodes = new ArrayList<>();
+    public Map<String, MapNode> nodeMap = new HashMap<>();
     public List<MapWay> ways = new ArrayList<>(); // misc
     public List<MapPath> paths = new ArrayList<>(); // pathable
     public List<MapPath> linkPaths = new ArrayList<>(); // pathable, links unreachable nodes by footpath, should not be
@@ -32,9 +34,16 @@ public class StreetMap implements IGUIMapElement {
 
     public StreetMap(MapData mapData) {
         mapbounds = MapFactory.bounds(mapData.getBounds());
-        nodes = new ArrayList<>(mapData.getNodes().stream().map(MapFactory::node).toList());
-        buildings = new ArrayList<>(mapData.getBuildings().stream().map(b -> MapFactory.building(b, nodes)).toList());
-        paths = new ArrayList<>(mapData.getPaths().stream().map(p -> MapFactory.path(p, nodes)).toList());
+        nodes = new ArrayList<>(mapData.getNodes().stream().map(n -> {
+            var node = MapFactory.node(n);
+            nodeMap.put(node.id, node);
+            return node;
+        }).toList());
+        buildings = new ArrayList<>(mapData.getBuildings().stream().map(b -> MapFactory.building(b, nodeMap)).toList());
+        paths = new ArrayList<>(mapData.getPaths().stream().map(p -> {
+            var path = MapFactory.path(p, nodeMap);
+            return path;
+        }).toList());
         ways = new ArrayList<>(mapData.getWays().stream().map(MapFactory::way).toList());
         addresses = new ArrayList<>(mapData.getAddresses().stream().map(a -> MapFactory.address(a, paths)).toList());
         linkAddresses(); // TODO : change to nearest point, and fix responsibility, a litte weird call
