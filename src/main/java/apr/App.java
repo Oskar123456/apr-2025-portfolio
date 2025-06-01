@@ -2,6 +2,9 @@ package apr;
 
 import com.github.javafaker.Faker;
 
+import apr.datastructures.graph.Point2D;
+import apr.examproj.utils.Geometry;
+
 /**
  * App
  */
@@ -11,7 +14,14 @@ public class App {
 
     public static void main(String[] args) {
 
-        System.out.println(0.1 + 0.2 == 0.3);
+        Point2D p1 = new Point2D(0, 1);
+        Point2D p2 = new Point2D(1, 1);
+        Point2D p3 = new Point2D(1, 0);
+
+        Point2D p4 = Geometry.closestPoint(p1, p2, p3);
+
+        System.out.printf("closest point from %s to %s <--> %s = %s%n",
+                p1.toString(), p2.toString(), p3.toString(), p4.toString());
 
         // System.out.println(doc);
 

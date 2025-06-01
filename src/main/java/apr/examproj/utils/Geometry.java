@@ -34,30 +34,48 @@ public class Geometry {
         return R * c;
     }
 
-    public static Point2D closestPoint(Point2D fromP, Point2D toA, Point2D toB) {
-        // Point2D aVec = toA.subtract(toB);
-        // Point2D bVec = toB.subtract(fromP);
-        // Point2D cVec = fromP.subtract(toA);
+    public static Point2D closestPoint(Point2D A, Point2D B, Point2D C) {
+        var AB = B.subtract(A);
+        var BC = C.subtract(B);
+        var CA = A.subtract(C);
 
-        Point2D paraVec = toB.subtract(toA);
-        Point2D perpVec = new Point2D(-paraVec.y, paraVec.x).normalize();
+        System.out.printf("Geometry.closestPoint(): A: %s, B: %s, C: %s%n",
+                A.toString(), B.toString(), C.toString());
 
-        double aLen = toA.subtract(toB).magnitude();
-        double bLen = toB.subtract(fromP).magnitude();
-        double cLen = fromP.subtract(toA).magnitude();
+        System.out.printf("Geometry.closestPoint(): AB: %s, BC: %s, CA: %s%n",
+                AB.toString(), BC.toString(), CA.toString());
 
-        double dLen = cLen * ((aLen * aLen + bLen * bLen - cLen * cLen) / (2 * aLen * bLen));
+        Point2D BCOrth = new Point2D(-BC.y, BC.x).normalize();
 
-        Point2D dVec = perpVec.scale(dLen);
-        Point2D p = fromP.add(dVec);
+        System.out.printf("Geometry.closestPoint(): orth(AB) = %s%n",
+                BCOrth);
 
-        double xMin = Math.min(toA.x, toB.x);
-        double xMax = Math.max(toA.x, toB.x);
-        double yMin = Math.min(toA.y, toB.y);
-        double yMax = Math.max(toA.y, toB.y);
+        double ABLen = AB.magnitude();
+        double BCLen = BC.magnitude();
+        double CALen = CA.magnitude();
+
+        double DLen = CALen * ((ABLen * ABLen + BCLen * BCLen - CALen * CALen) / (2 * ABLen * BCLen));
+
+        System.out.printf("Geometry.closestPoint(): |AB| = %f, |BC| = %f, |CA| = %f, |D| = %f%n",
+                ABLen, BCLen, CALen, DLen);
+
+        Point2D D = BCOrth.scale(DLen);
+
+        System.out.println("Geometry.closestPoint(): D = " + D.toString());
+
+        Point2D p = A.add(D);
+
+        System.out.println("Geometry.closestPoint(): D + p = " + p);
+
+        double xMin = Math.min(B.x, C.x);
+        double xMax = Math.max(B.x, C.x);
+        double yMin = Math.min(B.y, C.y);
+        double yMax = Math.max(B.y, C.y);
         if (p.x < xMin || p.x > xMax || p.y < yMin || p.y > yMax) {
-            p.x = toA.x;
-            p.y = toA.y;
+            System.out.print("Geometry.closestPoint(): out of bounds: " + p.toString());
+            p.x = B.x;
+            p.y = B.y;
+            System.out.println(", change to: " + p.toString());
         }
 
         return p;

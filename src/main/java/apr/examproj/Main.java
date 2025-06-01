@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import apr.datastructures.graph.Point2D;
 import apr.examproj.application.StreetMapApp;
 import apr.examproj.gui.GUIFactory;
 import apr.examproj.gui.SelectionList;
+import apr.examproj.utils.Geometry;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -34,7 +36,8 @@ public class Main extends Application {
     static int W = 800, H = 800;
 
     public static void main(String[] args) throws IOException {
-        launch();
+
+        // launch();
     }
 
     public void start(Stage stage) throws IOException {
