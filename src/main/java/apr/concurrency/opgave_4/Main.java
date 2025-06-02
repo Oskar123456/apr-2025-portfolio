@@ -1,4 +1,4 @@
-package ap_f2025.threads.opgave_4;
+package apr.concurrency.opgave_4;
 
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -39,9 +39,15 @@ public class Main {
                 if (sbufferSize > 8) {
                     System.out.printf(" adding consumers to keep with producers...%n");
                     for (int i = 0; i < sbufferSize; i++) {
-                        Thread t = new Thread(new Consumer(sbuffer), "Consumer " + consumerId++);
-                        t.start();
-                        consumers.submit(t);
+                        consumers.submit(() -> {
+                            try {
+                                Thread.sleep(rng.nextInt(1500, 3500));
+                                String str = sbuffer.pop();
+                                System.out.printf("[%s]: popped string \"%s\"%n", Thread.currentThread().getName(),
+                                        str);
+                            } catch (InterruptedException e) {
+                            }
+                        });
                     }
                 } else if (sbufferSize < 1) {
                     System.out.printf(" there is no work...%n");

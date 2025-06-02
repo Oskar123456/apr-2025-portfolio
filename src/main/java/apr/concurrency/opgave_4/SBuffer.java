@@ -1,4 +1,4 @@
-package ap_f2025.threads.opgave_4;
+package apr.concurrency.opgave_4;
 
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -15,8 +15,13 @@ public class SBuffer {
         Q = new String[cap];
     }
 
-    public synchronized int getSize() {
-        return (head - tail + cap) % cap;
+    public int getSize() {
+        lock.lock();
+        try {
+            return (head - tail + cap) % cap;
+        } finally {
+            lock.unlock();
+        }
     }
 
     public float getLoad() {

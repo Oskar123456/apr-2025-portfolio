@@ -1,6 +1,12 @@
 groupId="apr"
-mainClass="App"
-args="data/map.osm"
+
+# DEFAULT
+# mainClass="App"
+
+# CONCURRENCY
+# mainClass="concurrency.opgave_3.Main"
+mainClass="concurrency.opgave_4.Main"
+
 
 build:
 	@mvn -q compile

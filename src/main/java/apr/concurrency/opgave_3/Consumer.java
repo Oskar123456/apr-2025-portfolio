@@ -1,4 +1,4 @@
-package ap_f2025.threads.opgave_3;
+package apr.concurrency.opgave_3;
 
 import java.util.Random;
 
