@@ -75,10 +75,6 @@ public class PathingAnimator extends AnimationTimer {
     }
 
     public void draw() {
-        // for (var elmt : guiElements) {
-        // renderPane.getChildren().remove(elmt);
-        // }
-        // guiElements.clear();
         if (frame < graph.getVisitOrder().size()) {
             drawPathing();
         } else {
