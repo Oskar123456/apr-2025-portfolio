@@ -115,4 +115,11 @@ public class MapPath implements IGUIMapElement {
         return String.format("%s", name);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return obj != null
+                && !name.equals("unnamed")
+                && ((MapPath) obj).name.equals(name);
+    }
+
 }

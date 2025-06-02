@@ -38,17 +38,7 @@ public class MapData {
         for (var e : xmlDoc.getElementsByTag("way")) {
             var eTags = extractTags(e);
             if (eTags.containsKey("highway")) {
-                if (eTags.get("highway").equals("residential") ||
-                        eTags.get("highway").equals("tertiary")
-                        || eTags.get("highway").equals("footway")
-                        || eTags.get("highway").equals("footpath")
-                        || eTags.get("highway").equals("steps")
-                        || eTags.get("highway").equals("cyclepath")
-                        || eTags.get("highway").equals("service")) {
-                    paths.add(e);
-                } else {
-                    ways.add(e);
-                }
+                paths.add(e);
             } else if (eTags.containsKey("building")) {
                 buildings.add(e);
             } else {

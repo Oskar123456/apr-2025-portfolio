@@ -2,8 +2,12 @@ package apr.examproj.map;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import org.jsoup.nodes.Element;
 
 import apr.examproj.alg.PathFinder;
 import apr.examproj.ds.Graph;
@@ -33,19 +37,17 @@ public class StreetMap implements IGUIMapElement {
 
     public StreetMap(MapData mapData) {
         mapbounds = MapFactory.bounds(mapData.getBounds());
-        nodes = new ArrayList<>(mapData.getNodes().stream().map(n -> {
-            var node = MapFactory.node(n);
-            nodeMap.put(node.id, node);
-            return node;
-        }).toList());
+
+        nodes = new ArrayList<>(mapData.getNodes().stream().map(n -> MapFactory.node(n)).toList());
+        nodes.forEach(n -> nodeMap.put(n.id, n));
+
         buildings = new ArrayList<>(mapData.getBuildings().stream().map(b -> MapFactory.building(b, nodeMap)).toList());
 
-        paths = new ArrayList<>(mapData.getPaths().stream().map(p -> {
-            var path = MapFactory.path(p, nodeMap);
-            return path;
-        }).toList());
+        paths = new ArrayList<>(mapData.getPaths().stream().map(p -> MapFactory.path(p, nodeMap)).toList());
+        combinePaths();
 
         ways = new ArrayList<>(mapData.getWays().stream().map(MapFactory::way).toList());
+
         addresses = new ArrayList<>(mapData.getAddresses().stream().map(a -> MapFactory.address(a, paths)).toList());
         linkAddresses();
     }
@@ -136,6 +138,31 @@ public class StreetMap implements IGUIMapElement {
     @Override
     public String toString() {
         return Stringify.toString(this);
+    }
+
+    void combinePaths() {
+        // Set<MapPath> seen = new HashSet<>();
+        // List<MapPath> newPaths = new ArrayList<>();
+        //
+        // for (int i = 0; i < paths.size(); i++) {
+        // var p = paths.get(i);
+        // if (seen.contains(p)) {
+        // continue;
+        // }
+        //
+        // for (int j = i + 1; j < paths.size(); j++) {
+        // var p2 = paths.get(j);
+        // if (p.equals(p2)) {
+        // for (var n : p2.getNodes()) {
+        // p.addNode(n);
+        // }
+        // }
+        // }
+        //
+        // newPaths.add(p);
+        // seen.add(p); // should have better identifier but...
+        // }
+        // paths = newPaths;
     }
 
 }
