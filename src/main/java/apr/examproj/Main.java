@@ -36,8 +36,7 @@ public class Main extends Application {
     static int W = 800, H = 800;
 
     public static void main(String[] args) throws IOException {
-
-        // launch();
+        launch();
     }
 
     public void start(Stage stage) throws IOException {
