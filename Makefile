@@ -7,6 +7,8 @@ groupId="apr"
 # mainClass="concurrency.opgave_3.Main"
 mainClass="concurrency.opgave_4.Main"
 
+# BACKTRACKING
+mainClass="backtracking.Main"
 
 build:
 	@mvn -q compile
