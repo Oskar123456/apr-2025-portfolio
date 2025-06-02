@@ -1,5 +1,8 @@
 package apr.examproj.utils;
 
+import java.util.List;
+import java.util.UUID;
+
 import apr.datastructures.graph.Point2D;
 import apr.examproj.config.ApplicationConfig;
 import apr.examproj.enums.TransportationMode;
@@ -32,6 +35,87 @@ public class Geometry {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
         return R * c;
+    }
+
+    public static MapNode addNewClosestNode(MapNode node, List<MapNode> nodes) {
+        int closestIdx = 0;
+        int secondClosestIdx = 0;
+
+        for (int i = 0; i < nodes.size(); i++) {
+            var n = nodes.get(i);
+            if (n.dist(node) < nodes.get(closestIdx).dist(node)) {
+                closestIdx = i;
+            }
+        }
+
+        if (closestIdx == 0) {
+            secondClosestIdx = closestIdx + 1;
+        } else if (closestIdx + 1 == nodes.size()) {
+            secondClosestIdx = closestIdx - 1;
+        } else {
+            secondClosestIdx = (nodes.get(closestIdx - 1).dist(node) < nodes.get(closestIdx + 1).dist(node))
+                    ? closestIdx - 1
+                    : closestIdx + 1;
+        }
+
+        var newPoint = closestPointBinSearch(node.getPos(),
+                nodes.get(closestIdx).getPos(),
+                nodes.get(secondClosestIdx).getPos());
+        var newNode = new MapNode(UUID.randomUUID().toString(), newPoint.x, newPoint.y);
+        nodes.add(secondClosestIdx, newNode);
+        return newNode;
+    }
+
+    public static Point2D projection(Point2D C, Point2D B, Point2D A) {
+        var AB = B.subtract(A);
+        var AC = C.subtract(A);
+        var AD = AB.mul(AB.dot(AC)).mul(1 / AB.dot(AB));
+        var D = A.add(AD);
+
+        var xMin = Math.min(A.x, B.x);
+        var xMax = Math.max(A.x, B.x);
+        var yMin = Math.min(A.y, B.y);
+        var yMax = Math.max(A.y, B.y);
+
+        if (D.x < xMin || D.x > xMax || D.y < yMin || D.y > yMax) {
+            if (C.dist(A) < C.dist(B)) {
+                return new Point2D(A.x, A.y);
+            } else {
+                return new Point2D(B.x, B.y);
+            }
+        }
+
+        return D;
+    }
+
+    public static Point2D closestPointBinSearch(Point2D A, Point2D B, Point2D C) {
+        int tries = 2;
+
+        var P = new Point2D(B.x, B.y);
+        var P1 = B;
+        var P2 = C;
+
+        System.out.printf("Geometry.closestPointBinSearch(): %s %s %s%n",
+                A.toString(), B.toString(), C.toString());
+
+        for (int i = 0; i < tries; i++) {
+            var xMin = Math.min(P1.x, P2.x);
+            var xMax = Math.max(P1.x, P2.x);
+            var yMin = Math.min(P1.y, P2.y);
+            var yMax = Math.max(P1.y, P2.y);
+            P = new Point2D((xMax - xMin) / 2 + xMin, (yMax - yMin) / 2 + yMin);
+            System.out.printf("Geometry.closestPointBinSearch(): midpoint between %s %s = %s%n",
+                    P1.toString(), P2.toString(), P.toString());
+            if (A.dist(P1) < A.dist(P2)) {
+                P2 = P;
+            } else {
+                P1 = P;
+            }
+        }
+
+        System.out.printf("Geometry.closestPointBinSearch(): P = %s%n", P.toString());
+
+        return P;
     }
 
     public static Point2D closestPoint(Point2D A, Point2D B, Point2D C) {

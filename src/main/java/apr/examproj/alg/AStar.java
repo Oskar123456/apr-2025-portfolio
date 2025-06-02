@@ -29,7 +29,7 @@ public class AStar<T> implements PathFinder<T> {
 
         PQ.add(new Pair<>(graph.getStart(), heuristicFn.estimate(graph.src, graph.dest)));
         while (!PQ.isEmpty()) {
-            var curPair = PQ.remove();
+            var curPair = PQ.poll();
             var curNode = curPair.first;
             var curDist = graph.dists.get(curNode);
             graph.markAsVisited(curNode);

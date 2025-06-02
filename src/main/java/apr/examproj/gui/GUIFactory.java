@@ -114,7 +114,7 @@ public class GUIFactory {
         Pane pane = new Pane();
         double r = ApplicationConfig.mapNodeRadius * 1.25;
         Ellipse dot = new Ellipse(r, r);
-        dot.setId("street-map__highlighet-node");
+        dot.setId("street-map__highlighted-node");
         Geometry.relocateToScreenCoords(pane, node.getPos());
         pane.getChildren().add(dot);
         return pane;

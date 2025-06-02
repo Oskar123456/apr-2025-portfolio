@@ -35,12 +35,22 @@ public class MapFactory {
         address.municipality = tags.get("addr:municipality");
         address.postcode = tags.get("addr:postcode");
         address.node = node(xmlElmt);
+
+        MapPath closestPath = null;
+        double minDist = Double.POSITIVE_INFINITY;
         for (var p : paths) {
             if (p.name.equals(tags.get("addr:street"))) {
-                address.street = p;
-                break;
+                for (var n : p.getNodes()) {
+                    if (n.getPos().dist(address.node.getPos()) < minDist) {
+                        minDist = n.getPos().dist(address.node.getPos());
+                        closestPath = p;
+                    }
+                }
             }
         }
+
+        address.street = closestPath;
+
         return address;
     }
 

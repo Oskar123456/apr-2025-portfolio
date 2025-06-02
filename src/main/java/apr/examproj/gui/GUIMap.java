@@ -8,6 +8,7 @@ import apr.examproj.application.StreetMapApp;
 import apr.examproj.config.ApplicationConfig;
 import apr.examproj.map.MapAddress;
 import apr.examproj.map.MapBuilding;
+import apr.examproj.map.MapNode;
 import apr.examproj.map.MapPath;
 import apr.examproj.map.StreetMap;
 import apr.examproj.utils.Geometry;
@@ -51,10 +52,19 @@ public class GUIMap extends Pane {
 
         for (var p : streetMap.paths) {
             getChildren().add(pathLine(p));
+            for (var n : p.getNodes()) {
+                var pn = pathNode(n);
+                if (pn != null)
+                    getChildren().add(pn);
+            }
         }
 
         for (var b : streetMap.buildings) {
             getChildren().add(buildingPolygon(b));
+        }
+
+        for (var lp : streetMap.linkPaths) {
+            getChildren().add(linkPath(lp));
         }
 
         streetMap.addresses.forEach(a -> getChildren().add(addressNode(a)));
@@ -69,13 +79,30 @@ public class GUIMap extends Pane {
         Polyline line = new Polyline();
         line.setId("street-map__path");
 
+        List<Point2D> pointsSeen = new ArrayList<>();
         List<Double> coords = new ArrayList<>();
+        // System.out.println("GUIMap.pathLine(): ");
         path.getNodes().forEach(n -> {
             var p = toScreenCoords(normalize(n.lat, n.lon));
+
+            if (Double.isNaN(p.x) || Double.isNaN(p.y)) {
+                return;
+            }
+
+            for (var pp : pointsSeen) {
+                if ((Math.abs(p.x - pp.x)) <= 5 && (Math.abs(p.y - pp.y)) <= 5) {
+                    return;
+                }
+            }
+            pointsSeen.add(p);
+
+            // System.out.printf("(%.1f, %.1f),", p.x, p.y);
+
             coords.add(p.x);
             coords.add(p.y);
         });
         line.getPoints().addAll(coords);
+        // System.out.println();
 
         Tooltip.setTooltip(line, path.toString(), path.getDescription(), "id: " + path.id);
 
@@ -95,6 +122,51 @@ public class GUIMap extends Pane {
         polygon.getPoints().addAll(coords);
 
         return polygon;
+    }
+
+    Polyline linkPath(MapPath path) {
+        Polyline line = new Polyline();
+        line.setId("street-map__link-path");
+
+        List<Double> coords = new ArrayList<>();
+        path.getNodes().forEach(n -> {
+            var p = toScreenCoords(normalize(n.lat, n.lon));
+            coords.add(p.x);
+            coords.add(p.y);
+        });
+        line.getPoints().addAll(coords);
+
+        Tooltip.setTooltip(line, path.toString(), path.getDescription(), "id: " + path.id);
+
+        ApplicationConfig.showLinkPaths.addListener((e, o, n) -> {
+            line.setVisible(n);
+        });
+        line.setVisible(ApplicationConfig.showPathNodes.get());
+
+        return line;
+    }
+
+    Pane pathNode(MapNode node) {
+        if (Double.isNaN(node.lat) || Double.isNaN(node.lon)) {
+            return null;
+        }
+        Pane pane = new Pane();
+        pane.setPrefHeight(0);
+        pane.setPrefWidth(0);
+
+        var r = ApplicationConfig.mapPathNodeRadius;
+        Ellipse ellipse = new Ellipse(r, r);
+        ellipse.setId("street-map__path-node");
+
+        pane.getChildren().add(ellipse);
+        relocateToScreenCoords(pane, node.getPos());
+
+        ApplicationConfig.showPathNodes.addListener((e, o, n) -> {
+            pane.setVisible(n);
+        });
+        pane.setVisible(ApplicationConfig.showPathNodes.get());
+
+        return pane;
     }
 
     Pane addressNode(MapAddress address) {

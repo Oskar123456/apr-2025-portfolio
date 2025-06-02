@@ -42,10 +42,18 @@ public class Point2D extends Point {
         return this;
     }
 
+    public Point2D mul(double factor) {
+        return new Point2D(this.x * factor, this.y * factor);
+    }
+
     public Point2D scale(double scaleX, double scaleY) {
         this.x *= scaleX;
         this.y *= scaleY;
         return this;
+    }
+
+    public double dot(Point2D other) {
+        return (x * other.x) + (y * other.y);
     }
 
     public Point2D normalize() {
@@ -60,6 +68,6 @@ public class Point2D extends Point {
     }
 
     public String toString() {
-        return String.format("Point2D[%.1f, %.1f]", x, y);
+        return String.format("Point2D[%.7f, %.7f]", x, y);
     }
 }

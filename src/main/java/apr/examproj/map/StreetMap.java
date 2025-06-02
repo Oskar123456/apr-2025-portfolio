@@ -39,14 +39,15 @@ public class StreetMap implements IGUIMapElement {
             return node;
         }).toList());
         buildings = new ArrayList<>(mapData.getBuildings().stream().map(b -> MapFactory.building(b, nodeMap)).toList());
+
         paths = new ArrayList<>(mapData.getPaths().stream().map(p -> {
             var path = MapFactory.path(p, nodeMap);
             return path;
         }).toList());
+
         ways = new ArrayList<>(mapData.getWays().stream().map(MapFactory::way).toList());
         addresses = new ArrayList<>(mapData.getAddresses().stream().map(a -> MapFactory.address(a, paths)).toList());
-        linkAddresses(); // TODO : change to nearest point, and fix responsibility, a litte weird call
-                         // hierarchy atm.
+        linkAddresses();
     }
 
     public List<MapEdge> getAllEdges() {
@@ -89,10 +90,10 @@ public class StreetMap implements IGUIMapElement {
     @Override
     public void draw(MapBounds bounds, Pane renderPane) {
         // nodes.forEach(n -> n.draw(bounds, renderPane));
-        paths.forEach(p -> p.draw(bounds, renderPane));
-        buildings.forEach(b -> b.draw(bounds, renderPane));
-        addresses.forEach(a -> a.draw(bounds, renderPane));
-        linkPaths.forEach(p -> p.drawSubtle(bounds, renderPane));
+        // paths.forEach(p -> p.draw(bounds, renderPane));
+        // buildings.forEach(b -> b.draw(bounds, renderPane));
+        // addresses.forEach(a -> a.draw(bounds, renderPane));
+        // linkPaths.forEach(p -> p.drawSubtle(bounds, renderPane));
         // getAllEdges().forEach(a -> a.draw(bounds, renderPane));
     }
 

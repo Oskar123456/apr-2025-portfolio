@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import apr.datastructures.graph.Point2D;
 import apr.examproj.config.ApplicationConfig;
 import apr.examproj.gui.GUIUtils;
 import apr.examproj.gui.IGUIMapElement;
 import apr.examproj.gui.Tooltip;
+import apr.examproj.utils.Geometry;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polyline;
 
@@ -39,30 +41,38 @@ public class MapPath implements IGUIMapElement {
 
     public MapPath attachAddress(MapAddress addr) {
         addr.street = this;
-        var closestNode = addr.node.findClosest(nodes);
-        var newNode = new MapNode();
-        MapPath newPath = new MapPath(UUID.randomUUID().toString(),
-                "unnamed", "footpath",
-                ApplicationConfig.getWalkingSpeed());
-        for (int i = 0; i < nodes.size(); i++) {
-            if (nodes.get(i) == closestNode) {
-                var index = i + 1 < nodes.size() ? (i + 1) : (i - 1);
-                var secondClosestNode = nodes.get(index);
-                var middlePoint = closestNode.middlePoint(secondClosestNode);
 
-                // var closestPoint = Geometry.closestPoint(addr.node.getPos(),
-                // closestNode.getPos(),
-                // secondClosestNode.getPos());
-
-                newNode.id = UUID.randomUUID().toString();
-                newNode.lat = middlePoint.x;
-                newNode.lon = middlePoint.y;
-                nodes.add(i + 1 < nodes.size() ? i + 1 : i, newNode);
-                newPath.addNode(addr.node);
-                newPath.addNode(newNode);
-                break;
+        Point2D addrPoint = addr.node.getPos();
+        Point2D closestPoint = null;
+        int idx = 0;
+        for (int i = 1; i < nodes.size(); i++) {
+            var n1 = nodes.get(i - 1);
+            var n2 = nodes.get(i);
+            var p = Geometry.projection(addrPoint, n1.getPos(), n2.getPos());
+            if (closestPoint == null || p.dist(addrPoint) < closestPoint.dist(addrPoint)) {
+                closestPoint = p;
+                idx = i;
             }
         }
+        if (closestPoint == null) {
+            return null;
+        }
+
+        var newNode = new MapNode(UUID.randomUUID().toString(), closestPoint.x, closestPoint.y);
+        MapPath newPath = new MapPath(UUID.randomUUID().toString(),
+                "unnamed", "footpath", ApplicationConfig.getWalkingSpeed());
+        newPath.addNode(addr.node);
+        newPath.addNode(newNode);
+
+        List<MapNode> newNodes = new ArrayList<>();
+        for (int i = 0; i < nodes.size(); i++) {
+            if (i == idx) {
+                newNodes.add(newNode);
+            }
+            newNodes.add(nodes.get(i));
+        }
+        nodes = newNodes;
+
         return newPath;
     }
 

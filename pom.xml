@@ -81,8 +81,8 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>${project.groupId}.AppGui</mainClass>
-                    <!-- <mainClass>${project.groupId}.examproj.Main</mainClass> -->
+                    <!-- <mainClass>${project.groupId}.AppGui</mainClass> -->
+                    <mainClass>${project.groupId}.examproj.Main</mainClass>
                     <commandlineArgs>data/map-gigantic.osm</commandlineArgs>
                 </configuration>
             </plugin>

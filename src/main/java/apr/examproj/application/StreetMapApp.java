@@ -11,6 +11,7 @@ import java.util.Map;
 import apr.examproj.alg.AStar;
 import apr.examproj.alg.Dijkstra;
 import apr.examproj.alg.PathFinder;
+import apr.examproj.config.ApplicationConfig;
 import apr.examproj.enums.TransportationMode;
 
 import static apr.examproj.enums.TransportationMode.*;
@@ -95,6 +96,12 @@ public class StreetMapApp {
         toolPanel = new ToolPanel();
         toolPanel.addButton(e -> run(), "run");
         toolPanel.addButton(e -> pause(), "pause");
+        toolPanel.addButton(e -> {
+            ApplicationConfig.showLinkPaths.setValue(!ApplicationConfig.showLinkPaths.getValue());
+        }, "show link paths");
+        toolPanel.addButton(e -> {
+            ApplicationConfig.showPathNodes.setValue(!ApplicationConfig.showPathNodes.getValue());
+        }, "show path nodes");
         toolPanel.addSlider("Duration: %d secs", 1, 20, 5, (e, o, n) -> {
             if (pathingAnimator != null) {
                 PathingAnimator.setDuration(n.longValue());
@@ -120,6 +127,18 @@ public class StreetMapApp {
             mouseY = e.getY();
         });
         renderPane.addEventHandler(MouseEvent.MOUSE_DRAGGED, e -> {
+            if (Double.isNaN(mouseX)) {
+                return;
+            }
+            if (Double.isNaN(mouseY)) {
+                return;
+            }
+            if (mouseX < 0 || mouseX >= renderPane.getWidth()) {
+                return;
+            }
+            if (mouseY < 0 || mouseY >= renderPane.getHeight()) {
+                return;
+            }
             double dx = e.getX() - mouseX;
             double dy = e.getY() - mouseY;
             map.translateXProperty().set(map.getTranslateX() + dragSpeed * dx);
@@ -185,6 +204,9 @@ public class StreetMapApp {
     }
 
     static void pause() {
+        if (pathingAnimator == null) {
+            return;
+        }
         if (isPaused()) {
             paused = false;
             pathingAnimator.start();

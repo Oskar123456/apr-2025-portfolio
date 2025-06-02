@@ -23,7 +23,7 @@ public class Dijkstra<T> implements PathFinder<T> {
 
         PQ.add(new Pair<>(graph.getStart(), 0D));
         while (!PQ.isEmpty()) {
-            var curPair = PQ.remove();
+            var curPair = PQ.poll();
             var curNode = curPair.first;
             var curDist = curPair.second;
             graph.markAsVisited(curNode);
