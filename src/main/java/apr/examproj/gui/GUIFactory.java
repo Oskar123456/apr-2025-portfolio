@@ -110,7 +110,7 @@ public class GUIFactory {
         return pane;
     }
 
-    public static Node highlightedMapNode(MapNode node) {
+    public static Pane highlightedMapNode(MapNode node) {
         Pane pane = new Pane();
         double r = ApplicationConfig.mapNodeRadius * 1.25;
         Ellipse dot = new Ellipse(r, r);

@@ -27,7 +27,7 @@ public class PathingAnimator extends AnimationTimer {
     long startNS, lastUpdateNS, deltaNS;
     long updateFreqNS;
 
-    int frame;
+    int lastFrame = 0, frame;
     Graph<MapNode> graph;
     MapRoute route;
     MapBounds bounds;
@@ -75,10 +75,10 @@ public class PathingAnimator extends AnimationTimer {
     }
 
     public void draw() {
-        for (var elmt : guiElements) {
-            renderPane.getChildren().remove(elmt);
-        }
-        guiElements.clear();
+        // for (var elmt : guiElements) {
+        // renderPane.getChildren().remove(elmt);
+        // }
+        // guiElements.clear();
         if (frame < graph.getVisitOrder().size()) {
             drawPathing();
         } else {
@@ -87,22 +87,21 @@ public class PathingAnimator extends AnimationTimer {
     }
 
     void drawPathing() {
-        for (int i = 0; i < frame; ++i) {
+        for (int i = 0; i < lastFrame; ++i) {
+            ((Pane) guiElements.get(i)).getChildren().getFirst().setId("street-map__visited-node");
+        }
+        for (int i = lastFrame; i < frame; ++i) {
             var node = graph.getVisitOrder().get(i);
             var mapNode = node.data;
-            javafx.scene.Node mapGUINode;
-            if (i + 1 < frame) {
-                mapGUINode = GUIFactory.visitedMapNode(mapNode);
-            } else {
-                mapGUINode = GUIFactory.highlightedMapNode(mapNode);
-            }
+            var mapGUINode = GUIFactory.highlightedMapNode(mapNode);
             guiElements.add(mapGUINode);
             Tooltip.setTooltip(mapGUINode,
                     String.format("lat: %.4f, lon: %.4f", mapNode.lat, mapNode.lon),
                     String.format("dist: %.1fm", graph.dist(node)),
                     "id: " + mapNode.id);
+            renderPane.getChildren().add(mapGUINode);
         }
-        renderPane.getChildren().addAll(guiElements);
+        lastFrame = frame;
     }
 
     String[] describe() {
@@ -122,6 +121,9 @@ public class PathingAnimator extends AnimationTimer {
     }
 
     void drawRoute() {
+        for (var elmt : guiElements) {
+            renderPane.getChildren().remove(elmt);
+        }
         guiElements.addAll(route.drawNodes());
         renderPane.getChildren().addAll(guiElements);
         System.out.println(
