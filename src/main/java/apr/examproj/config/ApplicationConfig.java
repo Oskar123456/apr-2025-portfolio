@@ -21,8 +21,8 @@ public class ApplicationConfig {
     public static double mapAddressRadiusMax = 14;
     public static String cssIdMapNode = "street-map__node";
 
-    public static BooleanProperty showLinkPaths = new SimpleBooleanProperty();
-    public static BooleanProperty showPathNodes = new SimpleBooleanProperty();
+    public static BooleanProperty showLinkPaths = new SimpleBooleanProperty(true);
+    public static BooleanProperty showPathNodes = new SimpleBooleanProperty(false);
 
     public static double getWalkingSpeed() {
         return walkSpeed;

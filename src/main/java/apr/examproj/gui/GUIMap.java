@@ -141,7 +141,7 @@ public class GUIMap extends Pane {
         ApplicationConfig.showLinkPaths.addListener((e, o, n) -> {
             line.setVisible(n);
         });
-        line.setVisible(ApplicationConfig.showPathNodes.get());
+        line.setVisible(ApplicationConfig.showLinkPaths.get());
 
         return line;
     }
