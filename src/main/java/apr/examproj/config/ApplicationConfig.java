@@ -1,10 +1,7 @@
 package apr.examproj.config;
 
-import java.util.Observable;
-
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ObservableBooleanValue;
 
 /**
  * ApplicationConfig
