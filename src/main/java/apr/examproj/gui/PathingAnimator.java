@@ -27,7 +27,7 @@ public class PathingAnimator extends AnimationTimer {
     long startNS, lastUpdateNS, deltaNS;
     long updateFreqNS;
 
-    int lastFrame = 0, frame;
+    int lastFrame = 0, frame, frameInc = 1;
     Graph<MapNode> graph;
     MapRoute route;
     MapBounds bounds;
@@ -49,6 +49,7 @@ public class PathingAnimator extends AnimationTimer {
     @Override
     public void handle(long nowNS) {
         updateFreqNS = (durationS * bln) / route.graph.getVisitOrder().size();
+        frameInc = Math.max((int) ((bln / 60) / updateFreqNS), 1);
         if (startNS == 0) {
             startNS = nowNS;
             lastUpdateNS = nowNS;
@@ -65,7 +66,7 @@ public class PathingAnimator extends AnimationTimer {
             textPanel.setTexts(describe());
         }
 
-        frame++;
+        frame = Math.min(frame + frameInc, route.graph.getVisitOrder().size());
     }
 
     public void detach() {
