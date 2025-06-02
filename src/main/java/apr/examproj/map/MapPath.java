@@ -49,13 +49,13 @@ public class MapPath implements IGUIMapElement {
             var n1 = nodes.get(i - 1);
             var n2 = nodes.get(i);
             var p = Geometry.projection(addrPoint, n1.getPos(), n2.getPos());
+            if (Double.isNaN(p.x) || Double.isNaN(p.y)) {
+                continue;
+            }
             if (closestPoint == null || p.dist(addrPoint) < closestPoint.dist(addrPoint)) {
                 closestPoint = p;
                 idx = i;
             }
-        }
-        if (closestPoint == null) {
-            return null;
         }
 
         var newNode = new MapNode(UUID.randomUUID().toString(), closestPoint.x, closestPoint.y);

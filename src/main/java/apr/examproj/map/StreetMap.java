@@ -38,8 +38,8 @@ public class StreetMap implements IGUIMapElement {
     public StreetMap(MapData mapData) {
         mapbounds = MapFactory.bounds(mapData.getBounds());
 
-        nodes = new ArrayList<>(mapData.getNodes().stream().map(n -> MapFactory.node(n)).toList());
-        nodes.forEach(n -> nodeMap.put(n.id, n));
+        mapData.getNodes().forEach(n -> nodeMap.put(n.id(), MapFactory.node(n)));
+        nodes.addAll(nodeMap.entrySet().stream().map(kv -> kv.getValue()).toList());
 
         buildings = new ArrayList<>(mapData.getBuildings().stream().map(b -> MapFactory.building(b, nodeMap)).toList());
 
@@ -91,12 +91,6 @@ public class StreetMap implements IGUIMapElement {
 
     @Override
     public void draw(MapBounds bounds, Pane renderPane) {
-        // nodes.forEach(n -> n.draw(bounds, renderPane));
-        // paths.forEach(p -> p.draw(bounds, renderPane));
-        // buildings.forEach(b -> b.draw(bounds, renderPane));
-        // addresses.forEach(a -> a.draw(bounds, renderPane));
-        // linkPaths.forEach(p -> p.drawSubtle(bounds, renderPane));
-        // getAllEdges().forEach(a -> a.draw(bounds, renderPane));
     }
 
     public MapRoute getRoute(TransportationMode transportationMode, PathFinder<MapNode> pathFinder, MapAddress src,

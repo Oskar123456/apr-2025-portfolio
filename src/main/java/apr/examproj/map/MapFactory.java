@@ -51,6 +51,16 @@ public class MapFactory {
 
         address.street = closestPath;
 
+        if (address.street == null) {
+            System.out.println("MapFactory.address(): null street for " + address.toString());
+            System.out.println(tags.get("addr:street"));
+        }
+
+        if (tags.get("addr:street").equals("Ellemosevej") && address.housenumber.equals("97")) {
+            System.out.println("MapFactory.address(): " + address.toString());
+            System.out.println(tags.get("addr:street"));
+        }
+
         return address;
     }
 
