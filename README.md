@@ -9,14 +9,29 @@
       + Hvor e.weight >= 0 for alle e i E 
       
   - Kort forklaring af dijkstra
+      + 
+      + 
+      + Showcase selve dijkstra implementation
+          - Køretid: O(|V| + |E| lg(|V|)) -- vi kører igennem alle knuder èn
+            gang, alle edges, og for hver edge relaxerer vi, som koster O(lg|V|).
   
   - Kort forklaring af A*
+      + 
+      + 
+      + Showcase selve A* implementation
   
   - Vis projekt
+      + Demo
+      + Snak om design: hvordan vi konvertere fra OSM XML data til vores eget format,
+        som vi kan lave om til GUI i vores GUIFactory, og derefter til en
+        generisk graph, indeholdene den originale data, dvs. mapknuder med
+        længde- og breddegrader.
+      + Snak om design pattern:
+          - Observer
 
   - Cycle detection
-      + In singly linked list: rabbit & hare algorithm
-      + In graph: G
+      + In singly linked list: rabbit & hare algorithm.
+      + In graph: see algorithm section in notes.
   
 
 ## Korteste vej
@@ -90,7 +105,9 @@ MVVC / Observer Pattern er interessant
 #### Strategy
 #### Observer
 
-## Algo
+## Algorithm
+
+### Cycle detection in graph
 
 ```java
   // Function to perform DFS and detect cycle in a
