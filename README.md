@@ -1,10 +1,23 @@
 # APR 2025 EXAM PORTFOLIO
 
-## TODO
+# TODO
 
   - Show route travel time/dist
 
-## NOTES 
+# Presentation
+
+## Korteste vej
+
+At finde vej i en vægtet graph `G = {V, E}`.
+
+
+
+### Dijkstra
+
+
+### A*
+
+# NOTES 
 
 MVVC / Observer Pattern er interessant
 

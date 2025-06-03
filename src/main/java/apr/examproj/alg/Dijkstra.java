@@ -26,6 +26,9 @@ public class Dijkstra<T> implements PathFinder<T> {
             var curPair = PQ.poll();
             var curNode = curPair.first;
             var curDist = curPair.second;
+            if (graph.isVisited(curNode)) {
+                continue;
+            }
             graph.markAsVisited(curNode);
             if (curNode == graph.getDestination()) {
                 break;
@@ -34,8 +37,7 @@ public class Dijkstra<T> implements PathFinder<T> {
                 var neighbor = edge.dest;
                 var dist = curDist + edge.weight;
                 if (graph.dists.get(neighbor) > dist) {
-                    graph.dists.put(neighbor, dist);
-                    graph.srcs.put(neighbor, curNode);
+                    graph.relax(curNode, neighbor, dist);
                     PQ.add(new Pair<>(neighbor, dist));
                 }
             }

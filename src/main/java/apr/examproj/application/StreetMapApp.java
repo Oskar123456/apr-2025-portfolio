@@ -199,7 +199,6 @@ public class StreetMapApp {
             paused = false;
         } catch (Exception e) {
             System.out.println("StreetMapApp.run(): error: " + e.getMessage());
-            // e.printStackTrace();
         }
     }
 

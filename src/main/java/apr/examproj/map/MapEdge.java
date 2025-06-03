@@ -57,11 +57,11 @@ public class MapEdge implements IGUIMapElement {
     public double getTravelTime(TransportationMode mode) {
         switch (mode) {
             case TransportationMode.DRIVE:
-                return (dist / maxSpeed) / 1000;
+                return ((dist / 1000) / maxSpeed);
             case TransportationMode.BIKE:
-                return (dist / ApplicationConfig.getBikingSpeed()) / 1000;
+                return ((dist / 1000) / ApplicationConfig.getBikingSpeed());
             default:
-                return (dist / ApplicationConfig.getWalkingSpeed()) / 1000;
+                return ((dist / 1000) / ApplicationConfig.getWalkingSpeed());
         }
     }
 

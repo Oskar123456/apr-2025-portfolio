@@ -21,6 +21,7 @@ public class Graph<T> {
     public Map<GraphNode<T>, GraphNode<T>> srcs = new HashMap<>();
     public Set<GraphEdge<T>> path = new HashSet<>();
 
+    public Set<GraphNode<T>> visited = new HashSet<>();
     public List<GraphNode<T>> visitOrder = new ArrayList<>();
     public List<GraphNode<T>> seenOrder = new ArrayList<>();
 
@@ -53,7 +54,6 @@ public class Graph<T> {
             }
             nextNode = curNode;
             curNode = srcs.get(curNode);
-            // System.out.println("Graph.getPathEdges(): " + nextNode + " : " + curNode);
         }
 
         return path;
@@ -113,9 +113,6 @@ public class Graph<T> {
 
     public void updateSrcs(GraphEdge<T> edge) {
         srcs.put(edge.dest, edge.src);
-        // System.out.printf("updating %s from %s (w: %.5f)%n",
-        // edge.dest.data.toString(), edge.src.data.toString(),
-        // edge.weight);
     }
 
     public void updateDist(GraphNode<T> node, Double dist) {
@@ -163,8 +160,18 @@ public class Graph<T> {
         return outgoingEdges.get(node);
     }
 
+    public void relax(GraphNode<T> src, GraphNode<T> dest, double d) {
+        dists.put(dest, d);
+        srcs.put(dest, src);
+    }
+
+    public boolean isVisited(GraphNode<T> node) {
+        return visited.contains(node);
+    }
+
     public void markAsVisited(GraphNode<T> node) {
         visitOrder.add(node);
+        visited.add(node);
     }
 
     public void markAsSeen(GraphNode<T> node) {

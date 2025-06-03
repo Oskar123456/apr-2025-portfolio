@@ -1,5 +1,6 @@
 package apr.examproj.map;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,20 +39,10 @@ public class MapRoute implements IGUIMapElement {
     @Override
     public void draw(MapBounds bounds, Pane renderPane) {
         edges.forEach(e -> e.draw(renderPane));
-        // nodes.forEach(n -> {
-        // if (n != src.node && n != dest.node) {
-        // n.draw(bounds, renderPane);
-        // }
-        // });
     }
 
     public void draw(Pane renderPane) {
         edges.forEach(e -> e.draw(renderPane));
-        // nodes.forEach(n -> {
-        // if (n != src.node && n != dest.node) {
-        // n.draw(bounds, renderPane);
-        // }
-        // });
     }
 
     public List<Node> drawNodes() {

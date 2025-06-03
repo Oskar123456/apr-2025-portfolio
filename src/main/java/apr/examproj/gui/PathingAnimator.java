@@ -94,7 +94,7 @@ public class PathingAnimator extends AnimationTimer {
             guiElements.add(mapGUINode);
             Tooltip.setTooltip(mapGUINode,
                     String.format("lat: %.4f, lon: %.4f", mapNode.lat, mapNode.lon),
-                    String.format("dist: %.1fm", graph.dist(node)),
+                    String.format("dist: %s", GUIUtils.timeFormat(graph.dist(node))),
                     "id: " + mapNode.id);
             renderPane.getChildren().add(mapGUINode);
         }
@@ -122,7 +122,11 @@ public class PathingAnimator extends AnimationTimer {
             renderPane.getChildren().remove(elmt);
         }
         guiElements.clear();
-        guiElements.addAll(route.drawNodes());
+        var nodes = route.drawNodes();
+        for (var node : nodes) {
+
+        }
+        guiElements.addAll(nodes);
         renderPane.getChildren().addAll(guiElements);
         System.out.println(
                 "PathingAnimator.drawRoute(): took " + (((double) lastUpdateNS - startNS) / bln) + " secs to complete");
