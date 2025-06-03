@@ -4,28 +4,28 @@
 
 # Præsentation
 
-  - Kort forklaring af korteste vej
+  - Kort forklaring af korteste vej:
       + At finde vej i en vægtet graph `G = {V, E}`.
-      + Hvor e.weight >= 0 for alle e i E 
+      + Hvor e.weight >= 0 for alle e i E.
       
   - Kort forklaring af dijkstra
-      + 
-      + 
-      + Showcase selve dijkstra implementation
+      + Korrekthed:
+          - Kort forklaring. 
+      + Showcase selve dijkstra implementation:
           - Køretid: O(|V| + |E| lg(|V|)) -- vi kører igennem alle knuder èn
             gang, alle edges, og for hver edge relaxerer vi, som koster O(lg|V|).
   
   - Kort forklaring af A*
-      + 
-      + 
-      + Showcase selve A* implementation
+      + Korrekthed:
+          - Heuristisk funktions estimat *må* aldrig overstige mulig/aktuel distance.
+      + Showcase selve A* implementation.
   
   - Vis projekt
-      + Demo
       + Snak om design: hvordan vi konvertere fra OSM XML data til vores eget format,
         som vi kan lave om til GUI i vores GUIFactory, og derefter til en
         generisk graph, indeholdene den originale data, dvs. mapknuder med
         længde- og breddegrader.
+      + **Demo**.
       + Snak om design pattern:
           - Observer
 
