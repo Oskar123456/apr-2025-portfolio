@@ -66,11 +66,6 @@ while PQ not empty:
 
   - *At the start of each iteration, dist(v) is optimal for all v in Visited*.
 
-**Time**
-
-  - `|E| lg(|V|)`
-
-
 ### A*
 
 # NOTES 
@@ -91,7 +86,7 @@ MVVC / Observer Pattern er interessant
   - Wrapping classes; example: unbuffered I/O -> buffered I/O.
 
 #### Proxy
-#### Adaptor
+#### Adapter
   
 ### CREATIONAL
 

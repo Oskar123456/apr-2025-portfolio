@@ -66,6 +66,7 @@ public class Tooltip extends VBox {
             }
             relocate(x, y);
         });
+        hide();
     }
 
     public void clearContent() {

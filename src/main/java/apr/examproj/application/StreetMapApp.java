@@ -37,6 +37,7 @@ public class StreetMapApp {
 
     static TransportationMode transportationMode = WALK;
     static PathFinder<MapNode> pathFinder;
+    static List<String> sortedAlgNames;
     static Map<String, PathFinder<MapNode>> pathFinders = Map.of(
             "A*", new AStar<>((a, b) -> Geometry.travelTime(a.data, b.data, WALK)),
             "dijkstra", new Dijkstra<>());
@@ -85,58 +86,20 @@ public class StreetMapApp {
         GUIFactory.defaultChildText(srcPane, "start", "street-map__src-text");
         GUIFactory.defaultChildText(destPane, "end", "street-map__dest-text");
 
-        List<String> sortedAlgNames = new ArrayList<>(pathFinders.keySet().stream().toList());
+        sortedAlgNames = new ArrayList<>(pathFinders.keySet().stream().toList());
         sortedAlgNames.sort(Comparator.naturalOrder());
         pathFinder = pathFinders.get(sortedAlgNames.getFirst());
 
-        toolPanel = new ToolPanel();
-        toolPanel.addButton(e -> run(), "run");
-        toolPanel.addButton(e -> pause(), "pause");
-        toolPanel.addButton(e -> {
-            ApplicationConfig.showLinkPaths.setValue(!ApplicationConfig.showLinkPaths.getValue());
-        }, "show link paths");
-        toolPanel.addButton(e -> {
-            ApplicationConfig.showPathNodes.setValue(!ApplicationConfig.showPathNodes.getValue());
-        }, "show path nodes");
-        toolPanel.addSlider("Duration: %d secs", 1, 20, 5, (e, o, n) -> {
-            if (pathingAnimator != null) {
-                PathingAnimator.setDuration(n.longValue());
-            }
-        });
-        toolPanel.addChoiceBox((e, o, n) -> pathFinder = pathFinders.get(n), sortedAlgNames);
-        toolPanel.position(renderPane);
-
-        textPanel = new TextPanel();
-        textPanel.setTexts("Route");
-        textPanel.position(renderPane);
+        setToolPanel();
+        setTextPanel();
 
         renderPane.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> Options.hide());
         renderPane.addEventHandler(ScrollEvent.SCROLL, e -> map.zoom(zoomSpeed * e.getDeltaY()));
-
         renderPane.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
             mouseX = e.getX();
             mouseY = e.getY();
         });
-        renderPane.addEventHandler(MouseEvent.MOUSE_DRAGGED, e -> {
-            if (Double.isNaN(mouseX)) {
-                return;
-            }
-            if (Double.isNaN(mouseY)) {
-                return;
-            }
-            if (mouseX < 0 || mouseX >= renderPane.getWidth()) {
-                return;
-            }
-            if (mouseY < 0 || mouseY >= renderPane.getHeight()) {
-                return;
-            }
-            double dx = e.getX() - mouseX;
-            double dy = e.getY() - mouseY;
-            map.translateXProperty().set(map.getTranslateX() + dragSpeed * dx);
-            map.translateYProperty().set(map.getTranslateY() + dragSpeed * dy);
-            mouseX = e.getX();
-            mouseY = e.getY();
-        });
+        draggable(renderPane, map);
 
         renderPane.getChildren().addAll(map, toolPanel, textPanel);
         map.getChildren().addAll(srcPane, destPane);
@@ -147,8 +110,6 @@ public class StreetMapApp {
         toolPanel.reposition(renderPane);
         textPanel.reposition(renderPane);
 
-        Options.hide();
-        Tooltip.hide();
         srcPane.setVisible(false);
         destPane.setVisible(false);
     }
@@ -209,6 +170,56 @@ public class StreetMapApp {
 
     static boolean isPaused() {
         return paused;
+    }
+
+    static void draggable(Pane outer, Pane inner) {
+        outer.addEventHandler(MouseEvent.MOUSE_DRAGGED, e -> {
+            if (Double.isNaN(mouseX)) {
+                return;
+            }
+            if (Double.isNaN(mouseY)) {
+                return;
+            }
+            if (mouseX < 0 || mouseX >= renderPane.getWidth()) {
+                return;
+            }
+            if (mouseY < 0 || mouseY >= renderPane.getHeight()) {
+                return;
+            }
+            double dx = e.getX() - mouseX;
+            double dy = e.getY() - mouseY;
+            inner.translateXProperty().set(inner.getTranslateX() + dragSpeed * dx);
+            inner.translateYProperty().set(inner.getTranslateY() + dragSpeed * dy);
+            mouseX = e.getX();
+            mouseY = e.getY();
+        });
+    }
+
+    static void setToolPanel() {
+
+        toolPanel = new ToolPanel();
+        toolPanel.addButton(e -> run(), "run");
+        toolPanel.addButton(e -> pause(), "pause");
+        toolPanel.addButton(e -> {
+            ApplicationConfig.showLinkPaths.setValue(!ApplicationConfig.showLinkPaths.getValue());
+        }, "show link paths");
+        toolPanel.addButton(e -> {
+            ApplicationConfig.showPathNodes.setValue(!ApplicationConfig.showPathNodes.getValue());
+        }, "show path nodes");
+        toolPanel.addSlider("Duration: %d secs", 1, 20, 5, (e, o, n) -> {
+            if (pathingAnimator != null) {
+                PathingAnimator.setDuration(n.longValue());
+            }
+        });
+        toolPanel.addChoiceBox((e, o, n) -> pathFinder = pathFinders.get(n), sortedAlgNames);
+        toolPanel.position(renderPane);
+
+    }
+
+    static void setTextPanel() {
+        textPanel = new TextPanel();
+        textPanel.setTexts("Route");
+        textPanel.position(renderPane);
     }
 
 }

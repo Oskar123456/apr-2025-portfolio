@@ -61,6 +61,7 @@ public class Options extends VBox {
 
     public void setRenderTarget(Pane renderPane) {
         renderPane.getChildren().add(this);
+        hide();
     }
 
 }
