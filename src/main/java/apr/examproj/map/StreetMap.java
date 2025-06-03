@@ -20,7 +20,7 @@ import javafx.scene.layout.Pane;
  */
 public class StreetMap implements IGUIMapElement {
 
-    public MapBounds mapbounds;
+    public MapBounds bounds;
     public List<MapNode> nodes = new ArrayList<>();
     public Map<String, MapNode> nodeMap = new HashMap<>();
     public List<MapWay> ways = new ArrayList<>(); // misc
@@ -32,7 +32,7 @@ public class StreetMap implements IGUIMapElement {
     public List<MapAddress> addresses = new ArrayList<>();
 
     public StreetMap(MapData mapData) {
-        mapbounds = MapFactory.bounds(mapData.getBounds());
+        bounds = MapFactory.bounds(mapData.getBounds());
 
         mapData.getNodes().forEach(n -> nodeMap.put(n.id(), MapFactory.node(n)));
         nodes.addAll(nodeMap.entrySet().stream().map(kv -> kv.getValue()).toList());

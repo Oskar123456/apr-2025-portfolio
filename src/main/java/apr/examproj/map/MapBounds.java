@@ -125,16 +125,16 @@ public class MapBounds implements IGUIMapElement {
 
     @Override
     public void draw(MapBounds bounds, Pane renderPane) {
-        var widthFraction = 0.1;
+        var widthFraction = 0.2;
         var leftCorner = new Point2D(bounds.minLatitude, bounds.minLongitude);
         var rightCorner = new Point2D(bounds.maxLatitude, bounds.minLongitude);
         var realWorldDist = Geometry.greatCicleDistance(leftCorner,
                 Point2D.lerp(leftCorner, rightCorner, widthFraction));
+        System.out.printf("lerp %s %s %f %n", leftCorner.toString(), rightCorner.toString(), realWorldDist);
 
         HBox ruler = new HBox();
         ruler.setId("street-map__ruler");
         ruler.prefWidthProperty().bind(renderPane.widthProperty().multiply(widthFraction));
-        ruler.prefHeightProperty().set(40);
         ruler.translateXProperty().set(20);
         ruler.translateYProperty().set(20);
 

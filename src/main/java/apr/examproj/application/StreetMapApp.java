@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import apr.datastructures.graph.Point2D;
 import apr.examproj.alg.AStar;
 import apr.examproj.alg.Dijkstra;
 import apr.examproj.alg.PathFinder;
@@ -34,6 +35,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 /**
  * StreetMapDriver
@@ -145,8 +147,6 @@ public class StreetMapApp {
             mouseX = e.getX();
             mouseY = e.getY();
         });
-
-        bounds.draw(bounds, renderPane);
 
         renderPane.getChildren().addAll(map, toolPanel, textPanel);
         map.getChildren().addAll(srcPane, destPane);
