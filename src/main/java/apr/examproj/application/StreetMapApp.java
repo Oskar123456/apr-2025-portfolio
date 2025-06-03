@@ -43,7 +43,7 @@ public class StreetMapApp {
     static GUIMap map;
     static StreetMap streetMap;
     static MapAddress src, dest;
-    static MapBounds bounds;
+    public static MapBounds bounds;
 
     static TransportationMode transportationMode = WALK;
     static PathFinder<MapNode> pathFinder;
@@ -93,6 +93,10 @@ public class StreetMapApp {
         GUIFactory.defaultChildText(srcPane, "start", "street-map__src-text");
         GUIFactory.defaultChildText(destPane, "end", "street-map__dest-text");
 
+        List<String> sortedAlgNames = new ArrayList<>(pathFinders.keySet().stream().toList());
+        sortedAlgNames.sort(Comparator.naturalOrder());
+        pathFinder = pathFinders.get(sortedAlgNames.getFirst());
+
         toolPanel = new ToolPanel();
         toolPanel.addButton(e -> run(), "run");
         toolPanel.addButton(e -> pause(), "pause");
@@ -107,17 +111,12 @@ public class StreetMapApp {
                 PathingAnimator.setDuration(n.longValue());
             }
         });
+        toolPanel.addChoiceBox((e, o, n) -> pathFinder = pathFinders.get(n), sortedAlgNames);
         toolPanel.position(renderPane);
 
         textPanel = new TextPanel();
         textPanel.setTexts("Route");
         textPanel.position(renderPane);
-
-        List<String> sortedAlgNames = new ArrayList<>(
-                pathFinders.keySet().stream().toList());
-        sortedAlgNames.sort(Comparator.naturalOrder());
-        toolPanel.addChoiceBox((e, o, n) -> pathFinder = pathFinders.get(n), sortedAlgNames);
-        pathFinder = pathFinders.get(sortedAlgNames.getFirst());
 
         renderPane.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> Options.hide());
         renderPane.addEventHandler(ScrollEvent.SCROLL, e -> map.zoom(zoomSpeed * e.getDeltaY()));

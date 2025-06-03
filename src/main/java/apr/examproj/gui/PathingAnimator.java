@@ -123,9 +123,6 @@ public class PathingAnimator extends AnimationTimer {
         }
         guiElements.clear();
         var nodes = route.drawNodes();
-        for (var node : nodes) {
-
-        }
         guiElements.addAll(nodes);
         renderPane.getChildren().addAll(guiElements);
         System.out.println(
