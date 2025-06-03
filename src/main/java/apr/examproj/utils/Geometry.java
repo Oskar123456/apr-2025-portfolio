@@ -37,6 +37,21 @@ public class Geometry {
         return R * c;
     }
 
+    public static double greatCicleDistance(Point2D src, Point2D dest) {
+        double R = 6371e3;
+        double minLatRad = src.x * Math.PI / 180;
+        double maxLatRad = dest.x * Math.PI / 180;
+        double latArcRad = Math.abs(dest.x - src.x) * Math.PI / 180;
+        double lonArcRad = Math.abs(dest.y - src.y) * Math.PI / 180;
+
+        double a = Math.sin(latArcRad / 2) * Math.sin(latArcRad / 2) +
+                Math.cos(minLatRad) * Math.cos(maxLatRad) *
+                        Math.sin(lonArcRad / 2) * Math.sin(lonArcRad / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return R * c;
+    }
+
     public static MapNode addNewClosestNode(MapNode node, List<MapNode> nodes) {
         int closestIdx = 0;
         int secondClosestIdx = 0;

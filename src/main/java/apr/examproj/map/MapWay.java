@@ -17,8 +17,6 @@ public class MapWay implements IGUIMapElement {
 
     @Override
     public void draw(MapBounds bounds, Pane renderPane) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'draw'");
     }
 
 }

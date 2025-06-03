@@ -378,3 +378,14 @@
     stroke: royalblue;
     -fx-opacity: 0.5;
 }
+
+#street-map__ruler {
+    -fx-stroke-width: 3px;
+    -fx-fill: rgba(195, 185, 233, 0.75);
+    -fx-opacity: 0.5;
+    -fx-alignment: center;
+}
+
+#street-map__ruler-text {
+    -fx-font-size: 12px;
+}

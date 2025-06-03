@@ -56,6 +56,10 @@ public class Point2D extends Point {
         return (x * other.x) + (y * other.y);
     }
 
+    public static Point2D lerp(Point2D a, Point2D b, double w) {
+        return new Point2D(a.x + (b.x - a.x) * w, a.y + (b.y - a.y) * w);
+    }
+
     public Point2D normalize() {
         double len = magnitude();
         this.x /= len;

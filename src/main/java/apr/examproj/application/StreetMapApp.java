@@ -146,6 +146,8 @@ public class StreetMapApp {
             mouseY = e.getY();
         });
 
+        bounds.draw(bounds, renderPane);
+
         renderPane.getChildren().addAll(map, toolPanel, textPanel);
         map.getChildren().addAll(srcPane, destPane);
         Options.getInstance().setRenderTarget(map);

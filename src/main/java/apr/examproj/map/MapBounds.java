@@ -4,7 +4,10 @@ import org.jsoup.nodes.Element;
 
 import apr.datastructures.graph.Point2D;
 import apr.examproj.gui.IGUIMapElement;
+import apr.examproj.utils.Geometry;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 
 /**
  * Bounds
@@ -122,8 +125,24 @@ public class MapBounds implements IGUIMapElement {
 
     @Override
     public void draw(MapBounds bounds, Pane renderPane) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'draw'");
+        var widthFraction = 0.1;
+        var leftCorner = new Point2D(bounds.minLatitude, bounds.minLongitude);
+        var rightCorner = new Point2D(bounds.maxLatitude, bounds.minLongitude);
+        var realWorldDist = Geometry.greatCicleDistance(leftCorner,
+                Point2D.lerp(leftCorner, rightCorner, widthFraction));
+
+        HBox ruler = new HBox();
+        ruler.setId("street-map__ruler");
+        ruler.prefWidthProperty().bind(renderPane.widthProperty().multiply(widthFraction));
+        ruler.prefHeightProperty().set(40);
+        ruler.translateXProperty().set(20);
+        ruler.translateYProperty().set(20);
+
+        Text text = new Text(String.format("<- %.1fm ->", realWorldDist));
+        text.setId("street-map__ruler-text");
+
+        ruler.getChildren().add(text);
+        renderPane.getChildren().add(ruler);
     }
 
 }
