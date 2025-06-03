@@ -4,7 +4,12 @@
 
   - Show route travel time/dist
 
-# Presentation
+# Præsentation
+
+  - Kort forklaring af korteste vej
+      + 
+      + 
+  - Kort forklaring af korteste vej
 
 ## Korteste vej
 
@@ -40,6 +45,9 @@ while PQ not empty:
 
   - *At the start of each iteration, dist(v) is optimal for all v in Visited*.
 
+**Time**
+
+  - `|E| lg(|V|)`
 
 
 ### A*
