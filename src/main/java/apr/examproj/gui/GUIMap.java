@@ -55,7 +55,10 @@ public class GUIMap extends Pane {
 
         streetMap.addresses.forEach(a -> getChildren().add(GUIFactory.addressNode(a)));
 
-        drawRuler();
+        widthProperty().addListener(e -> updateRulerText());
+        heightProperty().addListener(e -> updateRulerText());
+
+        scaleXProperty().addListener(e -> updateRulerText());
     }
 
     public void zoom(double percentToZoom) {
@@ -63,33 +66,29 @@ public class GUIMap extends Pane {
         scaleYProperty().set(scaleYProperty().doubleValue() + percentToZoom);
     }
 
-    void drawRuler() {
-        var widthFraction = 0.2;
-
-        HBox ruler = new HBox();
-        ruler.setId("street-map__ruler");
-        ruler.prefWidthProperty().bind(widthProperty().multiply(widthFraction));
-        ruler.translateXProperty().set(5);
-        ruler.translateYProperty().set(5);
-
-        Text text = new Text(rulerText(widthFraction));
-        widthProperty().addListener((e) -> {
-            text.setText(rulerText(widthFraction));
-        });
-        text.setId("street-map__ruler-text");
-
-        ruler.getChildren().add(text);
-        getChildren().add(ruler);
-    }
-
-    String rulerText(double widthFraction) {
-        var leftCorner = new Point2D(streetMap.bounds.minLatitude, streetMap.bounds.minLatitude);
-        var rightCorner = new Point2D(streetMap.bounds.minLatitude
-                + (streetMap.bounds.width) * (getWidth() / (streetMap.bounds.width * pixelsPerDegree)),
-                streetMap.bounds.minLongitude);
-        var realWorldDist = Geometry.greatCicleDistance(leftCorner,
-                Point2D.lerp(leftCorner, rightCorner, widthFraction));
-        return String.format("<- %.1fm ->", realWorldDist);
+    void updateRulerText() {
+        double rulerPixelWidth = Ruler.getInstance().getWidth();
+        double mapPixelWidth = getWidth();
+        double mapMeterWidth = Geometry.greatCicleDistance(
+                new Point2D(streetMap.bounds.minLatitude, streetMap.bounds.minLongitude),
+                new Point2D(streetMap.bounds.maxLatitude, streetMap.bounds.minLongitude));
+        double metersPerPixel = mapMeterWidth / (mapPixelWidth * scaleXProperty().doubleValue());
+        double rulerMeterWidth = metersPerPixel * rulerPixelWidth;
+        // System.out.printf(
+        // "GUIMap.updateRulerText(): rulerPixelWidth %.1f, "
+        // + " mapPixelWidth %.1f,"
+        // + " mapscale %.1f,"
+        // + " mapMeterWidth %.1f,"
+        // + " metersPerPixel %.1f,"
+        // + " rulerMeterWidth %.1f %n",
+        // rulerPixelWidth,
+        // mapPixelWidth,
+        // scaleXProperty().doubleValue(),
+        // mapMeterWidth,
+        // metersPerPixel,
+        // rulerMeterWidth);
+        // Ruler.setText(String.format("%.1fm", rulerMeterWidth));
+        Ruler.setText(String.format("scale %.2f", scaleXProperty().doubleValue()));
     }
 
 }

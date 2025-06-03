@@ -11,6 +11,9 @@ public class ApplicationConfig {
     static double walkSpeed = 5;
     static double bikeSpeed = 5;
 
+    public static double pixelsPerDegree = 246153;
+    public static double rulerWidthFraction = 0.15;
+
     public static double mapNodeRadius = 8;
     public static double mapPathNodeRadius = 4;
     public static double mapAddressRadius = 0.025;

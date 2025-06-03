@@ -20,6 +20,7 @@ import apr.examproj.gui.GUIFactory;
 import apr.examproj.gui.GUIMap;
 import apr.examproj.gui.Options;
 import apr.examproj.gui.PathingAnimator;
+import apr.examproj.gui.Ruler;
 import apr.examproj.gui.TextPanel;
 import apr.examproj.gui.ToolPanel;
 import apr.examproj.gui.Tooltip;
@@ -59,6 +60,8 @@ public class StreetMapApp {
     static HBox srcPane, destPane;
     static ToolPanel toolPanel;
     static TextPanel textPanel;
+    static HBox ruler;
+    static Text rulerText;
     static double mouseX, mouseY;
     static double dragSpeed = 1;
     static double zoomSpeed = 0.0008;
@@ -152,6 +155,7 @@ public class StreetMapApp {
         map.getChildren().addAll(srcPane, destPane);
         Options.getInstance().setRenderTarget(map);
         Tooltip.getInstance().setRenderTarget(map);
+        Ruler.getInstance().setRenderTarget(renderPane);
 
         toolPanel.reposition(renderPane);
         textPanel.reposition(renderPane);
