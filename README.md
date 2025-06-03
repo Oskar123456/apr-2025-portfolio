@@ -1,21 +1,27 @@
 # APR 2025 EXAM PORTFOLIO
 
-# TODO
 
-  - Show route travel time/dist
 
 # Præsentation
 
   - Kort forklaring af korteste vej
-      + 
-      + 
-  - Kort forklaring af korteste vej
+      + At finde vej i en vægtet graph `G = {V, E}`.
+      + Hvor e.weight >= 0 for alle e i E 
+      
+  - Kort forklaring af dijkstra
+  
+  - Kort forklaring af A*
+  
+  - Vis projekt
+
+  - Cycle detection
+      + In singly linked list: rabbit & hare algorithm
+      + In graph: G
+  
 
 ## Korteste vej
 
-At finde vej i en vægtet graph `G = {V, E}`.
 
-Hvor e.weight >= 0 for alle e i E 
 
 ### Dijkstra
 
@@ -83,3 +89,40 @@ MVVC / Observer Pattern er interessant
 #### Command
 #### Strategy
 #### Observer
+
+## Algo
+
+```java
+  // Function to perform DFS and detect cycle in a
+  // directed graph
+  private static boolean isCyclicUtil(List<Integer>[] adj,
+                                      int u,
+                                      boolean[] visited,
+                                      boolean[] recStack)
+  {
+      // If the current node is already in the recursion
+      // stack, a cycle is detected
+      if (recStack[u])
+          return true;
+
+      // If already visited and not in recStack, it's not
+      // part of a cycle
+      if (visited[u])
+          return false;
+
+      // Mark the current node as visited and add it to
+      // the recursion stack
+      visited[u] = true;
+      recStack[u] = true;
+
+      // Recur for all adjacent vertices
+      for (int v : adj[u]) {
+          if (isCyclicUtil(adj, v, visited, recStack))
+              return true;
+      }
+
+      // Backtrack: remove the vertex from recursion stack
+      recStack[u] = false;
+      return false;
+  }
+```
