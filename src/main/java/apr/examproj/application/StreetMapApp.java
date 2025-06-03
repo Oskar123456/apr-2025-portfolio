@@ -8,7 +8,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import apr.datastructures.graph.Point2D;
 import apr.examproj.alg.AStar;
 import apr.examproj.alg.Dijkstra;
 import apr.examproj.alg.PathFinder;

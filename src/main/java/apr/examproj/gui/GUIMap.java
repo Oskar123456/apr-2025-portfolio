@@ -1,11 +1,8 @@
 package apr.examproj.gui;
 
-import apr.datastructures.graph.Point2D;
 import apr.examproj.map.StreetMap;
 import apr.examproj.utils.Geometry;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 
 /**
  * Map
@@ -67,13 +64,14 @@ public class GUIMap extends Pane {
     }
 
     void updateRulerText() {
-        double rulerPixelWidth = Ruler.getInstance().getWidth();
-        double mapPixelWidth = getWidth();
-        double mapMeterWidth = Geometry.greatCicleDistance(
-                new Point2D(streetMap.bounds.minLatitude, streetMap.bounds.minLongitude),
-                new Point2D(streetMap.bounds.maxLatitude, streetMap.bounds.minLongitude));
-        double metersPerPixel = mapMeterWidth / (mapPixelWidth * scaleXProperty().doubleValue());
-        double rulerMeterWidth = metersPerPixel * rulerPixelWidth;
+        // double rulerPixelWidth = Ruler.getInstance().getWidth();
+        // double mapPixelWidth = getWidth();
+        // double mapMeterWidth = Geometry.greatCicleDistance(
+        // new Point2D(streetMap.bounds.minLatitude, streetMap.bounds.minLongitude),
+        // new Point2D(streetMap.bounds.maxLatitude, streetMap.bounds.minLongitude));
+        // double metersPerPixel = mapMeterWidth / (mapPixelWidth *
+        // scaleXProperty().doubleValue());
+        // double rulerMeterWidth = metersPerPixel * rulerPixelWidth;
         // System.out.printf(
         // "GUIMap.updateRulerText(): rulerPixelWidth %.1f, "
         // + " mapPixelWidth %.1f,"
