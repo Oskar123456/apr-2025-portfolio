@@ -6,7 +6,7 @@
 
   - Kort forklaring af korteste vej:
       + At finde vej i en vægtet graph `G = {V, E}`.
-      + Hvor e.weight >= 0 for alle e i E.
+      + Hvor $e.weight >= 0$ for alle e i E.
       
   - Kort forklaring af dijkstra
       + Korrekthed:
