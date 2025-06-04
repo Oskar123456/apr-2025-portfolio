@@ -6,18 +6,18 @@
 
   - Kort forklaring af korteste vej:
       + At finde vej i en vægtet graph $G = {V, E}$.
-      + Hvor $e.weight >= 0$ for alle e i E.
+      + Hvor $w(e) \ge 0$ for alle e i E.
       
   - Kort forklaring af dijkstra
       + Korrekthed:
           - Kort forklaring. 
       + Showcase selve dijkstra implementation:
-          - Køretid: $O(|V| + |E| lg(|V|))$ -- vi kører igennem alle knuder èn
+          - Køretid: $O(|V| + |E| lg|V|)$ -- vi kører igennem alle knuder èn
             gang, alle edges, og for hver edge relaxerer vi, som koster $O(lg|V|)$.
   
   - Kort forklaring af A*
       + Korrekthed:
-          - Heuristisk funktions estimat *må* aldrig overstige mulig/aktuel distance.
+          - Heuristisk funktions estimat må *aldrig* overstige bedst mulige distance.
       + Showcase selve A* implementation.
   
   - Vis projekt

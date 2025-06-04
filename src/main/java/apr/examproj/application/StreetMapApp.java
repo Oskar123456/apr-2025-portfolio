@@ -19,6 +19,8 @@ import apr.examproj.gui.*;
 import apr.examproj.map.*;
 import apr.examproj.osm.MapData;
 import apr.examproj.utils.Geometry;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
@@ -99,6 +101,18 @@ public class StreetMapApp {
 
         renderPane.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> Options.hide());
         renderPane.addEventHandler(ScrollEvent.SCROLL, e -> map.zoom(zoomSpeed * e.getDeltaY()));
+        renderPane.addEventHandler(KeyEvent.KEY_PRESSED, e -> {
+            if (e.getCode() == KeyCode.getKeyCode("I")) {
+                map.zoom(0.05);
+            }
+            if (e.getCode() == KeyCode.getKeyCode("O")) {
+                map.zoom(-0.05);
+            }
+            if (e.getCode() == KeyCode.getKeyCode("R")) {
+                map.translateXProperty().set(renderPane.getWidth() / 2);
+                map.translateYProperty().set(renderPane.getHeight() / 2);
+            }
+        });
         renderPane.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
             mouseX = e.getX();
             mouseY = e.getY();

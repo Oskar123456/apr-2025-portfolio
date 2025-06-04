@@ -31,7 +31,7 @@ public class AStar<T> implements PathFinder<T> {
         while (!PQ.isEmpty() && graph.visitedSize() < graph.size()) {
             var curPair = PQ.poll();
             var curNode = curPair.first;
-            var curDist = graph.dists.get(curNode);
+            var curDist = graph.dist(curNode);
             if (graph.isVisited(curNode)) {
                 continue;
             }

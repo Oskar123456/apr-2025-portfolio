@@ -36,7 +36,7 @@ public class Dijkstra<T> implements PathFinder<T> {
             for (var edge : graph.edgesFrom(curNode)) {
                 var neighbor = edge.dest;
                 var dist = curDist + edge.weight;
-                if (graph.dists.get(neighbor) > dist) {
+                if (graph.dist(neighbor) > dist) {
                     graph.relax(curNode, neighbor, dist);
                     PQ.add(new Pair<>(neighbor, dist));
                 }
