@@ -85,6 +85,10 @@ public class StreetMapApp {
         destPane.setId("street-map__dest-pane");
         GUIFactory.defaultChildText(srcPane, "start", "street-map__src-text");
         GUIFactory.defaultChildText(destPane, "end", "street-map__dest-text");
+        map.scaleXProperty().addListener(e -> srcPane.scaleXProperty().set(1 / map.scaleXProperty().get()));
+        map.scaleYProperty().addListener(e -> srcPane.scaleYProperty().set(1 / map.scaleYProperty().get()));
+        map.scaleXProperty().addListener(e -> destPane.scaleXProperty().set(1 / map.scaleXProperty().get()));
+        map.scaleYProperty().addListener(e -> destPane.scaleYProperty().set(1 / map.scaleYProperty().get()));
 
         sortedAlgNames = new ArrayList<>(pathFinders.keySet().stream().toList());
         sortedAlgNames.sort(Comparator.naturalOrder());

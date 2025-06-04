@@ -15,6 +15,7 @@ public class GUIMap extends Pane {
     public StreetMap streetMap;
 
     public GUIMap(StreetMap streetMap) {
+        setId("street-map__gui-map");
         this.streetMap = streetMap;
         draw();
     }

@@ -28,6 +28,9 @@
       + **Demo**.
       + Snak om design pattern:
           - Observer
+          - Command (Toolpanel)
+          - Factory
+          - Singleton (Tooltip)
 
   - Cycle detection
       + In singly linked list: rabbit & hare algorithm.
@@ -84,6 +87,10 @@ MVVC / Observer Pattern er interessant
 
   - Add or change behavior of classes, by wrapping them in decorator.
   - Wrapping classes; example: unbuffered I/O -> buffered I/O.
+
+```java
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+```
 
 #### Proxy
 #### Adapter

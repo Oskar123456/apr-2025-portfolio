@@ -34,6 +34,10 @@ public class Graph<T> {
         return size;
     }
 
+    public int visitedSize() {
+        return visited.size();
+    }
+
     public Set<GraphEdge<T>> getPathEdges() throws Exception {
         if (src == null || dest == null) {
             throw new Exception("no src or dest in graph");
@@ -43,17 +47,17 @@ public class Graph<T> {
         }
 
         path = new HashSet<>();
-        var nextNode = dest;
-        var curNode = srcs.get(dest);
-        while (curNode != null) {
-            for (var edge : outgoingEdges.get(curNode)) {
-                if (edge.dest == nextNode) {
+        var current = dest;
+        var predecessor = srcs.get(dest);
+        while (predecessor != null) {
+            for (var edge : outgoingEdges.get(predecessor)) {
+                if (edge.dest == current) {
                     path.add(edge);
                     break;
                 }
             }
-            nextNode = curNode;
-            curNode = srcs.get(curNode);
+            current = predecessor;
+            predecessor = srcs.get(predecessor);
         }
 
         return path;
@@ -125,9 +129,8 @@ public class Graph<T> {
 
     public void reset() {
         srcs.clear();
-        for (var node : nodes) {
-            dists.put(node, Double.POSITIVE_INFINITY);
-        }
+        dists.clear();
+        nodes.forEach(n -> dists.put(n, Double.POSITIVE_INFINITY));
         if (!dists.containsKey(getStart())) {
             System.out.println("Graph.reset(): start does not show up in nodes...");
             return;

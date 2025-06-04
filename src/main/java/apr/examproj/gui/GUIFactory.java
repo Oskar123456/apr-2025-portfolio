@@ -152,7 +152,6 @@ public class GUIFactory {
         var pos = GUIUtils.mapNodeCoordsToPane(bounds, renderPane, node);
         pane.relocate(pos.x, pos.y);
         pane.getChildren().add(dot);
-        // renderPane.getChildren().add(pane);
         return pane;
     }
 
@@ -163,7 +162,6 @@ public class GUIFactory {
         dot.setId("street-map__highlight-node");
         var pos = GUIUtils.mapNodeCoordsToPane(bounds, renderPane, node);
         dot.relocate(pos.x, pos.y);
-        // renderPane.getChildren().add(dot);
         return dot;
     }
 
